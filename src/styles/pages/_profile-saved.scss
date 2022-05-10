@@ -1,0 +1,78 @@
+.profile-saved {
+  background: white;
+  .saved-box {
+    display: flex;
+    padding: 10px;
+    &:hover,
+    &:active {
+      transition: all 0.4s ease-in;
+      background: #dcdcdc;
+      border-radius: 10px;
+    }
+    img {
+      width: 7rem;
+      height: 7rem;
+      margin-right: 10px;
+      border-radius: 15px;
+      &:hover,
+      &:active {
+        cursor: pointer;
+      }
+    }
+    .saved-right {
+      .content {
+        font-weight: bold;
+        &:hover,
+        &:active {
+          transition: all 0.4s ease-in;
+          text-decoration: underline;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  .icon-lock {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    i {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 2px solid $primary-color;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      color: $primary-color;
+      font-size: 2.5rem;
+    }
+  }
+}
+
+
+@media screen and (max-width: 768px) {
+  .profile-saved {
+    .saved-box {
+      .saved-right {
+        .content {
+          font-size: 16px;
+        }}
+    }
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .profile-saved {
+    .saved-box {
+      img {
+        width: 5rem;
+        height: 5rem;
+      }
+      .saved-right {
+        .content {
+          font-size: 15px;
+        }}
+    }
+  }
+}

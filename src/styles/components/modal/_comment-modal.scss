@@ -1,0 +1,80 @@
+.comment-modal {
+  position: absolute;
+  width: 10rem;
+  min-height: 10rem;
+  right: 33%;
+  transform: translateY(18px);
+  z-index: 10;
+  font-family: $primary-font;
+  .dropdown {
+    border: 1px solid #ddd;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 0.5rem;
+    overflow: hidden;
+    transition: height $speed ease;
+    .menu {
+      .menu-item {
+        height: 2.5rem;
+        display: flex;
+        align-items: center;
+        border-radius: 8px;
+        transition: background $speed;
+        padding: 10px;
+        &:hover {
+          cursor: pointer;
+          background-color: #ddd;
+          color: black;
+          font-weight: 500;
+        }
+        .icon-button {
+          margin-right: 10px;
+          .fa-pen-to-square {
+            color: $secondary-color;
+          }
+          .fa-trash {
+            color: $third-color;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .comment-modal {
+    right: 50%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .comment-modal {
+    .dropdown {
+      padding: 0.5rem;
+      .menu {
+        .menu-item {
+          height: 2.3rem;
+          padding: 8px;
+          font-size: 16px;
+          .icon-button {
+            margin-right: 8px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .comment-modal {
+    width: 10rem;
+    .dropdown {
+      .menu {
+        .menu-item {
+          height: 2rem;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}

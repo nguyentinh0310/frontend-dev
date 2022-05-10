@@ -1,0 +1,19 @@
+.avatar {
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.15);
+  img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: inherit;
+    height: inherit;
+    border-radius: inherit;
+    cursor: pointer;
+  }
+}

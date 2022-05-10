@@ -1,0 +1,21 @@
+.modal-dialog {
+  font-family: $primary-font;
+  margin-top: 6rem !important;
+  .modal-content {
+    border-radius: 20px;
+    .modal-title {
+      font-weight: bold;
+    }
+    .modal-body {
+    }
+    .footer-modal {
+      .btn-create-post {
+        width: 100%;
+        background: $secondary-color;
+        color: $gray-color;
+        height: 35px;
+        border-radius: 10px;
+      }
+    }
+  }
+}

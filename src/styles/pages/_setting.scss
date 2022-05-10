@@ -1,0 +1,145 @@
+.setting-page {
+  width: 80%;
+  height: calc(100vh - 100px);
+  margin: 0 auto;
+  font-family: $primary-font;
+  .change-password {
+    background: white;
+    margin: 10px 0;
+    padding: 20px;
+    border-radius: 20px;
+    h4 {
+      margin-bottom: 20px;
+    }
+    label {
+      font-weight: bold;
+    }
+    input {
+      outline: none;
+      box-shadow: none;
+    }
+    .btn-pass {
+      width: 18rem;
+      background: $primary-color;
+      color: white;
+      border-radius: 20px;
+      margin-top: 10px;
+    }
+  }
+  .dark-mode {
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px 0;
+    padding: 20px;
+    border-radius: 20px;
+    h4{
+        margin-bottom: 0;
+    }
+    .checkbox {
+      opacity: 0;
+      position: absolute;
+    }
+    .label {
+      background-color: #111;
+      border-radius: 50px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 5px;
+      position: relative;
+      height: 26px;
+      width: 50px;
+      transform: scale(1.5);
+    }
+
+    .label .ball {
+      background-color: #fff;
+      border-radius: 50%;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      height: 22px;
+      width: 22px;
+      transform: translateX(0px);
+      transition: transform 0.2s linear;
+    }
+
+    .checkbox:checked + .label .ball {
+      transform: translateX(24px);
+    }
+
+    .fa-moon {
+      color: #f1c40f;
+    }
+
+    .fa-sun {
+      color: #f39c12;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .setting-page {
+    width: 90%;
+    .change-password {
+      h4 {
+        margin-bottom: 15px;
+        font-size: 20px;
+      }
+      label {
+        font-weight: bold;
+        font-size: 16px;
+      }
+      input {
+        outline: none;
+        box-shadow: none;
+      }
+      .btn-pass {
+        width: 17rem;
+        background: $primary-color;
+        color: white;
+        border-radius: 20px;
+        margin-top: 10px;
+        font-size: 16px;
+      }
+    }
+    .dark-mode {
+      h4 {
+        font-size: 20px;
+      }
+      .label {
+        transform: scale(1.25);
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .setting-page {
+    width: 98%;
+    .change-password {
+        h4 {
+          font-size: 18px;
+        }
+        label {
+          font-weight: bold;
+          font-size: 14px;
+        }
+        .btn-pass {
+          width: 15rem;
+          font-size: 14px;
+        }
+      }
+      .dark-mode {
+        h4 {
+          font-size: 18px;
+        }
+        .label {
+          transform: scale(1);
+        }
+      }
+    }
+}

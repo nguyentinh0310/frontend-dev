@@ -1,0 +1,32 @@
+.not-support, .not-support-menu {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: $primary-font;
+  span{
+      background-color: white;
+      padding: 10rem;
+      font-size: 35px;
+      font-weight: bold;
+      color: $primary-color;
+      border-radius: 20px;
+      border: 2px solid $primary-color;
+  }
+}
+@media screen and (max-width: 1024px) {
+  .not-support {
+    display: none;
+  }
+  .not-support-menu{
+    span{
+      font-size: 32px;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .not-support-menu {
+    display: none;
+  }
+}

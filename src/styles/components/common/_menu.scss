@@ -1,0 +1,128 @@
+.menu-page {
+  display: none;
+}
+/* 320 480 768 1024 1280 1366 1440 1660 1920 */
+@media screen and (max-width: 768px) {
+  .menu-page {
+    display: block;
+    font-family: $primary-font;
+    ul {
+      padding: 10px 0px;
+      li {
+        list-style: none;
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        transition: 0.3s;
+        border-radius: 5px;
+        cursor: pointer;
+        &:hover {
+          background: #ddd;
+        }
+        &.active {
+          background: #ddd;
+        }
+        .avatar {
+          width: 50px;
+          height: 50px;
+          margin: 0 1rem 0 0.5rem;
+        }
+        .name {
+          font-size: 20px;
+          font-weight: bold;
+        }
+        p {
+          font-size: 18px;
+          margin-bottom: 0 !important;
+        }
+
+        i {
+          font-size: 35px;
+          &.fa-user-friends {
+            color: $secondary-color;
+          }
+          &.fa-users {
+            color: tomato;
+          }
+          &.fa-bookmark {
+            color: violet;
+          }
+          &.fa-facebook-messenger {
+            color: $primary-color;
+          }
+          &.fa-compass {
+            color: indianred;
+          }
+          &.fa-gear {
+            color: $secondary-color;
+          }
+          &.fa-right-from-bracket {
+            color: $third-color;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .menu-page {
+    ul {
+      padding: 8px 0px;
+      li {
+        padding: 1rem;
+        .avatar {
+          width: 45px;
+          height: 45px;
+        }
+        .name {
+          font-size: 18px;
+          font-weight: bold;
+        }
+        p {
+          font-size: 18px;
+          padding-left: 25px;
+          margin-bottom: 0 !important;
+        }
+        i {
+          font-size: 31px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 479px) {
+    .menu-page {
+      ul {
+        padding: 8px 0px;
+        li {
+          padding: 1rem;
+          .avatar {
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            width: 45px;
+            height: 45px;
+            position: relative;
+            img {
+              width: 100%;
+              cursor: pointer;
+            }
+          }
+          .name {
+            font-size: 17px;
+          }
+          p {
+            font-size: 16px;
+            padding-left: 25px;
+            margin-bottom: 0 !important;
+          }
+          i {
+            font-size: 28px;
+          }
+        }
+      }
+    }
+  }
+  

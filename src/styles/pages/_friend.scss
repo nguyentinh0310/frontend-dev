@@ -1,0 +1,17 @@
+.friend-page {
+  width: 80%;
+  height: calc(100vh - 100px);
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 768px) {
+  .friend-page {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .friend-page {
+    width: 98%;
+  }
+}

@@ -1,0 +1,23 @@
+.following-modal {
+  max-height: 20rem;
+  overflow-y: auto;
+  .friend-box {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    &:hover,
+    &:active {
+      transition: all 0.4s;
+      cursor: pointer;
+    }
+    .avatar {
+      margin-right: 10px;
+    }
+    .name {
+      font-weight: bold;
+    }
+    .btn {
+      margin-left: auto;
+    }
+  }
+}

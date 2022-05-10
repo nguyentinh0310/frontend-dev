@@ -1,0 +1,35 @@
+.postId-page {
+  width: 60%;
+  margin: 0 auto;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  .post {
+    width: 100%;
+    margin: 10px 0;
+  }
+}
+@media screen and (max-width: 1024px) {
+  .postId-page {
+    width: 75%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .postId-page {
+    width: 83%;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .postId-page {
+    width: 90%;
+  }
+}
+
+
+@media screen and (max-width: 479px) {
+  .postId-page {
+    width: 95%;
+  }
+}

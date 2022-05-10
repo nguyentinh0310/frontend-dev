@@ -1,0 +1,57 @@
+.status-modal {
+  width: 40rem;
+  background: #fff;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid #dcdcdc;
+
+  .status-create {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+  }
+  .btn-post {
+    background: #f3f3f3;
+    width: 100%;
+    border: none;
+    outline: none;
+    text-align: left;
+    border-radius: 30px;
+    padding: 5px 20px;
+    margin-left: 10px;
+  }
+
+  
+}
+
+@media screen and (max-width: 1024px) {
+  .status-modal {
+    width: 48rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .status-modal {
+    width: 40rem;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .status-modal {
+    width: 30rem;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .status-modal {
+    width: 25rem;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .status-modal {
+    width: 22.5rem;
+  }
+}

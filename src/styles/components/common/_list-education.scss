@@ -1,0 +1,24 @@
+.list-education {
+  width: 100%;
+  .item {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    border-radius: 10px;
+    &:hover,
+    &:active {
+      background: $gray-color;
+      cursor: pointer;
+    }
+    .name-school {
+      font-size: 16px;
+    }
+    .year{
+        margin: auto;
+    }
+    .btn{
+        margin-left: auto;
+        font-size: 15px;
+    }
+  }
+}

@@ -1,0 +1,60 @@
+.profile-menu {
+  background-color: white;
+  border-radius: 10px;
+  border: 1px solid #dcdcdc;
+  .menu {
+    margin: 0;
+    padding: 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    li {
+      list-style: none;
+      width: 33.33%;
+      text-align: center;
+      &:hover,
+      &:active {
+        transition: all 0.4s;
+        font-weight: bold;
+      }
+      &.active {
+        color: $primary-color;
+        font-weight: bolder;
+        border-bottom: 2px solid $primary-color;
+      }
+      span {
+        font-size: 17px;
+        &:hover,
+        &:active {
+          color: black;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .profile-menu {
+    .menu {
+      padding: 0.5rem;
+      li {
+        span {
+          font-size: 15px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .profile-menu {
+    .menu {
+      padding: 0.25rem;
+      li {
+        span {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}

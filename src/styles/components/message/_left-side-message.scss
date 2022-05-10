@@ -1,0 +1,139 @@
+.message-left-side {
+  width: 27%;
+  font-family: $primary-font;
+  border-right: 1px solid #eee;
+  .message-header {
+    margin: 0 10px;
+    input {
+      margin: 1rem 0;
+      width: 100%;
+      border: none;
+      outline: none;
+      height: 40px;
+      padding: 5px 10px;
+      background-color: $gray-light-color !important;
+      box-shadow: none !important;
+      border-radius: 10px;
+    }
+  }
+  .message-chat-list {
+    max-height: 85%;
+    margin: 5px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    ul {
+      margin: 0 !important;
+      padding-left: 0 !important;
+      li {
+        list-style: none;
+        padding: 5px;
+        &:hover,
+        &:active {
+          background-color: #eee;
+          border-radius: 10px;
+        }
+        a {
+          display: flex;
+          align-items: center;
+          &:hover,
+          &:active {
+            color: $title-color;
+          }
+          .avatar {
+            width: 50px;
+            height: 50px;
+          }
+          .content {
+            margin-left: 10px;
+            .name {
+              font-size: 17px;
+              font-weight: bold;
+            }
+            .text {
+              margin-bottom: 0;
+              font-size: 16px;
+              opacity: 0.8;
+            }
+          }
+          .fa-circle {
+            margin-left: auto;
+            font-size: 11px;
+            opacity: 0.5;
+            &.active {
+              color: forestgreen;
+              opacity: 1;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .message-left-side {
+    width: 100%;
+    border-right: none;
+    .message-header {
+      input {
+        font-size: 16px;
+      }
+    }
+    .message-chat-list {
+      ul {
+        li {
+          a {
+            .avatar {
+              width: 45px;
+              height: 45px;
+            }
+            .content {
+              .name {
+                font-size: 16px;
+              }
+              .text {
+                font-size: 15px;
+              }
+            }
+            .fa-circle {
+              font-size: 9px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .message-left-side {
+    .message-header {
+      input {
+        font-size: 15px;
+      }
+    }
+    .message-chat-list {
+      ul {
+        li {
+          a {
+            .avatar {
+              width: 40px;
+              height: 40px;
+            }
+            .content {
+              .name {
+                font-size: 14px;
+              }
+              .text {
+                font-size: 13px;
+              }
+            }
+            .fa-circle {
+              font-size: 7px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

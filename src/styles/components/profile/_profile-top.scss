@@ -1,0 +1,373 @@
+.profile-top {
+  background-color: white;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  padding-bottom: 30px;
+  .profile-name {
+    position: relative;
+    .avatar {
+      position: absolute;
+      left: 2%;
+      bottom: -10%;
+      width: 10rem;
+      height: 10rem;
+      z-index: 5;
+    }
+    .name {
+      margin-left: 12rem;
+      font-size: 25px;
+      font-weight: bolder;
+    }
+    .count {
+      display: flex;
+      margin-left: 12rem;
+      margin-top: 10px;
+      .post-count,
+      .follower-count {
+        cursor: pointer;
+        margin-right: 2rem;
+        text-align: center;
+        .quantity {
+          font-weight: bold;
+          color: $primary-color;
+          margin-right: 5px;
+          font-size: 17px;
+        }
+      }
+      .following-count {
+        cursor: pointer;
+        text-align: center;
+        .quantity {
+          font-weight: bold;
+          color: $primary-color;
+          margin-right: 5px;
+          font-size: 17px;
+        }
+      }
+    }
+    .btn-setting {
+      position: absolute;
+      top: 10%;
+      right: 2%;
+      outline: none;
+      box-shadow: none;
+      border: 2px solid $primary-color;
+      border-radius: 18px;
+      &:hover,
+      &:active {
+        transition: all 0.4s;
+        background-color: $primary-color;
+        color: white;
+      }
+    }
+    .follow-message {
+      display: flex;
+      align-items: center;
+      position: absolute;
+      top: 10%;
+      right: 2%;
+      .btn-follow,
+      .btn-unfollow {
+        width: 10rem;
+        outline: none;
+        box-shadow: none;
+        background-color: $primary-color;
+        color: white;
+        border-radius: 18px;
+        margin-right: 10px;
+        &:hover,
+        &:active {
+          transition: all 0.4s;
+          background: white;
+          border: 2px solid $primary-color;
+          color: $primary-color;
+        }
+      }
+      .btn-unfollow {
+        background-color: $third-color;
+        color: white;
+        &:hover,
+        &:active {
+          transition: all 0.4s;
+          background: white;
+          border: 2px solid $third-color !important;
+          color: $third-color !important;
+        }
+      }
+      i {
+        font-size: 18px;
+        padding: 0.5rem;
+        background: $primary-color;
+        color: white;
+        border-radius: 50%;
+        &:hover,
+        &:active {
+          transition: all 0.4s;
+          background: white;
+          border: 2px solid $primary-color;
+          color: $primary-color;
+        }
+      }
+    }
+  }
+  .pofile-info {
+    margin: 2rem 1rem 1rem 1rem;
+    h4 {
+      font-weight: bolder;
+    }
+    .profile-bio {
+      display: flex;
+      justify-content: center;
+      margin: 1rem 0;
+    }
+    .info {
+      max-width: 100%;
+      .address {
+        margin-bottom: 5px;
+      }
+      .address,
+      .education,
+      .experience,
+      .skills {
+        font-weight: bold;
+        .description {
+          font-weight: normal;
+          color: black;
+        }
+      }
+      .socail {
+        font-weight: bold;
+        a {
+          font-weight: normal;
+          color: $secondary-color;
+          &:hover,
+          &:active {
+            text-decoration: underline;
+          }
+        }
+      }
+      .fa-location-dot {
+        color: $third-color;
+        width: 20px;
+      }
+      .fa-graduation-cap {
+        color: $secondary-color;
+      }
+      .fa-medal {
+        color: #f6f63e;
+      }
+      .fa-atom {
+        color: blue;
+      }
+      .fa-earth-asia {
+        color: $primary-color;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .profile-top {
+    .bg-cover-profile {
+      height: 20rem;
+    }
+    .profile-name {
+      .avatar {
+        position: absolute;
+        width: 8rem;
+        height: 8rem;
+      }
+      .name {
+        margin-left: 9.5rem;
+      }
+      .count {
+        margin-left: 9.5rem;
+        margin-top: 15px;
+        .post-count,
+        .follower-count {
+          margin-right: 1.5rem;
+          text-align: center;
+        }
+      }
+    }
+    .pofile-info {
+      margin-top: 2rem;
+      .profile-bio {
+        display: flex;
+        justify-content: center;
+        margin: 1rem 0;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .profile-top {
+    .bg-cover-profile {
+      height: 16rem;
+    }
+    .profile-name {
+      .avatar {
+        position: absolute;
+        bottom: 40%;
+        width: 7rem;
+        height: 7rem;
+      }
+      .name {
+        margin-left: 8rem;
+        font-size: 22px;
+      }
+      .count {
+        margin-left: 0;
+        margin-top: 2rem;
+        display: flex;
+        justify-content: space-around;
+        .post-count,
+        .follower-count {
+          margin-right: 0;
+          .quantity {
+            font-size: 16px;
+          }
+          .title {
+            font-size: 15px;
+          }
+        }
+        .following-count {
+          .quantity {
+            font-size: 16px;
+          }
+          .title {
+            font-size: 15px;
+          }
+        }
+      }
+      .btn-setting {
+        font-size: 14px !important;
+      }
+      .follow-message {
+        .btn-follow,
+        .btn-unfollow {
+          width: 8rem;
+          font-size: 14px;
+        }
+        i {
+          font-size: 14px;
+        }
+      }
+    }
+    .pofile-info {
+      margin-top: 1rem;
+      h4 {
+        font-size: 22px;
+      }
+      .profile-bio {
+        display: flex;
+        justify-content: center;
+        margin: 1rem 0;
+        font-size: 15px;
+      }
+      .info {
+        .address,
+        .education,
+        .experience,
+        .skills,
+        .socail {
+          font-size: 15px;
+          margin-bottom: 0.5rem;
+          a {
+            display: block;
+            margin-left: 20px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .profile-top {
+    .bg-cover-profile {
+      height: 11rem;
+    }
+    .profile-name {
+      margin-top: 3rem;
+      .avatar {
+        position: absolute;
+        transform: translateY(-42%);
+        width: 6rem;
+        height: 6rem;
+      }
+      .name {
+        margin-left: 1rem;
+        font-size: 20px;
+      }
+      .count {
+        margin-left: 0;
+        margin-top: 1rem;
+        display: flex;
+        justify-content: space-around;
+        .post-count,
+        .follower-count {
+          margin-right: 0;
+          cursor: pointer;
+          .quantity {
+            font-size: 14px;
+          }
+          .title {
+            font-size: 13px;
+          }
+        }
+        .following-count {
+          cursor: pointer;
+          .quantity {
+            font-size: 14px;
+          }
+          .title {
+            font-size: 13px;
+          }
+        }
+      }
+      .btn-setting {
+        font-size: 13px !important;
+        top: -60%;
+      }
+      .follow-message {
+        transform: translateY(-50px);
+        .btn-follow,
+        .btn-unfollow {
+          width: 8rem;
+          font-size: 13px;
+        }
+        i {
+          font-size: 13px;
+        }
+      }
+    }
+    .pofile-info {
+      margin-top: 1rem;
+      h4 {
+        font-size: 18px;
+      }
+      .profile-bio {
+        display: flex;
+        justify-content: center;
+        margin: 1rem 0;
+        font-size: 14px;
+      }
+      .info {
+        .address,
+        .education,
+        .experience,
+        .skills,
+        .socail {
+          font-size: 14px;
+        }
+        .socail {
+          a {
+            margin-left: 15px;
+          }
+        }
+      }
+    }
+  }
+}

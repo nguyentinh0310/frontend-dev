@@ -1,0 +1,28 @@
+.profile-page {
+  width: 60%;
+  margin: 0 auto;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: $primary-font;
+}
+
+@media screen and (max-width: 1280px) {
+  .profile-page {
+    width: 75%;
+    margin-top: 5px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .profile-page {
+    width: 70%;
+    margin-top: 5px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .profile-page {
+    width: 82%;
+  }
+}

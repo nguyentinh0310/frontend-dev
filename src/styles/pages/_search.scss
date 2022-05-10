@@ -1,0 +1,149 @@
+.search-page {
+  display: none;
+}
+@media screen and (max-width: 1024px) {
+  .search-page {
+    display: block;
+    width: 100%;
+    .search-header {
+      position: sticky;
+      top: 0;
+      background-color: white;
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      .icon-back {
+        margin-right: 10px;
+        i {
+          padding: 10px;
+          background: #dcdcdd;
+          border-radius: 50%;
+        }
+      }
+      form {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding: 0 10px;
+        .input-search {
+          padding: 0 10px;
+          height: 40px;
+          border-radius: 25px;
+          outline: none;
+          border: none;
+          background: #eee;
+          flex: 1;
+          overflow: auto;
+        }
+        .btn-cancel {
+          outline: none;
+          border: none;
+          box-shadow: none;
+          background: white;
+          color: $secondary-color;
+          font-weight: 600;
+        }
+      }
+    }
+    .search-body {
+      ul {
+        margin: 0;
+        padding: 0;
+        li {
+          list-style: none;
+          display: flex;
+          align-items: center;
+          padding: 10px 20px;
+          &:hover {
+            cursor: pointer;
+            background-color: #dcdcdd;
+          }
+          .icon-search {
+            font-size: 20px;
+            margin-right: 10px;
+          }
+          .avatar{
+            margin-right: 10px;
+          }
+          .title-name {
+           font-weight: 500;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .search-page {
+    .search-header {
+      .icon-back {
+        i {
+          padding: 8px;
+        }
+      }
+      form {
+        font-size: 16px;
+        .input-search {
+          height: 30px;
+        }
+        .btn-cancel {
+          font-size: 16px;
+        }
+      }
+    }
+    .search-body {
+      ul {
+        li {
+          padding: 8px 15px;
+          .icon-search {
+            font-size: 17px;
+            margin-right: 10px;
+          }
+          .avatar{
+            width: 30px;
+            height: 30px;
+          }
+          .title-name {
+            font-size: 16px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .search-page {
+    .search-header {
+      .icon-back {
+        i {
+          padding: 7px;
+        }
+      }
+      form {
+        font-size: 14px;
+        .input-search {
+          height: 27px;
+        }
+        .btn-cancel {
+          font-size: 15px;
+        }
+      }
+    }
+    .search-body {
+      ul {
+        li {
+          padding: 8px 15px;
+          .icon-search {
+            font-size: 15px;
+            margin-right: 10px;
+          }
+          .title-name {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+}
