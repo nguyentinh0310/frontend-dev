@@ -54,8 +54,11 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
         <Link href="/forgot-password">Quên mật khẩu?</Link>
       </div>
       <div className="mt-2 mb-3 d-flex justify-content-center">
-        <button type="submit" className="btn">
-          Đăng nhập
+        <button type="submit" className="btn" disabled={isSubmitting}>
+          Đăng nhập&nbsp;
+          {isSubmitting && (
+            <span className="spinner-border spinner-border-sm mr-1"></span>
+          )}
         </button>
       </div>
       <div className="d-flex justify-content-center">

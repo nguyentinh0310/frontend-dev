@@ -91,8 +91,11 @@ export function RegisterForm({ onSubmit }: RegisterFormProps) {
         />
       </div>
       <div className="mt-2 mb-3 d-flex justify-content-center">
-        <button type="submit" className="btn">
-          Đăng ký
+        <button type="submit" className="btn" disabled={isSubmitting}>
+          Đăng ký &nbsp;
+          {isSubmitting && (
+            <span className="spinner-border spinner-border-sm mr-1"></span>
+          )}
         </button>
       </div>
       <div className="d-flex justify-content-center">

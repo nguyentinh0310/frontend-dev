@@ -112,21 +112,29 @@
       margin-top: 0;
       padding: 10rem 2rem;
       border-radius: 5rem;
-      // form {
-      //   button {
-      //     width: 15rem;
-      //     height: 3rem;
-      //     box-shadow: none;
-      //     border-radius: 2rem;
-      //     background-color: $primary-color;
-      //     color: white;
-      //   }
-      // }
     }
   }
 }
 
 @media screen and (max-width: 768px) {
+  .wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url("../../components/images/register-background.jpg") no-repeat
+      center;
+    background-size: cover;
+    .wrapper-left {
+      display: none;
+    }
+    .wrapper-right {
+      background-color: white;
+      width: 90%;
+      margin-top: 0;
+      padding: 10rem 2rem;
+      border-radius: 5rem;
+    }
+  }
 }
 
 @media screen and (max-width: 479px) {

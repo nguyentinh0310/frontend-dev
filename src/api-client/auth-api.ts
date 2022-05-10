@@ -4,7 +4,8 @@ import {
   LoginPayload,
   RegisterPayload,
   ResetPasswordPayload,
-  TokenData
+  TokenData,
+  UpdatePasswordPayload
 } from "@/models";
 import axiosClient from "./axios-client";
 
@@ -29,6 +30,9 @@ export const authApi = {
   },
   resetPassword(payload: ResetPasswordPayload, token: any): Promise<any> {
     return axiosClient.post("/auth/reset-password", payload, token);
+  },
+  updatePassword(payload: UpdatePasswordPayload) {
+    return axiosClient.post("/auth/update-password", payload);
   },
   refreshToken(payload: string): Promise<TokenData> {
     return axiosClient.post("/auth/refresh-token", payload);

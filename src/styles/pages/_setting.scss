@@ -18,12 +18,28 @@
       outline: none;
       box-shadow: none;
     }
+    .show-pass {
+      position: relative;
+    }
+    .icon-small {
+      position: absolute;
+      top: 50%;
+      right: 0.8rem;
+      transform: translateY(-50%);
+      cursor: pointer;
+    }
     .btn-pass {
       width: 18rem;
       background: $primary-color;
       color: white;
       border-radius: 20px;
       margin-top: 10px;
+      outline: none;
+      box-shadow: none;
+      &:hover {
+        transition: all 0.4s;
+        font-style: italic;
+      }
     }
   }
   .dark-mode {
@@ -34,8 +50,8 @@
     margin: 10px 0;
     padding: 20px;
     border-radius: 20px;
-    h4{
-        margin-bottom: 0;
+    h4 {
+      margin-bottom: 0;
     }
     .checkbox {
       opacity: 0;
@@ -121,25 +137,25 @@
   .setting-page {
     width: 98%;
     .change-password {
-        h4 {
-          font-size: 18px;
-        }
-        label {
-          font-weight: bold;
-          font-size: 14px;
-        }
-        .btn-pass {
-          width: 15rem;
-          font-size: 14px;
-        }
+      h4 {
+        font-size: 18px;
       }
-      .dark-mode {
-        h4 {
-          font-size: 18px;
-        }
-        .label {
-          transform: scale(1);
-        }
+      label {
+        font-weight: bold;
+        font-size: 14px;
+      }
+      .btn-pass {
+        width: 15rem;
+        font-size: 14px;
       }
     }
+    .dark-mode {
+      h4 {
+        font-size: 18px;
+      }
+      .label {
+        transform: scale(1);
+      }
+    }
+  }
 }

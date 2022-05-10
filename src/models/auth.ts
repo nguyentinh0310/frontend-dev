@@ -15,3 +15,8 @@ export interface ForgotPasswordPayload {
 export interface ResetPasswordPayload {
   password: string;
 }
+
+export interface UpdatePasswordPayload {
+  password_old: string;
+  password: string;
+}
