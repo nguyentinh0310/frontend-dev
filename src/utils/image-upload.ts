@@ -1,14 +1,13 @@
-import { toast } from "react-toastify";
-
 export const checkImage = (file: any) => {
-  if (!file) toast.error("File không tồn tại");
+  let err = "";
+  if (!file) return (err = "File không tồn tại");
 
-  if (file.type !== "image/jpeg" && file.type !== "image/png") {
-    toast.error("File không đúng định dạng");
-  }
-  if (file.size > 1024 * 1024) {
-    toast.error("Kích thước hình ảnh lớn nhất là 1mb");
-  }
+  if (file.type !== "image/jpeg" && file.type !== "image/png")
+    err = "File không đúng định dạng";
+
+  if (file.size > 1024 * 1024) err = "Kích thước hình ảnh lớn nhất là 1mb";
+
+  return err;
 };
 
 export const imageUpload = async (images: any) => {

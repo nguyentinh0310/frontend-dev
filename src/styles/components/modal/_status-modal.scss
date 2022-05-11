@@ -47,6 +47,10 @@
   .input-images {
     display: flex;
     justify-content: center;
+    align-items: center;
+    .icon{
+      font-size: 1.8rem;
+    }
     i {
       font-size: 2rem;
       color: $primary-color;

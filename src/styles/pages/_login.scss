@@ -119,6 +119,8 @@
 @media screen and (max-width: 768px) {
   .wrapper {
     display: flex;
+    overflow-x: auto;
+    overflow-y: auto;
     justify-content: center;
     align-items: center;
     background: url("../../components/images/register-background.jpg") no-repeat

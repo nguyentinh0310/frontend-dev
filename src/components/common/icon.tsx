@@ -31,7 +31,7 @@ export function Icons({ setContent, content,setShow, show }: IconsProps) {
     }}>
       <span className="icon" onClick={handleClick}
         style={{opacity: 0.8}}
-      >😄</span>
+      >😘</span>
       <Overlay
         show={show}
         target={target}

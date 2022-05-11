@@ -1,4 +1,5 @@
 import { ImgPost, IPost } from "@/models";
+import { BASE_URL } from "@/utils";
 import DOMPurify from "dompurify";
 import moment from "moment";
 import { useRouter } from "next/router";
@@ -93,7 +94,7 @@ export function Post({ post }: PostProps) {
         </div>
         {isShare && (
           <ShareModal
-            url={`https://it-network-api.herokuapp.com/posts/${post?._id}`}
+            url={`${BASE_URL}/posts/${post?._id}`}
           />
         )}
         <div className="action">

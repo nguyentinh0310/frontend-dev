@@ -13,6 +13,7 @@ import { Form, Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
 import dynamic from "next/dynamic";
 import { useAuth } from "@/hooks";
+import { Icons } from "../common";
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
 
 export function StatusModal() {
@@ -22,6 +23,7 @@ export function StatusModal() {
   const [content, setContent] = useState<any>("");
   const [loading, setLoading] = useState(false);
   const [images, setImages] = useState<any>([]);
+  const [show, setShow] = useState(false);
 
   const { limit } = useAppSelector((state) => state.posts);
 
@@ -50,12 +52,19 @@ export function StatusModal() {
 
   const handleChangeImages = (e: any) => {
     const files = [...e.target.files];
+    let err = "";
     let newImages: any[] = [];
 
     files.forEach((file: any) => {
-      checkImage(file);
+      if (!file) return (err = "File không tồn tại");
+
+      if (file.size > 1024 * 1024 * 5) {
+        return (err = "Kích thước hình ảnh/video lớn nhất là 1mb.");
+      }
+
       return newImages.push(file);
     });
+    if (err) toast.error(err);
     setImages([...images, ...newImages]);
   };
 
@@ -69,6 +78,7 @@ export function StatusModal() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
+    setShow(false)
     if (!content) {
       setLoading(false);
       dispacth(closeStatus());
@@ -132,7 +142,7 @@ export function StatusModal() {
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit} className="modal-status-post">
-          <div className="modal-top">
+          <div className="modal-top" onClick={() => setShow(false)}>
             <MDEditor value={content} onChange={setContent} />
           </div>
           <div className="show-images">
@@ -147,6 +157,13 @@ export function StatusModal() {
             ))}
           </div>
           <div className="input-images mt-2 mb-2">
+            <Icons
+              setContent={setContent}
+              content={content}
+              show={show}
+              setShow={setShow}
+            />
+
             <div className="file-upload" onChange={handleChangeImages}>
               <i className="fas fa-image" />
               <input

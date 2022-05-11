@@ -37,7 +37,6 @@ export function Explore({ initPosts }: ExploreProps) {
     dispacth(setLimit({ limit: Number(limit) + 5 }));
   };
 
-
   return (
     <div className="middle-panel">
       <div className="status-modal">
@@ -51,13 +50,11 @@ export function Explore({ initPosts }: ExploreProps) {
         </div>
       </div>
       <StatusModal />
-      {loading && isLoading ? (
-        <PostSkeleton />
-      ) : (
-        postList?.data?.map((post: IPost) => (
-          <Post post={post} key={post._id} />
-        ))
-      )}
+      {loading && isLoading
+        ? postList?.data?.map(() => <PostSkeleton />)
+        : postList?.data?.map((post: IPost) => (
+            <Post post={post} key={post._id} />
+          ))}
       {posts?.totalRows === posts?.data.length ? (
         <span className="text-center mb-5">Hiển thị hết rồi</span>
       ) : (

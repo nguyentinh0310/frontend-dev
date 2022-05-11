@@ -18,13 +18,13 @@ export function FollowBtn({ user, mutateUser }: FollowBtnProps) {
   useEffect(() => {
     if (auth?.followings.find((item: any) => item?._id === user?._id)) {
       setFollowed(true);
+    } else {
+      setFollowed(false);
     }
-    return () => setFollowed(false);
   }, [auth?.followings, user?._id]);
 
   const handleFollow = async () => {
     if (loading) return;
-    setFollowed(true);
 
     setLoading(true);
     await userApi.follow(user?._id);
@@ -34,7 +34,6 @@ export function FollowBtn({ user, mutateUser }: FollowBtnProps) {
   };
   const handleUnFollow = async () => {
     if (loading) return;
-    setFollowed(false);
 
     setLoading(true);
     await userApi.unFollow(user?._id);

@@ -28,7 +28,8 @@ export function UserEditForm() {
 
   const changeAvatar = (e: any) => {
     const file = e.target.files[0];
-    checkImage(file);
+    const err = checkImage(file);
+    if (err) toast.error(err);
     setAvatar(file);
   };
 
@@ -43,12 +44,8 @@ export function UserEditForm() {
     setLoading(true);
     try {
       let media: any;
-      if (fullname) {
-        checkName(fullname);
-      }
       if (avatar) {
         media = await imageUpload([avatar]);
-        // mutate({ ...userData, avatar: media[0].url }, false);
         await userApi.update({
           ...userData,
           fullname: capitalizeFirstLetter(fullname),
@@ -56,7 +53,6 @@ export function UserEditForm() {
         });
         mutateAuth();
       } else {
-        // mutate(userData, false);
         await userApi.update({
           ...userData,
           fullname: capitalizeFirstLetter(fullname),
