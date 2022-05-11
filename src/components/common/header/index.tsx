@@ -87,6 +87,9 @@ export function Header() {
                 className={clsx({ active: router.pathname === route.path })}
                 style={{ display: route.style }}
                 onClick={handleMutate}
+                onDoubleClick={() => {
+                  window.location.href = route.path;
+                }}
               >
                 <i className={`${route.icon}`}></i>
               </a>

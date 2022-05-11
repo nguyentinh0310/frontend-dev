@@ -27,6 +27,15 @@
         }
         .icon-button {
           margin-right: 10px;
+          .fa-pen-to-square {
+            color: $secondary-color;
+          }
+          .fa-trash {
+            color: $third-color;
+          }
+          .fa-copy {
+            color: $primary-color;
+          }
         }
       }
     }

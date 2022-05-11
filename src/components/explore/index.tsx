@@ -1,11 +1,11 @@
 import { openStatus, setLimit, useAppDispatch, useAppSelector } from "@/app";
 import { StatusModal } from "@/components/modal";
 import { Post } from "@/components/posts";
-import { PostSkeleton } from "@/components/skeleton";
 import { useAuth } from "@/hooks";
 import { usePosts } from "@/hooks/use-post";
 import { IPost, ListResponse } from "@/models";
 import React, { useEffect, useState } from "react";
+import { PostSkeletonList } from "../skeleton/post-skeleton";
 
 export interface ExploreProps {
   initPosts: ListResponse<IPost>;
@@ -50,11 +50,13 @@ export function Explore({ initPosts }: ExploreProps) {
         </div>
       </div>
       <StatusModal />
-      {loading && isLoading
-        ? postList?.data?.map(() => <PostSkeleton />)
-        : postList?.data?.map((post: IPost) => (
-            <Post post={post} key={post._id} />
-          ))}
+      {loading && isLoading ? (
+        <PostSkeletonList length={5} />
+      ) : (
+        postList?.data?.map((post: IPost) => (
+          <Post post={post} key={post._id} />
+        ))
+      )}
       {posts?.totalRows === posts?.data.length ? (
         <span className="text-center mb-5">Hiển thị hết rồi</span>
       ) : (

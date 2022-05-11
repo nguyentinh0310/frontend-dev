@@ -8,6 +8,7 @@ import {
   usePostUser,
 } from "@/hooks/use-post";
 import { IPost } from "@/models";
+import { BASE_URL } from "@/utils";
 import React from "react";
 import { toast } from "react-toastify";
 
@@ -46,6 +47,12 @@ export function PostModal({ post, setShow }: PostModalProps) {
     }
   };
 
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(`${BASE_URL}/posts/${post?._id}`);
+    setShow(false);
+    toast.success("Đã sao chép!")
+  };
+
   return (
     <>
       {auth?._id === post?.user?._id ? (
@@ -64,7 +71,7 @@ export function PostModal({ post, setShow }: PostModalProps) {
                 </span>
                 <span className="menu-item-title">Xóa bài viết</span>
               </a>
-              <a className="menu-item">
+              <a className="menu-item" onClick={handleCopyLink}>
                 <span className="icon-button">
                   <i className="fa-solid fa-copy"></i>
                 </span>
@@ -77,7 +84,7 @@ export function PostModal({ post, setShow }: PostModalProps) {
         <div className="post-modal">
           <div className="dropdown">
             <div className="menu">
-              <a className="menu-item">
+              <a className="menu-item" onClick={handleCopyLink}>
                 <span className="icon-button">
                   <i className="fa-solid fa-copy"></i>
                 </span>

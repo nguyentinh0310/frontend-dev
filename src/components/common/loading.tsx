@@ -1,5 +1,11 @@
 import React from "react";
+import { Header } from "./header";
 
 export function Loading() {
-  return <div>Loading...</div>;
+  return (
+    <>
+      <Header />
+      <div>Loading...</div>;
+    </>
+  );
 }
