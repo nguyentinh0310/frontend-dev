@@ -11,9 +11,9 @@ export function RightSide() {
   const { id } = router.query;
   const [messagesList, setMessagesList] = useState<any>([]);
   const [arrivalMessage, setArrivalMessage] = useState<any>();
+  const [media, setMedia] = useState<any>([]);
 
   const refDisplay = useRef<any>();
-  const pageEnd = useRef<any>();
 
   const { auth } = useAuth();
   const { messages, mutateMessages } = useMessages(id);
@@ -25,7 +25,7 @@ export function RightSide() {
     }
   }, [messages]);
 
-  // get tin nhắn từ socket
+  // get tin nhắn đến từ socket
   useEffect(() => {
     socket.on("get-message", (data: any) => {
       setArrivalMessage({
@@ -35,14 +35,11 @@ export function RightSide() {
     });
   }, []);
 
-  // xet tin nhắn đến
+  // xét lại mảng tin nhắn
   useEffect(() => {
     if (arrivalMessage && arrivalMessage?.sender === id) {
       setMessagesList((prev: any) => [...prev, arrivalMessage]);
     }
-    return () => {
-      setMessagesList([]);
-    };
   }, [arrivalMessage, id]);
 
   useEffect(() => {
@@ -50,6 +47,11 @@ export function RightSide() {
       refDisplay?.current?.scrollIntoView({ behavior: "smooth", block: "end" });
     }, 50);
   }, [messagesList]);
+
+  const handleDeleteConversation = async () => {
+    // const messageId = messagesList.find((msg: IMessage) => msg.conversation)
+    // console.log(messageId)
+  };
 
   return (
     <Fragment>
@@ -65,12 +67,18 @@ export function RightSide() {
             {user?.length !== 0 && (
               <div className="icon">
                 <i className="fa-solid fa-phone text-primary"></i>
-                <i className="fas fa-trash text-danger"></i>
+                <i
+                  className="fas fa-trash text-danger"
+                  onClick={handleDeleteConversation}
+                ></i>
               </div>
             )}
           </div>
 
-          <div className="chat-container">
+          <div
+            className="chat-container"
+            style={{ height: media.length > 0 ? "calc(100% - 180px)" : "" }}
+          >
             <div className="chat-display">
               {messagesList?.map((msg: IMessage, index: any) => (
                 <span key={index} ref={refDisplay}>
@@ -94,6 +102,8 @@ export function RightSide() {
             mutate={mutateMessages}
             setMessagesList={setMessagesList}
             messagesList={messagesList}
+            media={media}
+            setMedia={setMedia}
           />
         </>
       ) : (
@@ -101,7 +111,10 @@ export function RightSide() {
           className="d-flex justify-content-center
   align-items-center flex-column h-100"
         >
-          <i className="fab fa-facebook-messenger text-primary" />
+          <i
+            className="fab fa-facebook-messenger"
+            style={{ fontSize: "8rem", color: "#85eb7d" }}
+          />
         </div>
       )}
     </Fragment>

@@ -68,10 +68,18 @@ export function Post({ post }: PostProps) {
         )}
 
         {post?.images.length > 0 && post?.images.length > 1 ? (
-          <Carousel fade>
+          <Carousel fade pause="hover">
             {post?.images?.map((img: ImgPost) => (
               <Carousel.Item key={img?.public_id}>
-                <img src={img?.url} className="d-block w-100" alt={img?.url} />
+                {img.url.match(/video/i) ? (
+                  <video controls src={img?.url} className="d-block w-100" />
+                ) : (
+                  <img
+                    src={img?.url}
+                    className="d-block w-100"
+                    alt={img?.url}
+                  />
+                )}
               </Carousel.Item>
             ))}
           </Carousel>
@@ -81,6 +89,12 @@ export function Post({ post }: PostProps) {
             className="d-block w-100"
             alt={post?.images[0]?.url}
           />
+
+          // <video
+          //   controls
+          //   src={post?.images[0]?.url}
+          //   className="d-block w-100"
+          // />
         )}
       </div>
 

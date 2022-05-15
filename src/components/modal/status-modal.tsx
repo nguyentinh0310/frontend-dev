@@ -1,7 +1,12 @@
 import { postApi } from "@/api-client/post-api";
 import { closeStatus, useAppDispatch, useAppSelector } from "@/app";
 import { useAuth } from "@/hooks";
-import { usePost, usePosts, usePostsFollow, usePostUser } from "@/hooks/use-post";
+import {
+  usePost,
+  usePosts,
+  usePostsFollow,
+  usePostUser,
+} from "@/hooks/use-post";
 import { ImgPost } from "@/models";
 import { imageUpload } from "@/utils";
 import dynamic from "next/dynamic";
@@ -35,6 +40,23 @@ export function StatusModal() {
     dispatch(closeStatus());
   };
 
+  const handleChangeImages = (e: any) => {
+    const files = [...e.target.files];
+    let err = "";
+    let newImages: any = [];
+
+    files.forEach((file: any) => {
+      if (!file) return (err = "File không tồn tại");
+
+      if (file.size > 1024 * 1024 * 5) {
+        return (err = "Kích thước hình ảnh/video lớn nhất là 1mb.");
+      }
+    });
+    console.log("images", newImages);
+    if (err) toast.error(err);
+    setImages([...images, ...newImages]);
+  };
+
   useEffect(() => {
     if (postEdit) {
       setContent(postEdit?.content);
@@ -44,24 +66,6 @@ export function StatusModal() {
       setImages([]);
     }
   }, [postEdit]);
-
-  const handleChangeImages = (e: any) => {
-    const files = [...e.target.files];
-    let err = "";
-    let newImages: any[] = [];
-
-    files.forEach((file: any) => {
-      if (!file) return (err = "File không tồn tại");
-
-      if (file.size > 1024 * 1024 * 5) {
-        return (err = "Kích thước hình ảnh/video lớn nhất là 1mb.");
-      }
-
-      return newImages.push(file);
-    });
-    if (err) toast.error(err);
-    setImages([...images, ...newImages]);
-  };
 
   const deleteImages = (img: any) => {
     URL.revokeObjectURL(img);
@@ -73,7 +77,7 @@ export function StatusModal() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    setShow(false)
+    setShow(false);
     if (!content) {
       setLoading(false);
       dispatch(closeStatus());
@@ -128,6 +132,16 @@ export function StatusModal() {
       toast.error("Lỗi 400");
     }
   };
+
+  const imageShow = (src: any) => {
+    return <img src={src} alt="images" className="img-thumbnail" />;
+  };
+
+  const videoShow = (src: any) => {
+    console.log(src);
+    return <video controls src={src} className="img-thumbnail" />;
+  };
+
   return (
     <Modal show={showModal} onHide={handleClose}>
       <Modal.Header closeButton>
@@ -140,13 +154,24 @@ export function StatusModal() {
           <div className="modal-top" onClick={() => setShow(false)}>
             <MDEditor value={content} onChange={setContent} />
           </div>
+
           <div className="show-images">
             {images?.map((img: any, index: any) => (
               <div key={index} id="file_img">
-                <img
-                  src={img?.url ? img?.url : URL.createObjectURL(img)}
-                  alt="images"
-                />
+                {img?.url ? (
+                  <>
+                    {img?.type?.match(/video/i)
+                      ? videoShow(img?.url)
+                      : imageShow(img?.url)}
+                  </>
+                ) : (
+                  <>
+                    {img?.type?.match(/video/i)
+                      ? videoShow(URL.createObjectURL(img))
+                      : imageShow(URL.createObjectURL(img))}
+                  </>
+                )}
+
                 <span onClick={() => deleteImages(img)}>&times;</span>
               </div>
             ))}
@@ -166,7 +191,7 @@ export function StatusModal() {
                 name="images"
                 id="file"
                 multiple
-                accept="image/*"
+                accept="image/*,video/*"
               />
             </div>
           </div>

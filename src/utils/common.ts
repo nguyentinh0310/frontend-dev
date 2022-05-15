@@ -16,5 +16,7 @@ export const checkName = (name: string) => {
   }
 };
 
+
+
 export const BASE_URL = "http://localhost:3000";
 export const socket = socketIoClient.io("http://localhost:5000");
