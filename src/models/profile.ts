@@ -13,7 +13,6 @@ export interface ProfilePayload {
   location: string;
   bio: string;
   skills: string;
-  youtube: string;
   twitter: string;
   instagram: string;
   linkedin: string;
@@ -42,7 +41,6 @@ export interface IEducation {
 }
 
 export interface ISocial extends Record<string, string> {
-  youtube: string;
   twitter: string;
   linkedin: string;
   facebook: string;
@@ -61,9 +59,9 @@ export interface ExperiencePayload {
 
 export interface EducationPayload {
   school: string;
-  fieldofstudy: string;
+  fieldofstudy?: string;
   from: Date;
   to: Date;
-  current: boolean;
-  description: string;
+  current?: boolean;
+  description?: string;
 }

@@ -7,6 +7,7 @@ export interface UserModalProps {
 }
 
 export function UserModal({ users, loading }: UserModalProps) {
+  
   return (
     <div
       className="dropdown-user"

@@ -1,6 +1,8 @@
 import axiosClient from "@/api-client/axios-client";
 import { EmptyLayout } from "@/components/layout";
 import { AppPropsWithLayout } from "@/models";
+import "@uiw/react-markdown-preview/markdown.css";
+import "@uiw/react-md-editor/markdown-editor.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-loading-skeleton/dist/skeleton.css";
 import { Provider } from "react-redux";
@@ -9,11 +11,15 @@ import "react-toastify/dist/ReactToastify.min.css";
 import { SWRConfig } from "swr";
 import store from "../app/store";
 import "../styles/globals.scss";
-import "@uiw/react-md-editor/markdown-editor.css";
-import "@uiw/react-markdown-preview/markdown.css";
 
 export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const Layout = Component.Layout ?? EmptyLayout;
+  // useEffect(() => {
+  //   const socket = socketIoClient.io();
+  //   return () => {
+  //     socket.close();
+  //   };
+  // }, []);
 
   return (
     <>

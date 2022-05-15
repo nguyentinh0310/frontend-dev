@@ -1,8 +1,7 @@
-import { userApi } from "@/api-client";
 import { useAuth, useProfile, useUser } from "@/hooks";
 import { usePostUser } from "@/hooks/use-post";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FollowerModal, FollowingModal } from "../modal";
 import { FollowBtn } from "./follow-btn";
 import { ProfileIntro } from "./introduction";

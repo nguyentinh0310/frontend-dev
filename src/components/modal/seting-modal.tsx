@@ -17,6 +17,7 @@ export function SettingModal() {
   const onClickToProfile = async () => {
     await mutateUser();
     router.push(`/profile/${auth?._id}`);
+    dispatch(closeModal());
   };
 
   const onClickLogout = async () => {
@@ -34,7 +35,13 @@ export function SettingModal() {
             <span className="menu-item-title">Trang cá nhân</span>
           </a>
 
-          <a href="/setting" className="menu-item">
+          <a
+            href="/setting"
+            className="menu-item"
+            onClick={() => {
+              dispatch(closeModal());
+            }}
+          >
             <span className="icon-button">
               <i className="fa-solid fa-gear"></i>
             </span>

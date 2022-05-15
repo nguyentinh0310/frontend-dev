@@ -4,7 +4,7 @@ import { IPost, ListResponse } from "@/models";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { StatusModal } from "../modal";
-import { PostSkeleton } from "../skeleton";
+import { PostSkeletonList } from "../skeleton";
 
 export interface ProfileBodyProps {
   initPosts: ListResponse<IPost>;
@@ -27,16 +27,14 @@ export function ProfileBody({ initPosts }: ProfileBodyProps) {
 
   return (
     <div className="profile-body">
-      <StatusModal/>
+      <StatusModal />
       {postArr?.data.length === 0 && (
         <h3 className="text-center mt-2">Chưa có bài viết nào</h3>
       )}
       {loading && isLoading ? (
-        <PostSkeleton />
+        <PostSkeletonList length={5} />
       ) : (
-        postArr?.data?.map((post: IPost) => (
-          <Post post={post} key={post._id} />
-        ))
+        postArr?.data?.map((post: IPost) => <Post post={post} key={post._id} />)
       )}
     </div>
   );

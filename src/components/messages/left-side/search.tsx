@@ -1,10 +1,14 @@
 import React, { ChangeEvent, FormEvent, useRef, useState } from "react";
 
-export interface SearchHeaderProps {
+export interface SearchConversationProps {
   onSubmit: (value: string) => void;
+  setKeyword: Function;
 }
 
-export function SearchHeader({ onSubmit }: SearchHeaderProps) {
+export function SearchConversation({
+  onSubmit,
+  setKeyword,
+}: SearchConversationProps) {
   const [search, setSearch] = useState("");
   const typingTimeoutRef = useRef<any>(null);
 
@@ -21,16 +25,18 @@ export function SearchHeader({ onSubmit }: SearchHeaderProps) {
   };
   const handleClose = () => {
     setSearch("");
+    setKeyword("");
   };
   return (
     <form
+      className="message-header"
       onSubmit={(e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
       }}
     >
       <input
         type="text"
-        placeholder="Tìm kiếm"
+        placeholder="&#128269; Tìm kiếm..."
         value={search}
         onChange={handleChangeSearch}
       />

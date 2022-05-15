@@ -1,3 +1,4 @@
+import socketIoClient from "socket.io-client";
 
 export const capitalizeFirstLetter = (text: string) => {
   return text.charAt(0).toUpperCase() + text.slice(1);
@@ -15,4 +16,5 @@ export const checkName = (name: string) => {
   }
 };
 
-export const BASE_URL = 'http://localhost:3000'
+export const BASE_URL = "http://localhost:3000";
+export const socket = socketIoClient.io("http://localhost:5000");

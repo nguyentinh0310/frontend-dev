@@ -1,4 +1,5 @@
 import {
+  closeStatus,
   toggleNotify,
   toggleSetting,
   useAppDispatch,
@@ -59,6 +60,7 @@ export function Header() {
   const handleMutate = async () => {
     await mutatePosts();
     await mutatePostsFl();
+    dispatch(closeStatus());
   };
 
   return (

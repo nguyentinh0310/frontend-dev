@@ -32,19 +32,19 @@ export const profileApi = {
   // experience
   createExperience(payload: Partial<ExperiencePayload>): Promise<IProfile> {
     const url = "/profile/experience";
-    return axiosClient.post(url, payload);
+    return axiosClient.put(url, payload);
   },
   deleteExperience(id: string): Promise<any> {
     const url = `/profile/experience/${id}`;
-    return axiosClient.delete(url);
+    return axiosClient.put(url);
   },
   //education
   createEducation(payload: Partial<EducationPayload>): Promise<IProfile> {
     const url = "/profile/education";
-    return axiosClient.post(url, payload);
+    return axiosClient.put(url, payload);
   },
   deleteEducation(id: string): Promise<any> {
     const url = `/profile/education/${id}`;
-    return axiosClient.delete(url);
+    return axiosClient.put(url);
   },
 };

@@ -16,18 +16,16 @@ export function InputField({ name, control, placeholder }: InputFieldProps) {
     control,
   });
   return (
-    // <div className="mb-3">
-    <>
+    <div className="mb-3">
       <input
         type="text"
-        className={"mb-3 form-control " + (error ? "is-invalid" : "")}
+        className={"form-control " + (error ? "is-invalid" : "")}
         onChange={onChange}
         value={value}
         onBlur={onBlur}
         placeholder={placeholder}
       />
       <div className="invalid-feedback">{error?.message}</div>
-    </>
-    // </div>
+    </div>
   );
 }

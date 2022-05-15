@@ -1,6 +1,12 @@
 .search-popup {
   position: relative;
-
+  .close-search{
+    position: absolute;
+    top: 17%;
+    right: 5%;
+    font-size: 18px;
+    cursor: pointer;
+  }
   .dropdown-user {
     position: absolute;
     top: 45px;

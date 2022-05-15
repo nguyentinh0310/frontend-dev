@@ -1,6 +1,8 @@
+import { IUser } from "./user";
+
 export interface IConversation {
   _id: string;
-  recipients: string[];
+  recipients: IUser[];
   text: string;
   media: string[];
   call: any;

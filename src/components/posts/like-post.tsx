@@ -1,5 +1,5 @@
 import { postApi } from "@/api-client/post-api";
-import { useAppSelector } from "@/app";
+import {  setPostData, useAppDispatch, useAppSelector } from "@/app";
 import { useAuth } from "@/hooks";
 import {
   usePost,
@@ -8,6 +8,7 @@ import {
   usePostUser,
 } from "@/hooks/use-post";
 import { IPost } from "@/models";
+import { socket } from "@/utils";
 import React, { useEffect, useState } from "react";
 
 export interface LikePostProps {
@@ -18,6 +19,7 @@ export function LikePost({ post }: LikePostProps) {
   const [isLike, setIsLike] = useState(false);
   const [loadLike, setLoadLike] = useState(false);
 
+  const dispatch = useAppDispatch();
   const { limit } = useAppSelector((state) => state.posts);
 
   const { auth } = useAuth();
@@ -37,27 +39,30 @@ export function LikePost({ post }: LikePostProps) {
 
   const handleLike = async () => {
     if (loadLike) return;
-
+    
     setLoadLike(true);
-    await postApi.likePost(post?._id);
+    const postLike = await postApi.likePost(post?._id);
     await mutatePosts();
     await mutatePost();
     await mutatePostUser();
-    await mutatePostsFl()
+    await mutatePostsFl();
     setLoadLike(false);
+    socket.emit("like-post", postLike);
   };
 
   const handleUnLike = async () => {
     if (loadLike) return;
 
     setLoadLike(true);
-    await postApi.unLikePost(post?._id);
+    const postUnLike = await postApi.unLikePost(post?._id);
     await mutatePosts();
     await mutatePost();
-    await mutatePostsFl()
+    await mutatePostsFl();
     await mutatePostUser();
     setLoadLike(false);
+    socket.emit("unlike-post", postUnLike);
   };
+
   return (
     <>
       {isLike ? (

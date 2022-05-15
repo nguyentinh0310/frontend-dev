@@ -7,6 +7,10 @@
       font-weight: bold;
     }
     .modal-body {
+      input, button{
+        box-shadow: none;
+        outline: none;
+      }
     }
     .footer-modal {
       .btn-create-post {

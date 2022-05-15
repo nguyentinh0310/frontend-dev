@@ -9,9 +9,10 @@ import { useRouter } from "next/router";
 import { profileApi } from "@/api-client/profile-api";
 import { toast } from "react-toastify";
 
-export function EducationModal() {
+export function ExperienceModal() {
   const schema = yup.object().shape({
-    school: yup.string().required("Trường học không để trống"),
+    title: yup.string().required("Kinh nghiệm không để trống"),
+    company: yup.string().required("Công ty không để trống"),
     from: yup.string().required("Vui lòng chọn thời gian"),
     to: yup.string().required("Vui lòng chọn thời gian"),
   });
@@ -31,7 +32,8 @@ export function EducationModal() {
     formState: { isSubmitting },
   } = useForm({
     defaultValues: {
-      school: "",
+      title: "",
+      company: "",
       from: "",
       to: "",
     },
@@ -39,24 +41,25 @@ export function EducationModal() {
   });
   const handleSubmitForm = async (values: any) => {
     try {
-      await profileApi.createEducation(values);
+      await profileApi.createExperience(values);
       await mutateProfile();
       setShow(false);
-      toast.success("Thêm học vấn thành công");
+      toast.success("Thêm kinh nghiệm thành công");
+      console.log(values);
     } catch (error) {
-      toast.error("Lỗi 400");
+      toast.error("Lỗi 500");
     }
   };
 
   return (
-    <div className="education-modal">
+    <div className="experience-modal">
       <button className="btn btn-edit" onClick={handleShow}>
         <i className="fa-solid fa-plus"></i>
       </button>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Thêm học vấn</Modal.Title>
+          <Modal.Title>Thêm kinh nghiệm</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form
@@ -65,10 +68,11 @@ export function EducationModal() {
             noValidate
           >
             <InputField
-              name="school"
+              name="title"
               control={control}
-              placeholder="Trường học"
+              placeholder="Kinh nghiệm"
             />
+            <InputField name="company" control={control} placeholder="Công ty" />
             <div className="mb-2 row">
               <div className="col-md-6">
                 <label>Bắt đầu</label>

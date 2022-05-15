@@ -7,6 +7,6 @@ export function useProfile(id:any) {
     profile: data,
     isLoading: !error && !data,
     isError: error,
-    mutate,
+    mutateProfile: mutate,
   };
 }

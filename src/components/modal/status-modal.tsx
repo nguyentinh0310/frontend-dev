@@ -1,23 +1,18 @@
 import { postApi } from "@/api-client/post-api";
 import { closeStatus, useAppDispatch, useAppSelector } from "@/app";
-import {
-  usePost,
-  usePosts,
-  usePostsFollow,
-  usePostUser,
-} from "@/hooks/use-post";
+import { useAuth } from "@/hooks";
+import { usePost, usePosts, usePostsFollow, usePostUser } from "@/hooks/use-post";
 import { ImgPost } from "@/models";
-import { checkImage, imageUpload } from "@/utils";
+import { imageUpload } from "@/utils";
+import dynamic from "next/dynamic";
 import React, { FormEvent, useEffect, useState } from "react";
 import { Form, Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
-import dynamic from "next/dynamic";
-import { useAuth } from "@/hooks";
 import { Icons } from "../common";
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
 
 export function StatusModal() {
-  const dispacth = useAppDispatch();
+  const dispatch = useAppDispatch();
   const { showModal, postEdit } = useAppSelector((state) => state.statusModal);
 
   const [content, setContent] = useState<any>("");
@@ -37,7 +32,7 @@ export function StatusModal() {
 
   const handleClose = () => {
     setContent("");
-    dispacth(closeStatus());
+    dispatch(closeStatus());
   };
 
   useEffect(() => {
@@ -81,7 +76,7 @@ export function StatusModal() {
     setShow(false)
     if (!content) {
       setLoading(false);
-      dispacth(closeStatus());
+      dispatch(closeStatus());
       return;
     }
 
@@ -109,7 +104,7 @@ export function StatusModal() {
         await mutatePostUser();
         setContent("");
         setImages([]);
-        dispacth(closeStatus());
+        dispatch(closeStatus());
         toast.success("Cập nhật bài viết thành công");
       } else {
         // Create Post
@@ -124,7 +119,7 @@ export function StatusModal() {
         await mutatePostUser();
         setContent("");
         setImages([]);
-        dispacth(closeStatus());
+        dispatch(closeStatus());
         toast.success("Tạo bài viết thành công");
       }
       setLoading(false);

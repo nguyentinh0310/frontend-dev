@@ -2,10 +2,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface postsState {
   limit: number;
+  postData: any
 }
 
 const initialState: postsState = {
   limit: 5,
+  postData: {}
 };
 
 const postsSlice = createSlice({
@@ -15,9 +17,12 @@ const postsSlice = createSlice({
     setLimit: (state, action: PayloadAction<any>) => {
       state.limit = action.payload.limit;
     },
+    setPostData:(state, action: PayloadAction<any>) => {
+      state.postData = action.payload;
+    },
   },
 });
 
 const postsReducer = postsSlice.reducer;
-export const { setLimit } = postsSlice.actions;
+export const { setLimit,setPostData } = postsSlice.actions;
 export default postsReducer;

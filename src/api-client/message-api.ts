@@ -1,12 +1,12 @@
-import { IMessage, ListParams, ListResponse } from "@/models";
+import { IMessage, ListParams, ListResponse, MessagePayload } from "@/models";
 import axiosClient from "./axios-client";
 
 export const messagesApi = {
   getAll(params: ListParams, id: string): Promise<ListResponse<IMessage>> {
-    const url = `/messages${id}`;
+    const url = `/messages/${id}`;
     return axiosClient.get(url, { params });
   },
-  create(payload: Partial<IMessage>): Promise<IMessage> {
+  create(payload: MessagePayload): Promise<IMessage> {
     const url = "/messages";
     return axiosClient.post(url, payload);
   },

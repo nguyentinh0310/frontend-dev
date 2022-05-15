@@ -1,24 +1,23 @@
+import { IMessage, IUser } from "@/models";
 import React, { Fragment } from "react";
+import moment from "moment";
 
-export function MessageDisplay() {
+interface MessageDisplayProps {
+  user: IUser;
+  msg: IMessage;
+}
+
+export function MessageDisplay({ user, msg }: MessageDisplayProps) {
   return (
     <Fragment>
       <div className="chat-title">
         <span className="avatar">
-          <img
-            src="https://cdn-acpnj.nitrocdn.com/SDkrhncnWeetGsYGlzwaPnbfptfOeIKk/assets/static/optimized/rev-00d8738/wp-content/uploads/2017/11/10-Patrick-I-Love-You-Gif.gif"
-            alt=""
-          />
+          <img src={user?.avatar} alt="" />
         </span>
       </div>
 
-      <div className="chat-text">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis
-        explicabo ipsam commodi! Voluptate magnam, quia ullam sequi
-        reprehenderit odit amet labore, beatae iure quod ea asperiores. Maxime
-        quisquam reiciendis sit?
-      </div>
-      <div className="chat-time">April 2022</div>
+      <div className="chat-text">{msg?.text}</div>
+      <div className="chat-time">{moment(msg?.createdAt).fromNow()}</div>
     </Fragment>
   );
 }

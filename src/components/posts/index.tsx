@@ -1,9 +1,9 @@
+import { setPostData, useAppDispatch } from "@/app";
 import { ImgPost, IPost } from "@/models";
 import { BASE_URL } from "@/utils";
-import DOMPurify from "dompurify";
 import moment from "moment";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Carousel } from "react-bootstrap";
 import ReactMarkdown from "react-markdown";
 import { PostModal, ShareModal } from "../modal";
@@ -18,16 +18,21 @@ export interface PostProps {
 
 export function Post({ post }: PostProps) {
   const router = useRouter();
+  const dispacth = useAppDispatch();
+  // const {postData} = useAppSelector(state => state.posts)
+  // console.log(postData)
 
   const [readMore, setReadMore] = useState(false);
   const [show, setShow] = useState(false);
   const [isShare, setIsShare] = useState(false);
 
-  const safeContent = DOMPurify.sanitize(post?.content);
-
   const onClickToProfile = () => {
     router.push(`/profile/${post?.user?._id}`);
   };
+
+  useEffect(() => {
+    dispacth(setPostData(post));
+  }, [dispacth]);
 
   return (
     <div className="post">
@@ -92,11 +97,7 @@ export function Post({ post }: PostProps) {
         <div className="action" onClick={() => setIsShare(!isShare)}>
           <i className="fa-regular fa-paper-plane"></i>
         </div>
-        {isShare && (
-          <ShareModal
-            url={`${BASE_URL}/posts/${post?._id}`}
-          />
-        )}
+        {isShare && <ShareModal url={`${BASE_URL}/posts/${post?._id}`} />}
         <div className="action">
           <SavePost post={post} />
         </div>

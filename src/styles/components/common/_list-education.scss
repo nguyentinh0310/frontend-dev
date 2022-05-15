@@ -10,15 +10,16 @@
       background: $gray-color;
       cursor: pointer;
     }
-    .name-school {
+    span {
       font-size: 16px;
     }
-    .year{
-        margin: auto;
+    .year,
+    .name-company {
+      margin: auto;
     }
-    .btn{
-        margin-left: auto;
-        font-size: 15px;
+    .btn {
+      margin-left: auto;
+      font-size: 15px;
     }
   }
 }
