@@ -40,6 +40,7 @@ class MyDocument extends Document {
           <link rel="preconnect" href="https://fonts.gstatic.com" />
         </Head>
         <body>
+          <input type="checkbox" className="checkbox" id="theme" />
           <Main />
           <NextScript />
         </body>

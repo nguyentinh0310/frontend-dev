@@ -3,6 +3,7 @@ import { useAppSelector } from "@/app";
 import { useAuth } from "@/hooks";
 import { usePost, usePosts, usePostsFollow, usePostUser } from "@/hooks/use-post";
 import { IComment, IPost } from "@/models";
+import { socket } from "@/utils";
 import React from "react";
 import { toast } from "react-toastify";
 
@@ -44,6 +45,7 @@ export function CommentModal({
         await mutatePostsFl()
         await mutatePost();
         await mutatePostUser();
+        socket.emit("delete-comment", post)
       });
     } catch (error) {
       toast.error("Lỗi 404")

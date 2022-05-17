@@ -84,6 +84,7 @@ export function AddMessage({
     newArr.splice(item, 1);
     setMedia(newArr);
   };
+  
   const imageShow = (src: any) => {
     return <img src={src} alt="images" className="img-thumbnail" />;
   };

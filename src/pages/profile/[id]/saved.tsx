@@ -16,29 +16,48 @@ const ProfileSavedPage: NextPageWithLayout = () => {
   return (
     <div className="profile-saved mb-5">
       {auth?._id === id ? (
-        auth?.saved?.map((post: IPost) => (
-          <div className="saved-box" key={post?._id}>
-            <img
-              src={
-                post?.images.length > 0
-                  ? post?.images[0].url
-                  : "https://res.cloudinary.com/dwgximj2j/image/upload/v1652075296/avatars/default-image_wygqce.jpg"
-              }
-              alt="post-saved"
-              onClick={() => onClickToDetailPost(post)}
-            />
-            <div className="saved-right">
-              <span
-                className="content"
-                onClick={() => onClickToDetailPost(post)}
-              >
-                {post?.content.length < 80
-                  ? post?.content
-                  : post?.content.slice(0, 80) + "... "}
-              </span>
+        <>
+          {auth?.saved.length === 0 && (
+            <h3 className="text-center mt-2">Chưa lưu bài viết nào cả</h3>
+          )}
+          {auth?.saved?.map((post: IPost) => (
+            <div className="saved-box" key={post?._id}>
+              {post?.images.length > 0 ? (
+                <>
+                  {post?.images[0]?.url.match(/video/i) ? (
+                    <video
+                      controls
+                      src={post?.images[0]?.url}
+                      className="d-block w-100"
+                    />
+                  ) : (
+                    <img
+                      src={post?.images[0]?.url}
+                      className="d-block w-100"
+                      alt={post?.images[0]?.url}
+                    />
+                  )}
+                </>
+              ) : (
+                <img
+                  src="https://res.cloudinary.com/dwgximj2j/image/upload/v1652075296/avatars/default-image_wygqce.jpg"
+                  alt="post-saved"
+                  onClick={() => onClickToDetailPost(post)}
+                />
+              )}
+              <div className="saved-right">
+                <span
+                  className="content"
+                  onClick={() => onClickToDetailPost(post)}
+                >
+                  {post?.content.length < 80
+                    ? post?.content
+                    : post?.content.slice(0, 80) + "... "}
+                </span>
+              </div>
             </div>
-          </div>
-        ))
+          ))}
+        </>
       ) : (
         <span className="icon-lock">
           <i className="fa-solid fa-lock"></i>

@@ -2,8 +2,14 @@ import { commentApi } from "@/api-client/comment-api";
 import { useAppSelector } from "@/app";
 import { Icons } from "@/components/common";
 import { useAuth } from "@/hooks";
-import { usePost, usePosts, usePostsFollow, usePostUser } from "@/hooks/use-post";
+import {
+  usePost,
+  usePosts,
+  usePostsFollow,
+  usePostUser,
+} from "@/hooks/use-post";
 import { IPost } from "@/models";
+import { socket } from "@/utils";
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -60,10 +66,11 @@ export function CommentInput({
 
       await commentApi.create(newComment);
       await mutatePosts();
-      await mutatePostsFl()
+      await mutatePostsFl();
       await mutatePost();
       await mutatePostUser();
-
+      // Socket
+      socket.emit("create-comment", post);
       setContent("");
       setLoading(false);
     } catch (error) {

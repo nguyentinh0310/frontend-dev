@@ -9,8 +9,9 @@
       background: #dcdcdc;
       border-radius: 10px;
     }
-    img {
-      width: 7rem;
+    img,
+    video {
+      width: 7rem !important;
       height: 7rem;
       margin-right: 10px;
       border-radius: 15px;
@@ -50,14 +51,14 @@
   }
 }
 
-
 @media screen and (max-width: 768px) {
   .profile-saved {
     .saved-box {
       .saved-right {
         .content {
           font-size: 16px;
-        }}
+        }
+      }
     }
   }
 }
@@ -65,14 +66,16 @@
 @media screen and (max-width: 575px) {
   .profile-saved {
     .saved-box {
-      img {
+      img,
+      video {
         width: 5rem;
         height: 5rem;
       }
       .saved-right {
         .content {
           font-size: 15px;
-        }}
+        }
+      }
     }
   }
 }

@@ -108,7 +108,6 @@ const SettingPage: NextPageWithLayout = () => {
       <div className="dark-mode">
         <h4>Chế độ màn hình:</h4>
         <div className="btn-toggle-bg">
-          <input type="checkbox" className="checkbox" id="theme" />
           <label className="label" htmlFor="theme">
             <i className="fas fa-moon"></i>
             <i className="fas fa-sun"></i>

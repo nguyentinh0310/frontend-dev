@@ -1,6 +1,8 @@
+import { notificationApi } from "@/api-client";
 import { postApi } from "@/api-client/post-api";
-import {  setPostData, useAppDispatch, useAppSelector } from "@/app";
+import { useAppSelector } from "@/app";
 import { useAuth } from "@/hooks";
+import { useNotify } from "@/hooks/use-notify";
 import {
   usePost,
   usePosts,
@@ -19,7 +21,6 @@ export function LikePost({ post }: LikePostProps) {
   const [isLike, setIsLike] = useState(false);
   const [loadLike, setLoadLike] = useState(false);
 
-  const dispatch = useAppDispatch();
   const { limit } = useAppSelector((state) => state.posts);
 
   const { auth } = useAuth();
@@ -27,6 +28,7 @@ export function LikePost({ post }: LikePostProps) {
   const { mutatePostsFl } = usePostsFollow(limit);
   const { mutatePost } = usePost(post?._id);
   const { mutatePostUser } = usePostUser(post?.user?._id);
+  const { mutateNotify } = useNotify();
 
   // Likes
   useEffect(() => {
@@ -39,7 +41,7 @@ export function LikePost({ post }: LikePostProps) {
 
   const handleLike = async () => {
     if (loadLike) return;
-    
+
     setLoadLike(true);
     const postLike = await postApi.likePost(post?._id);
     await mutatePosts();
@@ -48,6 +50,17 @@ export function LikePost({ post }: LikePostProps) {
     await mutatePostsFl();
     setLoadLike(false);
     socket.emit("like-post", postLike);
+
+    // Notify
+    const notify = {
+      id: auth?._id,
+      text: "đã thích bài viết",
+      recipients: [postLike?.user?._id],
+      url: `/posts/${postLike?._id}`,
+    };
+    await notificationApi.create(notify);
+    await mutateNotify();
+    socket.emit("create-notify", notify);
   };
 
   const handleUnLike = async () => {
@@ -62,7 +75,6 @@ export function LikePost({ post }: LikePostProps) {
     setLoadLike(false);
     socket.emit("unlike-post", postUnLike);
   };
-
   return (
     <>
       {isLike ? (

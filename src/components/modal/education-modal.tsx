@@ -50,7 +50,7 @@ export function EducationModal() {
 
   return (
     <div className="education-modal">
-      <button className="btn btn-edit" onClick={handleShow}>
+      <button className="btn btn-edit" onClick={handleShow} type="button">
         <i className="fa-solid fa-plus"></i>
       </button>
 

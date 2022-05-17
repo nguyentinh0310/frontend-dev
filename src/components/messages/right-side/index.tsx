@@ -49,8 +49,7 @@ export function RightSide() {
   }, [messagesList]);
 
   const handleDeleteConversation = async () => {
-    // const messageId = messagesList.find((msg: IMessage) => msg.conversation)
-    // console.log(messageId)
+    // console.log(user)
   };
 
   return (

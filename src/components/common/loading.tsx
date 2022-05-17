@@ -4,8 +4,8 @@ import { Header } from "./header";
 export function Loading() {
   return (
     <>
-      <Header />
-      <div>Loading...</div>;
+      {/* <Header /> */}
+      <div>Loading...</div>
     </>
   );
 }

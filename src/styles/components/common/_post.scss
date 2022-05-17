@@ -133,6 +133,7 @@
           align-items: center;
           .flex-fill {
             .content {
+              display: inline-block;
               word-break: break-all;
             }
             .readMore {

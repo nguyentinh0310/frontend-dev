@@ -2,13 +2,15 @@ import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import toggleModalReducer from "./toggle-modal-slice";
 import statusModalReducer from "./status-modal-slice";
 import postsReducer from "./posts-slice";
+import userReducer from "./user-slice";
 
 export function makeStore() {
   return configureStore({
     reducer: {
       toggleModal: toggleModalReducer,
       statusModal: statusModalReducer,
-      posts: postsReducer
+      posts: postsReducer,
+      user: userReducer,
     },
   });
 }

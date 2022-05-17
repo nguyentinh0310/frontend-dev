@@ -1,3 +1,4 @@
+import { notificationApi } from "@/api-client";
 import {
   closeStatus,
   toggleNotify,
@@ -7,6 +8,7 @@ import {
 } from "@/app";
 import { NotifyModal, SettingModal, UserModal } from "@/components/modal";
 import { useAuth, useSearchUser, useUser } from "@/hooks";
+import { useNotify } from "@/hooks/use-notify";
 import { usePosts, usePostsFollow } from "@/hooks/use-post";
 import clsx from "clsx";
 import throttle from "lodash.throttle";
@@ -27,6 +29,7 @@ export function Header() {
   const { mutateUser } = useUser(auth?._id);
   const { mutatePosts } = usePosts(limit);
   const { mutatePostsFl } = usePostsFollow(limit);
+  const { notifies } = useNotify();
 
   const { openNotify, openSetting } = useAppSelector(
     (state) => state.toggleModal
@@ -38,6 +41,7 @@ export function Header() {
 
   const onClickNotify = () => {
     dispatch(toggleNotify());
+    // const read = await notificationApi.readNotify()
   };
   const onClickSetting = () => {
     dispatch(toggleSetting());
@@ -112,10 +116,17 @@ export function Header() {
           </a>
 
           <a
-            className={openNotify ? "nav-icon active" : "nav-icon"}
+            className={
+              openNotify || notifies?.length > 0 ? "nav-icon active" : "nav-icon"
+            }
             onClick={onClickNotify}
           >
             <i className="fa fa-bell"></i>
+            {notifies?.length !== 0 && (
+              <span className="count">
+                <small>{notifies?.length}</small>
+              </span>
+            )}
           </a>
           <a
             className={openSetting ? "nav-icon active" : "nav-icon"}

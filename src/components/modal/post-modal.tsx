@@ -8,7 +8,7 @@ import {
   usePostUser,
 } from "@/hooks/use-post";
 import { IPost } from "@/models";
-import { BASE_URL } from "@/utils";
+import { BASE_URL, socket } from "@/utils";
 import React from "react";
 import { toast } from "react-toastify";
 
@@ -41,6 +41,7 @@ export function PostModal({ post, setShow }: PostModalProps) {
       await mutatePostsFl();
       await mutatePost();
       await mutatePostUser();
+      socket.emit("delete-post")
       toast.success("Đã xóa thành công");
     } catch (error) {
       toast.error("Lỗi 400");
@@ -50,7 +51,7 @@ export function PostModal({ post, setShow }: PostModalProps) {
   const handleCopyLink = () => {
     navigator.clipboard.writeText(`${BASE_URL}/posts/${post?._id}`);
     setShow(false);
-    toast.success("Đã sao chép!")
+    toast.success("Đã sao chép!");
   };
 
   return (

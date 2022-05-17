@@ -35,13 +35,28 @@ export default function ProfileMediaPage({ initPosts }: ProfileMediaPageProps) {
             <Skeleton width="100%" height="100%" />
           </div>
         ) : (
-          postArr?.data.map((post: IPost) => (
-            <Link href={`/posts/${post?._id}`} key={post?._id}>
-              <div className="col-lg-4 col-sm-6 media-col">
-                <img src={post?.images[0]?.url} alt={post?.images[0]?.url} />
-              </div>
-            </Link>
-          ))
+          <>
+           {postArr?.data.length === 0 && <h3 className="text-center mt-2">Chưa có hình ảnh nào cả</h3>}
+            {postArr?.data.map((post: IPost) => (
+              <Link href={`/posts/${post?._id}`} key={post?._id}>
+                <div className="col-lg-4 col-sm-6 media-col">
+                  {post?.images[0]?.url.match(/video/i) ? (
+                    <video
+                      controls
+                      src={post?.images[0]?.url}
+                      className="d-block w-100 h-100"
+                    />
+                  ) : (
+                    <img
+                      src={post?.images[0]?.url}
+                      className="d-block w-100"
+                      alt={post?.images[0]?.url}
+                    />
+                  )}
+                </div>
+              </Link>
+            ))}
+          </>
         )}
       </div>
     </div>

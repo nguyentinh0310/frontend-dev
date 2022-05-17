@@ -1,24 +1,77 @@
+import { notificationApi } from "@/api-client";
+import { closeModal, useAppDispatch } from "@/app";
+import { useNotify } from "@/hooks/use-notify";
+import { INotification } from "@/models";
+import moment from "moment";
+import { useRouter } from "next/router";
 import React from "react";
+import { toast } from "react-toastify";
 
-export  function NotifyModal() {
+export function NotifyModal() {
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+
+  const { notifies, isLoading, mutateNotify } = useNotify();
+
+  console.log(notifies);
+  const clickToNotify = async (notify: INotification) => {
+    try {
+      await notificationApi.readNotify(notify?._id);
+      await mutateNotify();
+      dispatch(closeModal());
+      router.push(`${notify?.url}`);
+    } catch (error) {
+      toast.error("Lỗi 500");
+    }
+  };
+
+  const handleDeleteAllNotify = async () => {
+    try {
+      await notificationApi.removeAll();
+      await mutateNotify();
+      toast.success("Xóa thông báo thành công");
+      dispatch(closeModal());
+    } catch (error) {
+      toast.error("Lỗi 500");
+    }
+  };
+
   return (
     <div className="dropdown-notify">
       <div className="dropdown">
         <div className="dropdown-title">
           <h4>Thông báo</h4>
-          <a>Hiển thị tất cả</a>
+          <a onClick={handleDeleteAllNotify}>Xóa thông báo</a>
         </div>
         <div className="menu row">
-          <a className="menu-item ">
-            <span className="col-lg-3 col-sm-5 avatar-item">A</span>
+          {isLoading ? (
+            <span className="text-center mt-2 spinner-border text-success"></span>
+          ) : (
+            <>
+              {notifies?.length === 0 && (
+                <h3 className="text-center mt-3">Chưa có thông báo gì chả</h3>
+              )}
+              {notifies?.map((notify: INotification) => (
+                <a
+                  className="menu-item"
+                  key={notify?._id}
+                  onClick={() => clickToNotify(notify)}
+                  style={{ fontWeight: notify?.isRead ? "normal" : "bold" }}
+                >
+                  <span className="avatar">
+                    <img src={notify?.user?.avatar} alt="" />
+                  </span>
 
-            <span className="col-lg-10 col-sm-10 text">
-            I Love You I Love You I Love You I Love You I Love You
-            </span>
-          </a>
-        </div>
-        <div className="dropdown-footer">
-          <span>Đã đọc</span>
+                  <span className=" text">
+                    {notify?.user?.fullname} {notify?.text}
+                    <small className="d-block">
+                      {moment(notify?.createdAt).fromNow()}
+                    </small>
+                  </span>
+                </a>
+              ))}
+            </>
+          )}
         </div>
       </div>
     </div>

@@ -1,18 +1,23 @@
 import { userApi } from "@/api-client";
-import { useAuth } from "@/hooks";
+import { useAuth, useUser } from "@/hooks";
 import { IUser } from "@/models";
+import { socket } from "@/utils";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 
 export interface FollowBtnProps {
   user: IUser;
-  mutateUser: any;
 }
 
-export function FollowBtn({ user, mutateUser }: FollowBtnProps) {
+export function FollowBtn({ user }: FollowBtnProps) {
+  const router = useRouter();
+  const { id } = router.query;
+
   const [followed, setFollowed] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const { auth, mutateAuth } = useAuth();
+  const { mutateUser } = useUser(id);
 
   // check follow tồn tại
   useEffect(() => {
@@ -23,13 +28,16 @@ export function FollowBtn({ user, mutateUser }: FollowBtnProps) {
     }
   }, [auth?.followings, user?._id]);
 
+
+
   const handleFollow = async () => {
     if (loading) return;
-
     setLoading(true);
     await userApi.follow(user?._id);
     await mutateUser();
     await mutateAuth();
+    // Socket
+    socket.emit("follow", user);
     setLoading(false);
   };
   const handleUnFollow = async () => {
@@ -40,6 +48,8 @@ export function FollowBtn({ user, mutateUser }: FollowBtnProps) {
     await mutateUser();
     await mutateAuth();
     setLoading(false);
+    // Socket
+    socket.emit("unFollow", user);
   };
   return (
     <>

@@ -1,11 +1,6 @@
 import { userApi } from "@/api-client";
 import { useAuth } from "@/hooks";
-import {
-  capitalizeFirstLetter,
-  checkImage,
-  checkName,
-  imageUpload,
-} from "@/utils";
+import { capitalizeFirstLetter, checkImage, imageUpload } from "@/utils";
 import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 

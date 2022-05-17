@@ -9,9 +9,11 @@
       background-color: #ffffff;
       border-radius: 8px;
       padding: 1rem;
-      overflow: hidden;
+      max-height: 30rem;
+      overflow-y: auto;
       transition: height $speed ease;
       .dropdown-title {
+        position: sticky;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -33,7 +35,7 @@
           border-radius: 8px;
           transition: background $speed;
           padding: 1rem 0.2rem 0.2rem 0.2rem;
-          .avatar-item {
+          .avatar {
             width: 3rem;
             height: 3rem;
             border-radius: 50%;
@@ -41,7 +43,10 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-right: 10px;
+            margin:0 5px;
+          }
+          .text{
+            word-break: break-all;
           }
           &:hover {
             background-color: #ddd;
@@ -50,6 +55,7 @@
           }
         }
       }
+    
     }
   }
   
@@ -63,7 +69,7 @@
         }
         .menu {
           .menu-item {
-            .avatar-item {
+            .avatar {
               width: 2.6rem;
               height: 2.6rem;
             }
@@ -86,7 +92,7 @@
         }
         .menu {
           .menu-item {
-            .avatar-item {
+            .avatar {
               margin-top: 5px;
               width: 3rem;
               height: 2.5rem;
@@ -105,7 +111,7 @@
       .dropdown {
         .menu {
           .menu-item {
-            .avatar-item {
+            .avatar {
               padding: 0 10px;
               width: 2.55rem;
               height: 2.5rem;
@@ -134,7 +140,7 @@
       .dropdown {
         .menu {
           .menu-item {
-            .avatar-item {
+            .avatar {
               padding: 0 14px;
             }
           }
@@ -155,7 +161,7 @@
       .dropdown {
         .menu {
           .menu-item {
-            .avatar-item {
+            .avatar {
               padding: 0 15px;
             }
           }

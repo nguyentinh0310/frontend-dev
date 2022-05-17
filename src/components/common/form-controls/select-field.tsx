@@ -2,8 +2,7 @@ import React, { InputHTMLAttributes } from 'react';
 import { Control, useController } from 'react-hook-form';
 
 export interface SelectOption {
-  label?: string;
-  value: number | string;
+  name: string;
 }
 
 export interface SelectFieldProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -32,8 +31,8 @@ export function SelectField({ name, control, options }: SelectFieldProps) {
       >
         <option value="">--</option>
         {options.map((opt) => (
-          <option key={opt.value} value={opt.value}>
-            {opt.label}
+          <option key={opt.name} value={opt.name}>
+            {opt.name}
           </option>
         ))}
       </select>

@@ -1,6 +1,7 @@
-import { postApi } from "@/api-client/post-api";
+import { notificationApi, postApi } from "@/api-client";
 import { closeStatus, useAppDispatch, useAppSelector } from "@/app";
 import { useAuth } from "@/hooks";
+import { useNotify } from "@/hooks/use-notify";
 import {
   usePost,
   usePosts,
@@ -8,7 +9,7 @@ import {
   usePostUser,
 } from "@/hooks/use-post";
 import { ImgPost } from "@/models";
-import { imageUpload } from "@/utils";
+import { imageUpload, socket } from "@/utils";
 import dynamic from "next/dynamic";
 import React, { FormEvent, useEffect, useState } from "react";
 import { Form, Modal } from "react-bootstrap";
@@ -21,8 +22,8 @@ export function StatusModal() {
   const { showModal, postEdit } = useAppSelector((state) => state.statusModal);
 
   const [content, setContent] = useState<any>("");
-  const [loading, setLoading] = useState(false);
   const [images, setImages] = useState<any>([]);
+  const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
 
   const { limit } = useAppSelector((state) => state.posts);
@@ -33,6 +34,7 @@ export function StatusModal() {
 
   const { mutatePost } = usePost(postEdit?._id);
   const { mutatePostUser } = usePostUser(auth?._id);
+
   const isEdit = Boolean(postEdit?._id);
 
   const handleClose = () => {
@@ -40,32 +42,15 @@ export function StatusModal() {
     dispatch(closeStatus());
   };
 
-  const handleChangeImages = (e: any) => {
-    const files = [...e.target.files];
-    let err = "";
-    let newImages: any = [];
-
-    files.forEach((file: any) => {
-      if (!file) return (err = "File không tồn tại");
-
-      if (file.size > 1024 * 1024 * 5) {
-        return (err = "Kích thước hình ảnh/video lớn nhất là 1mb.");
-      }
-    });
-    console.log("images", newImages);
-    if (err) toast.error(err);
-    setImages([...images, ...newImages]);
-  };
-
   useEffect(() => {
-    if (postEdit) {
+    if (isEdit) {
       setContent(postEdit?.content);
       setImages(postEdit?.images);
     } else {
       setContent("");
       setImages([]);
     }
-  }, [postEdit]);
+  }, [postEdit?.content, postEdit?.images]);
 
   const deleteImages = (img: any) => {
     URL.revokeObjectURL(img);
@@ -74,6 +59,24 @@ export function StatusModal() {
     setImages(newArr);
   };
 
+  const handleChangeImages = (e: any) => {
+    const files = [...e.target.files];
+    let newImages: any = [];
+    let err = "";
+
+    files.forEach((file: any) => {
+      if (!file) return (err = "File không tồn tại");
+
+      if (file.size > 1024 * 1024 * 5) {
+        return (err = "Kích thước hình ảnh/video lớn nhất là 1mb.");
+      }
+      return newImages.push(file);
+    });
+    if (err) toast.error(err);
+    setImages([...images, ...newImages]);
+  };
+
+  // add edit post
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
@@ -86,6 +89,7 @@ export function StatusModal() {
 
     try {
       let media: any = [];
+      let data: any;
       if (isEdit) {
         // Edit Post
         if (images) {
@@ -106,6 +110,8 @@ export function StatusModal() {
         await mutatePostsFl();
         await mutatePost();
         await mutatePostUser();
+        socket.emit("update-post", data)
+
         setContent("");
         setImages([]);
         dispatch(closeStatus());
@@ -114,16 +120,21 @@ export function StatusModal() {
         // Create Post
         if (images) {
           media = await imageUpload(images);
-          await postApi.create({ content, images: media });
+          data = await postApi.create({ content, images: media });
         } else {
-          await postApi.create({ content });
+          data = await postApi.create({ content });
         }
+
+        console.log(data);
         await mutatePosts();
         await mutatePostsFl();
         await mutatePostUser();
+        socket.emit("create-post", data)
+
         setContent("");
         setImages([]);
         dispatch(closeStatus());
+
         toast.success("Tạo bài viết thành công");
       }
       setLoading(false);
@@ -171,7 +182,6 @@ export function StatusModal() {
                       : imageShow(URL.createObjectURL(img))}
                   </>
                 )}
-
                 <span onClick={() => deleteImages(img)}>&times;</span>
               </div>
             ))}

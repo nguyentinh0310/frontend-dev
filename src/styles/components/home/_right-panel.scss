@@ -6,8 +6,40 @@
   top: 0%;
   right: 0%;
   margin-top: 70px;
+
   .friends-section {
     margin: 1rem 0px;
+    .suggest-user {
+      .btn-follow,
+      .btn-unfollow {
+        margin-left: auto;
+        width: 7rem;
+        outline: none;
+        box-shadow: none;
+        background-color: $primary-color;
+        color: white;
+        border-radius: 18px;
+        margin-right: 10px;
+        &:hover,
+        &:active {
+          transition: all 0.4s;
+          background: white;
+          border: 2px solid $primary-color;
+          color: $primary-color;
+        }
+      }
+      .btn-unfollow {
+        background-color: $third-color;
+        color: white;
+        &:hover,
+        &:active {
+          transition: all 0.4s;
+          background: white;
+          border: 2px solid $third-color !important;
+          color: $third-color !important;
+        }
+      }
+    }
     h4 {
       margin-bottom: 10px;
       font-weight: 600;

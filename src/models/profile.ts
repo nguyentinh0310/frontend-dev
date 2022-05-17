@@ -11,13 +11,13 @@ export interface IProfile {
 
 export interface ProfilePayload {
   location: string;
-  bio: string;
-  skills: string;
-  twitter: string;
-  instagram: string;
-  linkedin: string;
-  facebook: string;
-  github: string;
+  bio?: string;
+  skills?: string;
+  twitter?: string;
+  instagram?: string;
+  linkedin?: string;
+  facebook?: string;
+  github?: string;
 }
 
 export interface IExperience {

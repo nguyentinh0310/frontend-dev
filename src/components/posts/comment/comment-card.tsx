@@ -2,7 +2,12 @@ import { commentApi } from "@/api-client/comment-api";
 import { useAppSelector } from "@/app";
 import { CommentModal } from "@/components/modal";
 import { useAuth } from "@/hooks";
-import { usePost, usePosts, usePostsFollow, usePostUser } from "@/hooks/use-post";
+import {
+  usePost,
+  usePosts,
+  usePostsFollow,
+  usePostUser,
+} from "@/hooks/use-post";
 import { IComment, IPost } from "@/models";
 import moment from "moment";
 import React, { ChangeEvent, useEffect, useState } from "react";
@@ -10,6 +15,7 @@ import { toast } from "react-toastify";
 import { CommentInput } from "./comment-input";
 import { LikeComment } from "./like-comment";
 import ReactMarkdown from "react-markdown";
+import { socket } from "@/utils";
 
 export interface CommentCardProps {
   children?: any;
@@ -51,9 +57,11 @@ export function CommentCard({
       if (comment?.content !== content) {
         await commentApi.update(comment?._id, { content });
         await mutatePosts();
-        await mutatePostsFl()
+        await mutatePostsFl();
         await mutatePost();
         await mutatePostUser();
+
+        socket.emit("update-comment", post);
       }
       setOnEdit(false);
     } catch (error) {

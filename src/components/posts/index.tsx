@@ -84,17 +84,21 @@ export function Post({ post }: PostProps) {
             ))}
           </Carousel>
         ) : (
-          <img
-            src={post?.images[0]?.url}
-            className="d-block w-100"
-            alt={post?.images[0]?.url}
-          />
-
-          // <video
-          //   controls
-          //   src={post?.images[0]?.url}
-          //   className="d-block w-100"
-          // />
+          <>
+            {post?.images[0]?.url.match(/video/i) ? (
+              <video
+                controls
+                src={post?.images[0]?.url}
+                className="d-block w-100"
+              />
+            ) : (
+              <img
+                src={post?.images[0]?.url}
+                className="d-block w-100"
+                alt={post?.images[0]?.url}
+              />
+            )}
+          </>
         )}
       </div>
 

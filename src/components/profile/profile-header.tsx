@@ -1,7 +1,10 @@
+import { useAppSelector } from "@/app";
+import { setUserData } from "@/app/user-slice";
 import { useAuth, useProfile, useUser } from "@/hooks";
 import { usePostUser } from "@/hooks/use-post";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { FollowerModal, FollowingModal } from "../modal";
 import { FollowBtn } from "./follow-btn";
 import { ProfileIntro } from "./introduction";
@@ -9,12 +12,15 @@ import { ProfileIntro } from "./introduction";
 export function ProfileHeader() {
   const router = useRouter();
   const { id } = router.query;
+  const dispatch = useDispatch();
+
+
 
   const [showFollowing, setShowFollowing] = useState(false);
   const [showFollower, setShowFollower] = useState(false);
 
   const { auth } = useAuth();
-  const { user, mutateUser, isLoading } = useUser(id);
+  const { user,  isLoading } = useUser(id);
   const { profile } = useProfile(id);
   const { postUser } = usePostUser(id);
 
@@ -25,6 +31,9 @@ export function ProfileHeader() {
   const handleShowFollowing = () => setShowFollowing(true);
   const handleShowFollower = () => setShowFollower(true);
 
+  useEffect(() => {
+    dispatch(setUserData(user));
+  }, [dispatch]);
   return (
     <div className="profile-top">
       <div className="bg-cover-profile">
@@ -74,7 +83,7 @@ export function ProfileHeader() {
           </button>
         ) : (
           <div className="follow-message">
-            <FollowBtn user={user} mutateUser={mutateUser} />
+            <FollowBtn user={user} />
             <i className="fa-solid fa-envelope"></i>
           </div>
         )}
