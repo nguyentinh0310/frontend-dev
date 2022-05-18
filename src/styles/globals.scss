@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
 
 html,
 body {
@@ -47,7 +47,7 @@ a {
   color: inherit;
   text-decoration: none;
 }
-i{
+i {
   cursor: pointer;
 }
 
@@ -57,7 +57,7 @@ textarea {
   box-shadow: none !important;
 }
 
-.carousel-indicators [data-bs-target]{
+.carousel-indicators [data-bs-target] {
   width: 9px !important;
   height: 9px !important;
   border-radius: 50% !important;
@@ -86,6 +86,7 @@ textarea {
 @import "components/common/post";
 @import "components/common/create-post";
 @import "components/common/menu";
+@import "components/common/fomo-notification";
 @import "components/home/left-panel";
 @import "components/home/middle-panel";
 @import "components/home/right-panel";

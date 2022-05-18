@@ -183,7 +183,7 @@ export function CommentCard({
       </div>
 
       {onReply && (
-        <CommentInput post={post} userReply={userReply} setOnReply={setOnReply}>
+        <CommentInput post={post} userReply={userReply} setOnReply={setOnReply} comment={comment}>
           <a
             href={`/profile/${comment?.user?._id}`}
             style={{ color: "#009efd" }}

@@ -1,6 +1,7 @@
+import { notificationApi } from "@/api-client";
 import { postApi } from "@/api-client/post-api";
 import { openStatusEdit, useAppDispatch, useAppSelector } from "@/app";
-import { useAuth } from "@/hooks";
+import { useAuth, useNotify } from "@/hooks";
 import {
   usePost,
   usePosts,
@@ -26,6 +27,7 @@ export function PostModal({ post, setShow }: PostModalProps) {
   const { mutatePostsFl } = usePostsFollow(limit);
   const { mutatePost } = usePost(post?._id);
   const { mutatePostUser } = usePostUser(post?.user?._id);
+  const { mutateNotify } = useNotify();
 
   // xét modal edit post
   const handleEditPost = () => {
@@ -41,7 +43,19 @@ export function PostModal({ post, setShow }: PostModalProps) {
       await mutatePostsFl();
       await mutatePost();
       await mutatePostUser();
-      socket.emit("delete-post")
+      socket.emit("delete-post");
+
+      // Remove notify
+      const notify = {
+        id: post?._id,
+        text: "xóa bài viết.",
+        recipients: [post?.user?._id],
+        url: `/posts/${post._id}`,
+      };
+      await notificationApi.remove(notify);
+      await mutateNotify();
+      socket.emit("remove-notify", notify);
+
       toast.success("Đã xóa thành công");
     } catch (error) {
       toast.error("Lỗi 400");

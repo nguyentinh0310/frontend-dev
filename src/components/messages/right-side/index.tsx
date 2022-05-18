@@ -1,8 +1,10 @@
-import { useAuth, useMessages, useUser } from "@/hooks";
+import { conversationsApi } from "@/api-client/coversation-api";
+import { useAuth, useConversations, useMessages, useUser } from "@/hooks";
 import { IMessage } from "@/models";
 import { socket } from "@/utils";
 import { useRouter } from "next/router";
 import React, { Fragment, useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
 import { MessageDisplay } from "../message-display";
 import { AddMessage } from "./add-message";
 
@@ -18,6 +20,8 @@ export function RightSide() {
   const { auth } = useAuth();
   const { messages, mutateMessages } = useMessages(id);
   const { user } = useUser(id);
+  const { mutateConv } = useConversations();
+
 
   useEffect(() => {
     if (messages) {
@@ -32,8 +36,9 @@ export function RightSide() {
         sender: data.sender,
         text: data.text,
       });
+      data = mutateConv()
     });
-  }, []);
+  }, [socket]);
 
   // xét lại mảng tin nhắn
   useEffect(() => {
@@ -49,7 +54,13 @@ export function RightSide() {
   }, [messagesList]);
 
   const handleDeleteConversation = async () => {
-    // console.log(user)
+    try {
+      await conversationsApi.remove(user?._id)
+      await mutateConv()
+      toast.success("Xóa cuộc hội thoại thành công!")
+    } catch (error) {
+      toast.error("Lỗi 500")
+    }
   };
 
   return (

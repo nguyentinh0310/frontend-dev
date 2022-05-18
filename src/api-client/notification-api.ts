@@ -10,8 +10,8 @@ export const notificationApi = {
     const url = "/notification";
     return axiosClient.post(url, payload);
   },
-  remove(id: string): Promise<any> {
-    const url = `/notification/${id}`;
+  remove(notify: any): Promise<any> {
+    const url = `/notification/${notify.id}?url=${notify.url}`;
     return axiosClient.delete(url);
   },
   removeAll(): Promise<any> {

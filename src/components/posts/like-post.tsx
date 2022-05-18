@@ -7,7 +7,7 @@ import {
   usePost,
   usePosts,
   usePostsFollow,
-  usePostUser,
+  usePostUser
 } from "@/hooks/use-post";
 import { IPost } from "@/models";
 import { socket } from "@/utils";
@@ -53,8 +53,8 @@ export function LikePost({ post }: LikePostProps) {
 
     // Notify
     const notify = {
-      id: auth?._id,
-      text: "đã thích bài viết",
+      id: post?._id,
+      text: "đã thích bài viết của bạn.",
       recipients: [postLike?.user?._id],
       url: `/posts/${postLike?._id}`,
     };

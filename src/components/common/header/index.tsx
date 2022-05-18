@@ -21,8 +21,9 @@ import { SearchHeader } from "./search";
 export function Header() {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const [keyword, setKeyword] = useState("");
   const { limit } = useAppSelector((state) => state.posts);
+
+  const [keyword, setKeyword] = useState("");
 
   const { userSearch, isLoading } = useSearchUser(keyword);
   const { auth } = useAuth();
@@ -52,9 +53,9 @@ export function Header() {
   };
 
   const onClickToProfile = async () => {
-    await mutateUser();
     router.push(`/profile/${auth?._id}`);
     throttle(scrollTop, 200);
+    await mutateUser();
   };
 
   const onFilterSearch = (value: string) => {
@@ -77,7 +78,7 @@ export function Header() {
             </span>
           </Link>
           <div className="search-popup">
-            <SearchHeader onSubmit={onFilterSearch} />
+            <SearchHeader onSubmit={onFilterSearch} setKeyword={setKeyword} />
             {userSearch && <UserModal users={userSearch} loading={isLoading} />}
           </div>
 
@@ -93,9 +94,9 @@ export function Header() {
                 className={clsx({ active: router.pathname === route.path })}
                 style={{ display: route.style }}
                 onClick={handleMutate}
-                onDoubleClick={() => {
-                  window.location.href = route.path;
-                }}
+                // onDoubleClick={() => {
+                //   window.location.href = route.path;
+                // }}
               >
                 <i className={`${route.icon}`}></i>
               </a>
@@ -117,7 +118,9 @@ export function Header() {
 
           <a
             className={
-              openNotify || notifies?.length > 0 ? "nav-icon active" : "nav-icon"
+              openNotify || notifies?.length > 0
+                ? "nav-icon active"
+                : "nav-icon"
             }
             onClick={onClickNotify}
           >

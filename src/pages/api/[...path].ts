@@ -25,6 +25,7 @@ export default function handler(
     // dont't send cookie to API server
     req.headers.cookie = "";
 
+    
 
     proxy.web(req, res, {
       target: process.env.API_URL,

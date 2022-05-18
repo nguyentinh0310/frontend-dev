@@ -8,7 +8,8 @@ import {
 } from "@/hooks/use-post";
 import { INotification, IPost, IUser } from "@/models";
 import { socket } from "@/utils";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { FomoNotification } from "./fomo-notification";
 
 export function SocketClient() {
   const audioRef = useRef<any>();
@@ -16,6 +17,7 @@ export function SocketClient() {
   const { limit } = useAppSelector((state) => state.posts);
   const { userData } = useAppSelector((state) => state.user);
   // console.log(userData);
+
 
   const { auth, mutateAuth } = useAuth();
   const { mutateUser } = useUser(userData?._id);
@@ -52,7 +54,6 @@ export function SocketClient() {
     socket.on("create-post-to-client", async (post: IPost) => {
       audioRef?.current.play();
       setMutatePostData(post);
-      console.log(post);
     });
     return () => {
       socket.off("create-post-to-client");
@@ -64,7 +65,6 @@ export function SocketClient() {
     socket.on("update-post-to-client", async (post: IPost) => {
       audioRef?.current.play();
       setMutatePostData(post);
-      console.log(post);
     });
     return () => {
       socket.off("update-post-to-client");
@@ -76,7 +76,6 @@ export function SocketClient() {
     socket.on("delete-post-to-client", async (post: IPost) => {
       audioRef?.current.play();
       setMutatePostData(post);
-      console.log(post);
     });
     return () => {
       socket.off("delete-post-to-client");
@@ -132,6 +131,24 @@ export function SocketClient() {
     };
   }, [socket]);
 
+  useEffect(() => {
+    socket.on("like-comment-to-client", (post: IPost) => {
+      setMutatePostData(post);
+    });
+    return () => {
+      socket.off("like-comment-to-client");
+    };
+  }, [socket]);
+
+  useEffect(() => {
+    socket.on("unLike-comment-to-client", (post: IPost) => {
+      setMutatePostData(post);
+    });
+    return () => {
+      socket.off("unLike-comment-to-client");
+    };
+  }, [socket]);
+
   // Follow
   useEffect(() => {
     socket.on("follow-to-client", async (user: IUser) => {
@@ -163,11 +180,21 @@ export function SocketClient() {
   useEffect(() => {
     socket.on("create-notify-to-client", async (notify: INotification) => {
       audioRef?.current.play();
-      console.log(notify);
       notify = await mutateNotify();
     });
     return () => {
       socket.off("create-notify-to-client");
+    };
+  }, [socket]);
+
+
+  useEffect(() => {
+    socket.on("remove-notify-to-client", async (notify: INotification) => {
+      notify = await mutateNotify();
+      console.log(notify)
+    });
+    return () => {
+      socket.off("remove-notify-to-client");
     };
   }, [socket]);
 
@@ -176,6 +203,7 @@ export function SocketClient() {
       <audio controls ref={audioRef} style={{ display: "none" }}>
         <source src="https://assets.coderrocketfuel.com/pomodoro-times-up.mp3" />
       </audio>
+      {/* {notifiData && <FomoNotification notify={notifiData}/>} */}
     </>
   );
 }

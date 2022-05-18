@@ -9,6 +9,7 @@ import {
 } from "@/hooks/use-post";
 import { IPost } from "@/models";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 export interface SavePostProps {
   post: IPost;
@@ -36,29 +37,39 @@ export function SavePost({ post }: SavePostProps) {
   }, [auth?.saved, post?._id]);
 
   const handleSavePost = async () => {
-    if (loading) return;
+    try {
+      if (loading) return;
 
-    setLoading(true);
-    await postApi.savePost(post?._id);
-    await mutatePosts();
-    await mutatePost();
-    await mutatePostUser();
-    await mutatePostsFl();
-    await mutateAuth();
-    setLoading(false);
+      setLoading(true);
+      await postApi.savePost(post?._id);
+      await mutatePosts();
+      await mutatePost();
+      await mutatePostUser();
+      await mutatePostsFl();
+      await mutateAuth();
+      setLoading(false);
+      toast.success("Lưu bài viết thành công!")
+    } catch (error) {
+      toast.error("Lỗi 500")
+    }
   };
 
   const handleUnSavePost = async () => {
-    if (loading) return;
+    try {
+      if (loading) return;
 
-    setLoading(true);
-    await postApi.unSavePost(post?._id);
-    await mutatePosts();
-    await mutatePost();
-    await mutatePostUser();
-    await mutatePostsFl();
-    await mutateAuth();
-    setLoading(false);
+      setLoading(true);
+      await postApi.unSavePost(post?._id);
+      await mutatePosts();
+      await mutatePost();
+      await mutatePostUser();
+      await mutatePostsFl();
+      await mutateAuth();
+      setLoading(false);
+      toast.warn("Đã bỏ lưu bài viết!")
+    } catch (error) {
+      toast.error("Lỗi 500")
+    }
   };
 
   return (

@@ -10,8 +10,9 @@ export function LeftSide() {
   const [conversationsList, setConnversationsList] = useState<any>([]);
   const [keyword, setKeyword] = useState("");
 
+
   const { userSearch, isLoading } = useSearchUser(keyword);
-  const { conversations } = useConversations();
+  const { conversations, mutateConv } = useConversations();
 
   useEffect(() => {
     if (conversations) {
@@ -25,6 +26,7 @@ export function LeftSide() {
 
   const clickToMessage = (user: IUser) => {
     setKeyword("");
+    mutateConv()
     return router.push(`/message/${user?._id}`);
   };
 

@@ -2,9 +2,10 @@ import React, { ChangeEvent, FormEvent, useRef, useState } from "react";
 
 export interface SearchHeaderProps {
   onSubmit: (value: string) => void;
+  setKeyword: Function;
 }
 
-export function SearchHeader({ onSubmit }: SearchHeaderProps) {
+export function SearchHeader({ onSubmit, setKeyword }: SearchHeaderProps) {
   const [search, setSearch] = useState("");
   const typingTimeoutRef = useRef<any>(null);
 
@@ -21,6 +22,7 @@ export function SearchHeader({ onSubmit }: SearchHeaderProps) {
   };
   const handleClose = () => {
     setSearch("");
+    setKeyword("");
   };
   return (
     <form

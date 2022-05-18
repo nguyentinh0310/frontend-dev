@@ -14,6 +14,7 @@ export function NotifyModal() {
   const { notifies, isLoading, mutateNotify } = useNotify();
 
   console.log(notifies);
+
   const clickToNotify = async (notify: INotification) => {
     try {
       await notificationApi.readNotify(notify?._id);
@@ -23,6 +24,12 @@ export function NotifyModal() {
     } catch (error) {
       toast.error("Lỗi 500");
     }
+  };
+
+  const handleDeleteNotify = async () => {
+    // Remove notify
+    // await notificationApi.remove(post?._id, `/posts/${post?._id}`);
+    // await mutateNotify();
   };
 
   const handleDeleteAllNotify = async () => {
@@ -41,15 +48,17 @@ export function NotifyModal() {
       <div className="dropdown">
         <div className="dropdown-title">
           <h4>Thông báo</h4>
-          <a onClick={handleDeleteAllNotify}>Xóa thông báo</a>
+          {notifies?.length > 0 && (
+            <a onClick={handleDeleteAllNotify}>Xóa thông báo</a>
+          )}
         </div>
-        <div className="menu row">
+        <div className="menu">
           {isLoading ? (
-            <span className="text-center mt-2 spinner-border text-success"></span>
+            <span className="m-auto mt-3 spinner-border text-success"></span>
           ) : (
             <>
               {notifies?.length === 0 && (
-                <h3 className="text-center mt-3">Chưa có thông báo gì chả</h3>
+                <h5 className="text-center mt-3">Chưa có thông báo gì chả</h5>
               )}
               {notifies?.map((notify: INotification) => (
                 <a
@@ -62,7 +71,7 @@ export function NotifyModal() {
                     <img src={notify?.user?.avatar} alt="" />
                   </span>
 
-                  <span className=" text">
+                  <span className="text">
                     {notify?.user?.fullname} {notify?.text}
                     <small className="d-block">
                       {moment(notify?.createdAt).fromNow()}

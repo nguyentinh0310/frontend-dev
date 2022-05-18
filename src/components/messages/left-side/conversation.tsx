@@ -1,4 +1,4 @@
-import { useAuth } from "@/hooks";
+import { useAuth, useConversations } from "@/hooks";
 import { IConversation, IUser } from "@/models";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -12,6 +12,7 @@ export function Conversation({ conv }: ConversationProps) {
 
   const [user, setUser] = useState<any>("");
   const { auth } = useAuth();
+  const { mutateConv } = useConversations();
 
   useEffect(() => {
     const friendId = conv?.recipients.find(
@@ -22,7 +23,8 @@ export function Conversation({ conv }: ConversationProps) {
 
   return (
     <li
-      onClick={() => {
+      onClick={async () => {
+        await mutateConv();
         return router.push(`/message/${user ? user?._id : auth?._id}`);
       }}
     >

@@ -1,7 +1,13 @@
+import { notificationApi } from "@/api-client";
 import { commentApi } from "@/api-client/comment-api";
 import { useAppSelector } from "@/app";
-import { useAuth } from "@/hooks";
-import { usePost, usePosts, usePostsFollow, usePostUser } from "@/hooks/use-post";
+import { useAuth, useNotify } from "@/hooks";
+import {
+  usePost,
+  usePosts,
+  usePostsFollow,
+  usePostUser,
+} from "@/hooks/use-post";
 import { IComment, IPost } from "@/models";
 import { socket } from "@/utils";
 import React from "react";
@@ -27,6 +33,7 @@ export function CommentModal({
   const { mutatePostsFl } = usePostsFollow(limit);
   const { mutatePost } = usePost(post?._id);
   const { mutatePostUser } = usePostUser(post?.user?._id);
+  const { mutateNotify } = useNotify();
 
   const handleEdit = () => {
     setOnEdit(true);
@@ -42,13 +49,25 @@ export function CommentModal({
       deleteArr.forEach(async (item) => {
         await commentApi.remove(item?._id);
         await mutatePosts();
-        await mutatePostsFl()
+        await mutatePostsFl();
         await mutatePost();
         await mutatePostUser();
-        socket.emit("delete-comment", post)
+        socket.emit("delete-comment", post);
+
+        // Remove notify
+        const notify = {
+          id: post?._id,
+          text: "xóa bình luận.",
+          recipients: [post?.user?._id, comment?.user?._id],
+          url: `/posts/${post._id}`,
+        };
+        console.log(notify);
+        await notificationApi.remove(notify);
+        await mutateNotify();
+        socket.emit("remove-notify", notify);
       });
     } catch (error) {
-      toast.error("Lỗi 404")
+      toast.error("Lỗi 404");
     }
   };
 
