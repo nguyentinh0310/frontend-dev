@@ -7,6 +7,8 @@ import React, { Fragment, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { MessageDisplay } from "../message-display";
 import { AddMessage } from "./add-message";
+import swal from "sweetalert";
+import Link from "next/link";
 
 export function RightSide() {
   const router = useRouter();
@@ -14,6 +16,7 @@ export function RightSide() {
   const [messagesList, setMessagesList] = useState<any>([]);
   const [arrivalMessage, setArrivalMessage] = useState<any>();
   const [media, setMedia] = useState<any>([]);
+  const [loadMedia, setLoadMedia] = useState(false);
 
   const refDisplay = useRef<any>();
 
@@ -21,7 +24,6 @@ export function RightSide() {
   const { messages, mutateMessages } = useMessages(id);
   const { user } = useUser(id);
   const { mutateConv } = useConversations();
-
 
   useEffect(() => {
     if (messages) {
@@ -35,8 +37,9 @@ export function RightSide() {
       setArrivalMessage({
         sender: data.sender,
         text: data.text,
+        media: data.media,
       });
-      data = mutateConv()
+      data = mutateConv();
     });
   }, [socket]);
 
@@ -55,25 +58,48 @@ export function RightSide() {
 
   const handleDeleteConversation = async () => {
     try {
-      await conversationsApi.remove(user?._id)
-      await mutateConv()
-      toast.success("Xóa cuộc hội thoại thành công!")
+      swal({
+        title: "Xác nhận",
+        text: "Bạn có muốn xoá cuộc hội thoại này?",
+        icon: "warning",
+        buttons: ["Huỷ", "Xác nhận"],
+        dangerMode: true,
+      }).then(async (willDelete) => {
+        if (willDelete) {
+          await conversationsApi.remove(user?._id);
+          await mutateMessages();
+          await mutateConv();
+          toast.success("Xóa cuộc hội thoại thành công!");
+        }
+      });
     } catch (error) {
-      toast.error("Lỗi 500")
+      toast.error("Lỗi 500");
     }
   };
 
+  useEffect(() => {
+    socket.on("delete-message-to-client", async (msg: IMessage) => {
+      msg = await mutateMessages();
+      msg = await mutateConv();
+      console.log(msg);
+    });
+    return () => {
+      socket.off("delete-message-to-client");
+    };
+  }, [socket]);
   return (
     <Fragment>
       {id ? (
         <>
           <div className="message-header">
-            <div className="info">
-              <span className="avatar">
-                <img src={user?.avatar} alt="" />
-              </span>
-              <span className="name">{user?.fullname}</span>
-            </div>
+            <Link href={`/profile/${user?._id}`}>
+              <div className="info">
+                <span className="avatar">
+                  <img src={user?.avatar} alt="" />
+                </span>
+                <span className="name">{user?.fullname}</span>
+              </div>
+            </Link>
             {user?.length !== 0 && (
               <div className="icon">
                 <i className="fa-solid fa-phone text-primary"></i>
@@ -102,6 +128,11 @@ export function RightSide() {
                       <MessageDisplay user={auth} msg={msg} key={msg?._id} />
                     </div>
                   )}
+                  {loadMedia && (
+                    <div className="chat_row you_message">
+                      <span className="m-auto mt-2 spinner-border text-success"></span>
+                    </div>
+                  )}
                 </span>
               ))}
             </div>
@@ -114,6 +145,8 @@ export function RightSide() {
             messagesList={messagesList}
             media={media}
             setMedia={setMedia}
+            loadMedia={loadMedia}
+            setLoadMedia={setLoadMedia}
           />
         </>
       ) : (

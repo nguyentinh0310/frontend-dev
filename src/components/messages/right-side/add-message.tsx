@@ -13,6 +13,8 @@ export interface AddMessageProps {
   messagesList: any;
   media: any;
   setMedia: Function;
+  loadMedia: boolean;
+  setLoadMedia: Function;
 }
 
 export function AddMessage({
@@ -22,14 +24,14 @@ export function AddMessage({
   messagesList,
   media,
   setMedia,
+  loadMedia,
+  setLoadMedia,
 }: AddMessageProps) {
   const [content, setContent] = useState("");
   const [show, setShow] = useState(false);
-  const [loadMedia, setLoadMedia] = useState(false);
-
-  const { mutateConv } = useConversations();
 
   const { auth } = useAuth();
+  const { mutateConv } = useConversations();
 
   const handleChangeImages = (e: any) => {
     const files = [...e.target.files];
@@ -55,6 +57,7 @@ export function AddMessage({
     setShow(false);
     setMedia([]);
     setLoadMedia(true);
+
     try {
       let newArr = [];
       if (media.length > 0) newArr = await imageUpload(media);
@@ -63,10 +66,10 @@ export function AddMessage({
         sender: auth?._id,
         recipient: user?._id,
         text: content,
+        media: newArr,
       };
       // socket
       socket.emit("send-message", newMessage);
-
       const data = await messagesApi.create(newMessage);
       setMessagesList([...messagesList, data]);
       await mutate();
@@ -84,7 +87,7 @@ export function AddMessage({
     newArr.splice(item, 1);
     setMedia(newArr);
   };
-  
+
   const imageShow = (src: any) => {
     return <img src={src} alt="images" className="img-thumbnail" />;
   };

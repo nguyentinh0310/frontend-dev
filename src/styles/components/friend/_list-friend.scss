@@ -23,6 +23,11 @@
       .name {
         font-size: 18px;
         font-weight: bold;
+        &:hover {
+          cursor: pointer;
+          transition: all 0.4s ease-in;
+          text-decoration: underline;
+        }
       }
       .btn-unfollow {
         margin-left: auto;
@@ -31,9 +36,24 @@
         box-shadow: none;
         border: 1px solid $third-color;
         color: $third-color;
-        &:hover,&:active{
-          transition: all .4s;
+        &:hover,
+        &:active {
+          transition: all 0.4s;
           background: $third-color;
+          color: white;
+        }
+      }
+      .btn-follow {
+        margin-left: auto;
+        font-size: 17px;
+        outline: none;
+        box-shadow: none;
+        border: 1px solid $primary-color;
+        color: $primary-color;
+        &:hover,
+        &:active {
+          transition: all 0.4s;
+          background: $primary-color;
           color: white;
         }
       }
@@ -53,7 +73,8 @@
         .name {
           font-size: 16px;
         }
-        .btn-unfollow {
+        .btn-unfollow,
+        .btn-follow {
           font-size: 14px;
         }
       }
@@ -76,7 +97,8 @@
         .name {
           font-size: 15px;
         }
-        .btn-unfollow {
+        .btn-unfollow,
+        .btn-follow {
           font-size: 13px;
         }
       }

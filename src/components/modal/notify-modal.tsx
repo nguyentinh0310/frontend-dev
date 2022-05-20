@@ -7,29 +7,31 @@ import { useRouter } from "next/router";
 import React from "react";
 import { toast } from "react-toastify";
 
-export function NotifyModal() {
+interface NotifyModalProps{
+}
+
+export function NotifyModal(props: NotifyModalProps) {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
   const { notifies, isLoading, mutateNotify } = useNotify();
 
-  console.log(notifies);
-
   const clickToNotify = async (notify: INotification) => {
+    router.push(`${notify?.url}`);
     try {
       await notificationApi.readNotify(notify?._id);
       await mutateNotify();
       dispatch(closeModal());
-      router.push(`${notify?.url}`);
     } catch (error) {
       toast.error("Lỗi 500");
     }
   };
 
-  const handleDeleteNotify = async () => {
-    // Remove notify
-    // await notificationApi.remove(post?._id, `/posts/${post?._id}`);
-    // await mutateNotify();
+  const handleReadAllNotify = async () => {
+    notifies?.forEach(async (notify: INotification) => {
+      await notificationApi.readNotify(notify._id);
+      await mutateNotify();
+    });
   };
 
   const handleDeleteAllNotify = async () => {
@@ -47,9 +49,14 @@ export function NotifyModal() {
     <div className="dropdown-notify">
       <div className="dropdown">
         <div className="dropdown-title">
-          <h4>Thông báo</h4>
+          <h4>
+            Thông báo {notifies?.length > 0 ? `(${notifies?.length})` : ""}
+          </h4>
           {notifies?.length > 0 && (
-            <a onClick={handleDeleteAllNotify}>Xóa thông báo</a>
+            <span className="operate-notify">
+              <a onClick={handleReadAllNotify}>Đánh dấu đã đọc</a>
+              <a onClick={handleDeleteAllNotify}>Xóa thông báo</a>
+            </span>
           )}
         </div>
         <div className="menu">

@@ -1,4 +1,4 @@
-import { useConversations, useSearchUser } from "@/hooks";
+import { useConversations, useMessages, useSearchUser } from "@/hooks";
 import { IConversation, IUser } from "@/models";
 import { useRouter } from "next/router";
 import React, { Fragment, useEffect, useState } from "react";
@@ -7,11 +7,11 @@ import { SearchConversation } from "./search";
 
 export function LeftSide() {
   const router = useRouter();
+
   const [conversationsList, setConnversationsList] = useState<any>([]);
   const [keyword, setKeyword] = useState("");
 
-
-  const { userSearch, isLoading } = useSearchUser(keyword);
+  const { userSearch } = useSearchUser(keyword);
   const { conversations, mutateConv } = useConversations();
 
   useEffect(() => {
@@ -24,9 +24,9 @@ export function LeftSide() {
     setKeyword(value);
   };
 
-  const clickToMessage = (user: IUser) => {
+  const clickToMessage = async (user: IUser) => {
     setKeyword("");
-    mutateConv()
+    await mutateConv();
     return router.push(`/message/${user?._id}`);
   };
 

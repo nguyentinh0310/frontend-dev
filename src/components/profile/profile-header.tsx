@@ -2,6 +2,7 @@ import { useAppSelector } from "@/app";
 import { setUserData } from "@/app/user-slice";
 import { useAuth, useProfile, useUser } from "@/hooks";
 import { usePostUser } from "@/hooks/use-post";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -14,13 +15,11 @@ export function ProfileHeader() {
   const { id } = router.query;
   const dispatch = useDispatch();
 
-
-
   const [showFollowing, setShowFollowing] = useState(false);
   const [showFollower, setShowFollower] = useState(false);
 
   const { auth } = useAuth();
-  const { user,  isLoading } = useUser(id);
+  const { user, isLoading } = useUser(id);
   const { profile } = useProfile(id);
   const { postUser } = usePostUser(id);
 
@@ -84,7 +83,9 @@ export function ProfileHeader() {
         ) : (
           <div className="follow-message">
             <FollowBtn user={user} />
-            <i className="fa-solid fa-envelope"></i>
+            <Link href={`/message/${user?._id}`}>
+              <i className="fa-solid fa-envelope"></i>
+            </Link>
           </div>
         )}
       </div>

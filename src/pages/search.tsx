@@ -4,11 +4,7 @@ import debounce from "lodash.debounce";
 import { useRouter } from "next/router";
 import React, { ChangeEvent, FormEvent, Fragment, useState } from "react";
 
-export interface SearchPageProps {
-  posts: any;
-}
-
-export default function SearchPage(props: SearchPageProps) {
+export default function SearchPage() {
   const router = useRouter();
   const [search, setSearch] = useState("");
   const { userSearch, isLoading } = useSearchUser(search);

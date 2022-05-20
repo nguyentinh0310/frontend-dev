@@ -49,7 +49,7 @@ export default function ProfileMediaPage({ initPosts }: ProfileMediaPageProps) {
                   ) : (
                     <img
                       src={post?.images[0]?.url}
-                      className="d-block w-100"
+                      className="w-100"
                       alt={post?.images[0]?.url}
                     />
                   )}

@@ -83,7 +83,7 @@ export function StatusModal() {
     setShow(false);
     if (!content) {
       setLoading(false);
-      dispatch(closeStatus());
+      toast.error("Vui lòng thêm nội dung bài viết!")
       return;
     }
 

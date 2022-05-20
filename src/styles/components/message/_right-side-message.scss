@@ -46,16 +46,27 @@
         margin-bottom: 10px;
         .chat-title {
           display: flex;
+
           .avatar {
             width: 25px;
             height: 25px;
             margin-right: 5px;
           }
         }
-        .chat-text {
-          padding: 10px 15px;
-          margin: 5px 0;
-          border-radius: 20px;
+        .content-chat {
+          .fa-trash {
+            opacity: 0;
+            margin-right: 10px;
+          }
+          .chat-text {
+            padding: 10px 15px;
+            margin: 5px 0;
+            border-radius: 20px;
+          }
+          &:hover > i {
+            transition: all 0.4s ease-in;
+            opacity: 1;
+          }
         }
         .chat-time {
           font-size: 13px;

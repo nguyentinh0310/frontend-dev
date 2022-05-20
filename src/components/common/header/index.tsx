@@ -1,4 +1,3 @@
-import { notificationApi } from "@/api-client";
 import {
   closeStatus,
   toggleNotify,
@@ -22,8 +21,12 @@ export function Header() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { limit } = useAppSelector((state) => state.posts);
+  const { openNotify, openSetting } = useAppSelector(
+    (state) => state.toggleModal
+  );
 
   const [keyword, setKeyword] = useState("");
+  const [isRead, setIsRead] = useState(false);
 
   const { userSearch, isLoading } = useSearchUser(keyword);
   const { auth } = useAuth();
@@ -32,28 +35,23 @@ export function Header() {
   const { mutatePostsFl } = usePostsFollow(limit);
   const { notifies } = useNotify();
 
-  const { openNotify, openSetting } = useAppSelector(
-    (state) => state.toggleModal
-  );
-
   const scrollTop = () => {
     window.scrollTo(0, 0);
   };
 
   const onClickNotify = () => {
     dispatch(toggleNotify());
-    // const read = await notificationApi.readNotify()
   };
+
   const onClickSetting = () => {
     dispatch(toggleSetting());
   };
 
   const onClickMessage = () => {
-    router.push("/message");
+    return router.push("/message");
   };
 
-  const onClickToProfile = async () => {
-    router.push(`/profile/${auth?._id}`);
+  const onMutateProfile = async () => {
     throttle(scrollTop, 200);
     await mutateUser();
   };
@@ -73,7 +71,12 @@ export function Header() {
       <div className="row">
         <div className="col-lg-4 col-sm-2 nav-left">
           <Link href="/">
-            <span className="title-home">
+            <span
+              className="title-home"
+              onDoubleClick={() => {
+                window.location.href = "/";
+              }}
+            >
               <i className="fa-solid fa-code"></i>
             </span>
           </Link>
@@ -82,9 +85,11 @@ export function Header() {
             {userSearch && <UserModal users={userSearch} loading={isLoading} />}
           </div>
 
-          <a href="/search" className="search">
-            <i className="fa-solid fa-magnifying-glass"></i>
-          </a>
+          <Link href="/search">
+            <span className="search">
+              <i className="fa-solid fa-magnifying-glass"></i>
+            </span>
+          </Link>
         </div>
 
         <div className="col-lg-4 col-sm-6 nav-middle">
@@ -94,9 +99,6 @@ export function Header() {
                 className={clsx({ active: router.pathname === route.path })}
                 style={{ display: route.style }}
                 onClick={handleMutate}
-                // onDoubleClick={() => {
-                //   window.location.href = route.path;
-                // }}
               >
                 <i className={`${route.icon}`}></i>
               </a>
@@ -105,28 +107,30 @@ export function Header() {
         </div>
 
         <div className="col-lg-4 col-sm-4 nav-right">
-          <span className="avatar" onClick={onClickToProfile}>
-            <img src={auth?.avatar} alt="" />
-          </span>
-          <span className="fullname" onClick={onClickToProfile}>
-            {auth?.fullname}
-          </span>
-
+          <Link href={`/profile/${auth?._id}`}>
+            <span className="avatar" onClick={onMutateProfile}>
+              <img src={auth?.avatar} alt="" />
+            </span>
+          </Link>
+          <Link href={`/profile/${auth?._id}`}>
+            <span className="fullname" onClick={onMutateProfile}>
+              {auth?.fullname}
+            </span>
+          </Link>
           <a className="nav-icon nav-icon-messenger" onClick={onClickMessage}>
             <i className="fab fa-facebook-messenger"></i>
           </a>
 
           <a
-            className={
-              openNotify || notifies?.length > 0
-                ? "nav-icon active"
-                : "nav-icon"
-            }
+            className={openNotify ? "nav-icon active" : "nav-icon"}
             onClick={onClickNotify}
           >
             <i className="fa fa-bell"></i>
             {notifies?.length !== 0 && (
-              <span className="count">
+              <span
+                className="count"
+                style={{ display: openNotify ? "none" : "" }}
+              >
                 <small>{notifies?.length}</small>
               </span>
             )}

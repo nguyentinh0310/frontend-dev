@@ -14,9 +14,16 @@
     transition: height $speed ease;
     .dropdown-title {
       position: sticky;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      .operate-notify {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 8px;
+        a:hover {
+          transition: all 0.4 ease-in;
+          text-decoration: underline;
+        }
+      }
       h4 {
         font-weight: 600;
         margin-bottom: 0px;
