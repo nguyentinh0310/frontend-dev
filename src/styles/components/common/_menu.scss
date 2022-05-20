@@ -5,6 +5,7 @@
 @media screen and (max-width: 768px) {
   .menu-page {
     display: block;
+    overflow-x: hidden;
     font-family: $primary-font;
     ul {
       padding: 10px 0px;

@@ -166,6 +166,9 @@ nav {
 @media screen and (max-width: 768px) {
   nav {
     .nav-middle {
+      justify-content: start;
+      padding-left: 8rem;
+      margin-top: 5px;
       a[href*="/friend"],
       a[href*="/group"] {
         display: none !important;
@@ -175,6 +178,11 @@ nav {
         i {
           font-size: 26px;
         }
+      }
+    }
+    .nav-right {
+      .icon-setting {
+        display: none;
       }
     }
   }
@@ -187,18 +195,20 @@ nav {
       width: auto;
     }
     .nav-middle {
+      margin-left: auto;
+      padding-left: 0;
+
       a[href*="/menu"] {
         padding-top: 15px;
       }
       a[href*="/friend"],
       a[href*="/group"],
-      a[href*="/explore"],
       a:first-child {
         display: none !important;
       }
     }
     .nav-right {
-      margin-left: 6rem;
+      margin-left: auto;
     }
   }
 }
@@ -219,6 +229,7 @@ nav {
       }
     }
     .nav-middle {
+      margin: 0;
       a[href*="/menu"] {
         display: block !important;
         i {
@@ -227,10 +238,7 @@ nav {
       }
     }
     .nav-right {
-      margin-left: 2rem;
-      .icon-setting {
-        display: none;
-      }
+      margin-left: -0.5rem;
       .avatar {
         width: 33px;
         height: 33px;
@@ -245,50 +253,7 @@ nav {
     }
   }
 }
-
-@media screen and (max-width: 429px) {
-  nav {
-    .nav-right {
-      margin-left: 1.6rem;
-    }
-  }
-}
-@media screen and (max-width: 419px) {
-  nav {
-    .nav-right {
-      margin-left: 0.75rem;
-    }
-  }
-}
-
 @media screen and (max-width: 400px) {
-  nav {
-    .nav-right {
-      margin-left: -1rem;
-    }
-  }
-}
-
-@media screen and (max-width: 379px) {
-  nav {
-    .nav-right {
-      .avatar {
-        display: none;
-      }
-      margin-left: 0.5rem;
-    }
-  }
-}
-
-@media screen and (max-width: 360px) {
-  nav {
-    .nav-right {
-      margin-left: -0.5rem;
-    }
-  }
-}
-
-@media screen and (max-width: 320px) {
   nav {
     .nav-left {
       .search {
@@ -303,15 +268,13 @@ nav {
     .nav-middle {
       a {
         i {
-          font-size: 18px;
+          font-size: 18px !important;
         }
       }
     }
     .nav-right {
-      margin-left: -2rem;
-      .avatar {
-        display: none;
-      }
+      margin-left: -0.5rem;
+      .avatar,
       .nav-icon {
         width: 30px;
         height: 30px;

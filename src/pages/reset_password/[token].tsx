@@ -1,5 +1,5 @@
 import { authApi } from "@/api-client";
-import { PasswordField } from "@/components";
+import { PasswordField, Seo } from "@/components";
 import { ResetPasswordPayload } from "@/models";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/router";
@@ -45,39 +45,51 @@ export default function ResetPasswordPage() {
     }
   };
   return (
-    <div className="wrapper">
-      <div className="wrapper-left">
-        <div className="background"></div>
-      </div>
-      <div className="wrapper-right">
-        <Form
-          onSubmit={handleSubmit(handleSubmitForm)}
-          className="needs-validation"
-          noValidate
-        >
-          <div className="logo">
-            <h1 className="title">IT Network</h1>
-            <p>Mạng xã hội dành cho IT</p>
-          </div>
-          <h1 className="mb-3 text-center title-login">Đặt lại mật khẩu</h1>
-          <PasswordField
-            name="password"
-            control={control}
-            placeholder="Mật khẩu"
-          />
-          <PasswordField
-            name="retypePassword"
-            control={control}
-            placeholder="Xác nhận mật khẩu"
-          />
+    <>
+      <Seo
+        data={{
+          title: "Khôi phục mật khẩu",
+          description:
+            "Website It Network xây dựng fullstack sử dụng công nghệ Nextjs và Nodejs",
+          url: "http://localhost:3000/",
+          thumbnailUrl:
+            "https://res.cloudinary.com/dwgximj2j/image/upload/v1625475731/header__ul8cso.png",
+        }}
+      />
+      <div className="wrapper">
+        <div className="wrapper-left">
+          <div className="background"></div>
+        </div>
+        <div className="wrapper-right">
+          <Form
+            onSubmit={handleSubmit(handleSubmitForm)}
+            className="needs-validation"
+            noValidate
+          >
+            <div className="logo">
+              <h1 className="title">IT Network</h1>
+              <p>Mạng xã hội dành cho IT</p>
+            </div>
+            <h1 className="mb-3 text-center title-login">Đặt lại mật khẩu</h1>
+            <PasswordField
+              name="password"
+              control={control}
+              placeholder="Mật khẩu"
+            />
+            <PasswordField
+              name="retypePassword"
+              control={control}
+              placeholder="Xác nhận mật khẩu"
+            />
 
-          <div className="mt-2 mb-3 d-flex justify-content-center">
-            <button type="submit" className="btn">
-              Xác nhận
-            </button>
-          </div>
-        </Form>
+            <div className="mt-2 mb-3 d-flex justify-content-center">
+              <button type="submit" className="btn">
+                Xác nhận
+              </button>
+            </div>
+          </Form>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

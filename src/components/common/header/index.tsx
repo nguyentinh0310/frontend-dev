@@ -131,12 +131,12 @@ export function Header() {
                 className="count"
                 style={{ display: openNotify ? "none" : "" }}
               >
-                <small>{notifies?.length}</small>
+              <small>{notifies?.length}</small>
               </span>
             )}
           </a>
           <a
-            className={openSetting ? "nav-icon active" : "nav-icon"}
+            className={openSetting ? "nav-icon active" : "nav-icon icon-setting"}
             onClick={onClickSetting}
           >
             <i className="fa-solid fa-caret-down"></i>

@@ -8,8 +8,7 @@ import {
 } from "@/hooks/use-post";
 import { INotification, IPost, IUser } from "@/models";
 import { socket } from "@/utils";
-import React, { useEffect, useRef, useState } from "react";
-import { FomoNotification } from "./fomo-notification";
+import React, { useEffect, useRef } from "react";
 
 export function SocketClient() {
   const audioRef = useRef<any>();
@@ -17,7 +16,6 @@ export function SocketClient() {
   const { limit } = useAppSelector((state) => state.posts);
   const { userData } = useAppSelector((state) => state.user);
   // console.log(userData);
-
 
   const { auth, mutateAuth } = useAuth();
   const { mutateUser } = useUser(userData?._id);
@@ -187,11 +185,10 @@ export function SocketClient() {
     };
   }, [socket]);
 
-
   useEffect(() => {
     socket.on("remove-notify-to-client", async (notify: INotification) => {
       notify = await mutateNotify();
-      console.log(notify)
+      console.log(notify);
     });
     return () => {
       socket.off("remove-notify-to-client");

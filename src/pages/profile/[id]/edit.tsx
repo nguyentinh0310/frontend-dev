@@ -1,4 +1,4 @@
-import { EditFormProfile, MainLayout, UserEditForm } from "@/components";
+import { EditFormProfile, MainLayout, Seo, UserEditForm } from "@/components";
 import { useAuth } from "@/hooks";
 import { NextPageWithLayout } from "@/models";
 import { useRouter } from "next/router";
@@ -8,12 +8,19 @@ const EditProfilePage: NextPageWithLayout = () => {
   const router = useRouter();
   const { id } = router.query;
   const { auth } = useAuth();
-  // if (auth?._id !== id) {
-  //   router.back();
-  // }
 
   return (
     <Fragment>
+      <Seo
+        data={{
+          title: "Chỉnh sửa cá nhân",
+          description:
+            "Website It Network xây dựng fullstack sử dụng công nghệ Nextjs và Nodejs",
+          url: "http://localhost:3000/",
+          thumbnailUrl:
+            "https://res.cloudinary.com/dwgximj2j/image/upload/v1625475731/header__ul8cso.png",
+        }}
+      />
       {auth?._id === id && (
         <div className="edit-profile-page">
           <UserEditForm />

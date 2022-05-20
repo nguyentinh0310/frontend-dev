@@ -1,5 +1,5 @@
 import { authApi } from "@/api-client";
-import { LoginForm } from "@/components";
+import { LoginForm, Seo } from "@/components";
 import { useAuth } from "@/hooks";
 import { LoginPayload } from "@/models";
 import { useRouter } from "next/router";
@@ -20,13 +20,25 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="wrapper">
-      <div className="wrapper-left">
-        <div className="background"></div>
+    <>
+      <Seo
+        data={{
+          title: "Đăng nhập | It Network",
+          description:
+            "Website It Network xây dựng fullstack sử dụng công nghệ Nextjs và Nodejs",
+          url: "http://localhost:3000/",
+          thumbnailUrl:
+            "https://res.cloudinary.com/dwgximj2j/image/upload/v1625475731/header__ul8cso.png",
+        }}
+      />
+      <div className="wrapper">
+        <div className="wrapper-left">
+          <div className="background"></div>
+        </div>
+        <div className="wrapper-right">
+          <LoginForm onSubmit={handleSubmit} />
+        </div>
       </div>
-      <div className="wrapper-right">
-        <LoginForm onSubmit={handleSubmit} />
-      </div>
-    </div>
+    </>
   );
 }

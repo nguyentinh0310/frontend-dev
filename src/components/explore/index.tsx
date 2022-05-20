@@ -34,7 +34,7 @@ export function Explore({ initPosts }: ExploreProps) {
 
   const handleShowPost = () => {
     setLoading(false);
-    dispacth(setLimit({ limit: Number(limit) + 5 }));
+    dispacth(setLimit({ limit: Number(limit) + 10 }));
   };
 
   return (

@@ -1,9 +1,9 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Form } from "react-bootstrap";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
-import { InputField } from "@/components";
+import { InputField, Seo } from "@/components";
 import { toast } from "react-toastify";
 import { authApi } from "@/api-client";
 
@@ -33,6 +33,17 @@ const ForgotPasswordPage = () => {
     }
   };
   return (
+    <Fragment>
+     <Seo
+        data={{
+          title: "Quên mật khẩu",
+          description:
+            "Website It Network xây dựng fullstack sử dụng công nghệ Nextjs và Nodejs",
+          url: "http://localhost:3000/",
+          thumbnailUrl:
+            "https://res.cloudinary.com/dwgximj2j/image/upload/v1625475731/header__ul8cso.png",
+        }}
+      />
     <div className="wrapper">
       <div className="wrapper-left">
         <div className="background"></div>
@@ -62,6 +73,7 @@ const ForgotPasswordPage = () => {
         </Form>
       </div>
     </div>
+    </Fragment>
   );
 };
 

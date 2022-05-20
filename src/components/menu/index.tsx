@@ -2,10 +2,11 @@ import { useAuth, useUser } from "@/hooks";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
+import { toast } from "react-toastify";
 
 export function Menu() {
   const router = useRouter();
-  const { auth } = useAuth();
+  const { auth, logout } = useAuth();
   const { mutateUser } = useUser(auth?._id);
 
   const ROUTE_LIST = [
@@ -34,16 +35,17 @@ export function Menu() {
       icon: "fa-solid fa-gear",
       path: "/setting",
     },
-    {
-      label: "Đăng xuất",
-      icon: "fa-solid fa-right-from-bracket",
-      path: "#",
-    },
   ];
 
-  const onClickProfile = async() => {
-    await mutateUser()
-    router.push(`/profile/${auth?._id}`);
+  const onClickProfile = async () => {
+    await mutateUser();
+    return router.push(`/profile/${auth?._id}`);
+  };
+  const handleLogout = async () => {
+    await logout();
+
+    toast.success("Đã đăng xuất");
+    return router.push("/login");
   };
 
   return (
@@ -51,12 +53,9 @@ export function Menu() {
       <ul>
         <li onClick={onClickProfile}>
           <span className="avatar">
-            <img
-              src="https://cdn-acpnj.nitrocdn.com/SDkrhncnWeetGsYGlzwaPnbfptfOeIKk/assets/static/optimized/rev-00d8738/wp-content/uploads/2017/11/10-Patrick-I-Love-You-Gif.gif"
-              alt=""
-            />
+            <img src={auth?.avatar} alt="" />
           </span>
-          <span className="name">Aashish Panthi</span>
+          <span className="name">{auth?.fullname}</span>
         </li>
         {ROUTE_LIST.map((route: any) => (
           <Link key={route.path} href={route.path} passHref>
@@ -66,6 +65,11 @@ export function Menu() {
             </li>
           </Link>
         ))}
+
+        <li className="row" onClick={handleLogout}>
+          <i className="col-1 fa-solid fa-right-from-bracket"></i>
+          <p className="col-11 label">Đăng xuất</p>
+        </li>
       </ul>
     </div>
   );

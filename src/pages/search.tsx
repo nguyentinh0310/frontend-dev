@@ -1,3 +1,4 @@
+import { Seo } from "@/components";
 import { useSearchUser } from "@/hooks";
 import { IUser } from "@/models";
 import debounce from "lodash.debounce";
@@ -27,6 +28,16 @@ export default function SearchPage() {
 
   return (
     <Fragment>
+      <Seo
+        data={{
+          title: "Tìm kiếm | It Network",
+          description:
+            "Website It Network xây dựng fullstack sử dụng công nghệ Nextjs và Nodejs",
+          url: "http://localhost:3000/",
+          thumbnailUrl:
+            "https://res.cloudinary.com/dwgximj2j/image/upload/v1625475731/header__ul8cso.png",
+        }}
+      />
       <div className="row">
         <div className="col-lg-12">
           <div className="not-support">

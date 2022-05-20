@@ -11,6 +11,7 @@ import {
 import { IPost } from "@/models";
 import { BASE_URL, socket } from "@/utils";
 import React from "react";
+import swal from "sweetalert";
 import { toast } from "react-toastify";
 
 export interface PostModalProps {
@@ -35,28 +36,38 @@ export function PostModal({ post, setShow }: PostModalProps) {
     setShow(false);
   };
 
-  // xóa pót
+  // xóa post
   const handleDeletePost = async () => {
     try {
-      await postApi.remove(post?._id);
-      await mutatePosts();
-      await mutatePostsFl();
-      await mutatePost();
-      await mutatePostUser();
-      socket.emit("delete-post");
+      swal({
+        title: "Xác nhận",
+        text: "Bạn có muốn xoá bài viết này?",
+        icon: "warning",
+        buttons: ["Huỷ", "Xác nhận"],
+        dangerMode: true,
+      }).then(async (willDelete) => {
+        if (willDelete) {
+          await postApi.remove(post?._id);
+          await mutatePosts();
+          await mutatePostsFl();
+          await mutatePost();
+          await mutatePostUser();
+          socket.emit("delete-post");
 
-      // Remove notify
-      const notify = {
-        id: post?._id,
-        text: "xóa bài viết.",
-        recipients: [post?.user?._id],
-        url: `/posts/${post._id}`,
-      };
-      await notificationApi.remove(notify);
-      await mutateNotify();
-      socket.emit("remove-notify", notify);
+          // Remove notify
+          const notify = {
+            id: post?._id,
+            text: "xóa bài viết.",
+            recipients: [post?.user?._id],
+            url: `/posts/${post._id}`,
+          };
+          await notificationApi.remove(notify);
+          await mutateNotify();
+          socket.emit("remove-notify", notify);
 
-      toast.success("Đã xóa thành công");
+          toast.success("Đã xóa thành công");
+        }
+      });
     } catch (error) {
       toast.error("Lỗi 400");
     }

@@ -1,4 +1,4 @@
-import { MainLayout, PostSkeleton, StatusModal } from "@/components";
+import { MainLayout, PostSkeletonList, Seo, StatusModal } from "@/components";
 import { Post } from "@/components/posts";
 import { usePost } from "@/hooks/use-post";
 import { IPost } from "@/models";
@@ -26,10 +26,27 @@ export default function PostIdPage({ postDetail }: PostIdPageProps) {
   }, [post]);
 
   return (
-    <div className="postId-page">
-      {loading && isLoading ? <PostSkeleton /> : <Post post={data} />}
-      <StatusModal />
-    </div>
+    <>
+      <Seo
+        data={{
+          title: "Chi tiết bài viết",
+          description:
+            "Website It Network xây dựng fullstack sử dụng công nghệ Nextjs và Nodejs",
+          url: "http://localhost:3000/",
+          thumbnailUrl:
+            "https://res.cloudinary.com/dwgximj2j/image/upload/v1625475731/header__ul8cso.png",
+        }}
+      />
+
+      <div className="postId-page">
+        {loading && isLoading ? (
+          <PostSkeletonList length={2} />
+        ) : (
+          <Post post={data} />
+        )}
+        <StatusModal />
+      </div>
+    </>
   );
 }
 PostIdPage.Layout = MainLayout;

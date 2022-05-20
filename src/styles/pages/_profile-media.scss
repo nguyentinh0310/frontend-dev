@@ -1,13 +1,29 @@
-.profile-media{
+.profile-media {
+  width: 100%;
+  margin-top: 10px;
+  padding: 0 10px;
+  .img-post-media {
     width: 100%;
-    margin-top: 10px;
-    padding: 0 10px;
-    .media-col{
-        padding: 0.25rem !important;
-        img{
-            cursor: pointer;
-            width: 100%;
-        }
-
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    justify-content: center;
+    grid-gap: 10px;
+    overflow: hidden;
+    margin: 15px 0;
+    .media-col {
+      min-width: 250px;
+      height: 250px;
+      width: 100%;
+      position: relative;
+      cursor: pointer;
+      overflow: hidden;
+      img,
+      video {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+      }
     }
+  }
 }

@@ -1,4 +1,4 @@
-import { ProfileLayout } from "@/components";
+import { ProfileLayout, Seo } from "@/components";
 import { usePostUser } from "@/hooks/use-post";
 import { IPost, ListResponse } from "@/models";
 import axios from "axios";
@@ -15,7 +15,7 @@ export interface ProfileMediaPageProps {
 export default function ProfileMediaPage({ initPosts }: ProfileMediaPageProps) {
   const router = useRouter();
   const { id } = router.query;
-  const [postArr, setPostArr] = useState(initPosts);
+  const [postArr, setPostArr] = useState<any>(initPosts);
   const [loading, setLoading] = useState(false);
 
   const { postUser, isLoading } = usePostUser(id);
@@ -28,38 +28,58 @@ export default function ProfileMediaPage({ initPosts }: ProfileMediaPageProps) {
   }, [postUser]);
 
   return (
-    <div className="profile-media mb-5">
-      <div className="row">
-        {loading && isLoading ? (
-          <div className="col-lg-4 col-sm-6 media-col">
-            <Skeleton width="100%" height="100%" />
-          </div>
-        ) : (
-          <>
-           {postArr?.data.length === 0 && <h3 className="text-center mt-2">Chưa có hình ảnh nào cả</h3>}
-            {postArr?.data.map((post: IPost) => (
-              <Link href={`/posts/${post?._id}`} key={post?._id}>
-                <div className="col-lg-4 col-sm-6 media-col">
-                  {post?.images[0]?.url.match(/video/i) ? (
-                    <video
-                      controls
-                      src={post?.images[0]?.url}
-                      className="d-block w-100 h-100"
-                    />
-                  ) : (
-                    <img
-                      src={post?.images[0]?.url}
-                      className="w-100"
-                      alt={post?.images[0]?.url}
-                    />
-                  )}
-                </div>
-              </Link>
-            ))}
-          </>
-        )}
+    <>
+      <Seo
+        data={{
+          title: "Ảnh/video",
+          description:
+            "Website It Network xây dựng fullstack sử dụng công nghệ Nextjs và Nodejs",
+          url: "http://localhost:3000/",
+          thumbnailUrl:
+            "https://res.cloudinary.com/dwgximj2j/image/upload/v1625475731/header__ul8cso.png",
+        }}
+      />
+      <div className="profile-media mb-5">
+        <div className="img-post-media">
+          {loading && isLoading ? (
+            <div className="media-col">
+              <Skeleton width="100%" height="100%" />
+            </div>
+          ) : (
+            <>
+              {postArr?.data.map(
+                (post: IPost) =>
+                  // {
+                  //   post?.images.length === 0 && (
+                  //     <h3 className="text-center mt-2">Chưa có hình ảnh nào cả</h3>
+                  //   );
+                  // }
+                  post?.images.length > 0 && (
+                    <Link href={`/posts/${post?._id}`} key={post?._id}>
+                      <div className="media-col">
+                        {post?.images[0]?.url.match(/video/i) ? (
+                          <video
+                            controls
+                            src={post?.images[0]?.url}
+                            className="d-block w-100 h-100"
+                          />
+                        ) : (
+                          <img
+                            src={post?.images[0]?.url}
+                            className="w-100"
+                            loading="lazy"
+                            alt={post?.images[0]?.url}
+                          />
+                        )}
+                      </div>
+                    </Link>
+                  )
+              )}
+            </>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 ProfileMediaPage.Layout = ProfileLayout;

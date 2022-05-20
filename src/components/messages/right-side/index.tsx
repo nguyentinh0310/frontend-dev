@@ -34,11 +34,13 @@ export function RightSide() {
   // get tin nhắn đến từ socket
   useEffect(() => {
     socket.on("get-message", (data: any) => {
+      console.log(data);
       setArrivalMessage({
         sender: data.sender,
         text: data.text,
         media: data.media,
       });
+
       data = mutateConv();
     });
   }, [socket]);
@@ -77,16 +79,16 @@ export function RightSide() {
     }
   };
 
-  useEffect(() => {
-    socket.on("delete-message-to-client", async (msg: IMessage) => {
-      msg = await mutateMessages();
-      msg = await mutateConv();
-      console.log(msg);
-    });
-    return () => {
-      socket.off("delete-message-to-client");
-    };
-  }, [socket]);
+  // useEffect(() => {
+  //   socket.on("delete-message-to-client", async (msg: IMessage) => {
+  //     msg = await mutateMessages();
+  //     msg = await mutateConv();
+  //     console.log(msg);
+  //   });
+  //   return () => {
+  //     socket.off("delete-message-to-client");
+  //   };
+  // }, [socket]);
   return (
     <Fragment>
       {id ? (
@@ -128,13 +130,13 @@ export function RightSide() {
                       <MessageDisplay user={auth} msg={msg} key={msg?._id} />
                     </div>
                   )}
-                  {loadMedia && (
-                    <div className="chat_row you_message">
-                      <span className="m-auto mt-2 spinner-border text-success"></span>
-                    </div>
-                  )}
                 </span>
               ))}
+              {loadMedia && (
+                <div className="chat-row you-message">
+                  <small className="spinner-border text-default"></small>
+                </div>
+              )}
             </div>
           </div>
 

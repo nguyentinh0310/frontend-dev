@@ -6,7 +6,7 @@ interface postsState {
 }
 
 const initialState: postsState = {
-  limit: 5,
+  limit: 15,
   postData: {}
 };
 

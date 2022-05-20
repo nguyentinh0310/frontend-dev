@@ -1,4 +1,6 @@
+import { openStatus, useAppDispatch } from "@/app";
 import { Post } from "@/components/posts";
+import { useAuth } from "@/hooks";
 import { usePostUser } from "@/hooks/use-post";
 import { IPost, ListResponse } from "@/models";
 import { useRouter } from "next/router";
@@ -13,10 +15,17 @@ export interface ProfileBodyProps {
 export function ProfileBody({ initPosts }: ProfileBodyProps) {
   const router = useRouter();
   const { id } = router.query;
+  const dispacth = useAppDispatch();
+
   const { postUser, isLoading } = usePostUser(id);
+  const { auth } = useAuth();
 
   const [postArr, setPostArr] = useState(initPosts);
   const [loading, setLoading] = useState(false);
+
+  const handleShow = () => {
+    dispacth(openStatus());
+  };
 
   useEffect(() => {
     if (postUser) {
@@ -27,6 +36,18 @@ export function ProfileBody({ initPosts }: ProfileBodyProps) {
 
   return (
     <div className="profile-body">
+      {auth?._id === id && (
+        <div className="status-modal">
+          <div className="status-create">
+            <span className="avatar">
+              <img src={auth?.avatar} alt="avatar" />
+            </span>
+            <button className="btn-post" onClick={handleShow}>
+              Bạn đang nghĩ gì?
+            </button>
+          </div>
+        </div>
+      )}
       <StatusModal />
       {postArr?.data.length === 0 && (
         <h3 className="text-center mt-2">Chưa có bài viết nào</h3>
