@@ -1,5 +1,5 @@
-import { userApi } from "@/api-client";
-import { useAuth, useUser } from "@/hooks";
+import { notificationApi, userApi } from "@/api-client";
+import { useAuth, useNotify, useUser } from "@/hooks";
 import { IUser } from "@/models";
 import { socket } from "@/utils";
 import { useRouter } from "next/router";
@@ -18,6 +18,7 @@ export function FollowBtn({ user }: FollowBtnProps) {
 
   const { auth, mutateAuth } = useAuth();
   const { mutateUser } = useUser(id);
+  const { mutateNotify } = useNotify();
 
   // check follow tồn tại
   useEffect(() => {
@@ -28,8 +29,6 @@ export function FollowBtn({ user }: FollowBtnProps) {
     }
   }, [auth?.followings, user?._id]);
 
-
-
   const handleFollow = async () => {
     if (loading) return;
     setLoading(true);
@@ -39,6 +38,17 @@ export function FollowBtn({ user }: FollowBtnProps) {
     // Socket
     socket.emit("follow", user);
     setLoading(false);
+
+    // Notify
+    const notify: any = {
+      id: auth?._id,
+      text: "đã theo dõi bạn.",
+      recipients: [user?._id],
+      url: `/profile/${user?._id}`,
+    };
+    await notificationApi.create(notify);
+    await mutateNotify();
+    socket.emit("create-notify", notify);
   };
   const handleUnFollow = async () => {
     if (loading) return;
@@ -50,6 +60,17 @@ export function FollowBtn({ user }: FollowBtnProps) {
     setLoading(false);
     // Socket
     socket.emit("unFollow", user);
+
+    // Remove notify
+    const notify = {
+      id: auth?._id,
+      text: "đã bỏ theo dõi bạn.",
+      recipients: [user?._id],
+      url: `/profile/${user?._id}`,
+    };
+    await notificationApi.remove(notify);
+    await mutateNotify();
+    socket.emit("remove-notify", notify);
   };
   return (
     <>

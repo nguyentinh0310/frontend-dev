@@ -34,7 +34,6 @@ export function RightSide() {
   // get tin nhắn đến từ socket
   useEffect(() => {
     socket.on("get-message", (data: any) => {
-      console.log(data);
       setArrivalMessage({
         sender: data.sender,
         text: data.text,
@@ -79,16 +78,7 @@ export function RightSide() {
     }
   };
 
-  // useEffect(() => {
-  //   socket.on("delete-message-to-client", async (msg: IMessage) => {
-  //     msg = await mutateMessages();
-  //     msg = await mutateConv();
-  //     console.log(msg);
-  //   });
-  //   return () => {
-  //     socket.off("delete-message-to-client");
-  //   };
-  // }, [socket]);
+
   return (
     <Fragment>
       {id ? (

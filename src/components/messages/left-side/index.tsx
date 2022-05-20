@@ -1,4 +1,4 @@
-import { useConversations, useMessages, useSearchUser } from "@/hooks";
+import { useConversations, useSearchUser } from "@/hooks";
 import { IConversation, IUser } from "@/models";
 import { useRouter } from "next/router";
 import React, { Fragment, useEffect, useState } from "react";

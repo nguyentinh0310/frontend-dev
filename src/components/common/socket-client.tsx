@@ -1,30 +1,34 @@
 import { useAppSelector } from "@/app";
-import { useAuth, useNotify, useUser } from "@/hooks";
+import { useAuth, useConversations, useMessages, useNotify, useUser } from "@/hooks";
 import {
   usePost,
   usePosts,
   usePostsFollow,
   usePostUser,
 } from "@/hooks/use-post";
-import { INotification, IPost, IUser } from "@/models";
+import { IMessage, INotification, IPost, IUser } from "@/models";
 import { socket } from "@/utils";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { FomoNotification } from "./fomo-notification";
 
 export function SocketClient() {
   const audioRef = useRef<any>();
   const { postData } = useAppSelector((state) => state.posts);
   const { limit } = useAppSelector((state) => state.posts);
-  const { userData } = useAppSelector((state) => state.user);
-  // console.log(userData);
+  const { userId } = useAppSelector((state) => state.user);
+
+  const [notifyData, setNotifyData] = useState({});
 
   const { auth, mutateAuth } = useAuth();
-  const { mutateUser } = useUser(userData?._id);
+  const { mutateUser } = useUser(userId);
 
   const { mutatePosts } = usePosts(limit);
   const { mutatePostsFl } = usePostsFollow(limit);
   const { mutatePost } = usePost(postData?._id);
   const { mutatePostUser } = usePostUser(postData?.user?._id);
   const { mutateNotify } = useNotify();
+  const { mutateMessages } = useMessages(userId);
+  const { mutateConv } = useConversations();
 
   const setMutatePostData = async (data: IPost) => {
     data = await mutatePosts();
@@ -149,12 +153,9 @@ export function SocketClient() {
 
   // Follow
   useEffect(() => {
-    socket.on("follow-to-client", async (user: IUser) => {
+    socket.on("follow-to-client", (user: IUser) => {
       audioRef?.current.play();
-      // setMutateUserData(user);
-      user = await mutateAuth();
-      user = await mutateUser();
-      console.log(user);
+      setMutateUserData(user);
     });
     return () => {
       socket.off("follow-to-client");
@@ -162,12 +163,9 @@ export function SocketClient() {
   }, [socket]);
 
   useEffect(() => {
-    socket.on("unFollow-to-client", async (user: IUser) => {
+    socket.on("unFollow-to-client", (user: IUser) => {
       audioRef?.current.play();
-      // setMutateUserData(user);
-      user = await mutateAuth();
-      user = await mutateUser();
-      console.log(user);
+      setMutateUserData(user);
     });
     return () => {
       socket.off("unFollow-to-client");
@@ -177,6 +175,7 @@ export function SocketClient() {
   // Notification
   useEffect(() => {
     socket.on("create-notify-to-client", async (notify: INotification) => {
+      setNotifyData(notify);
       audioRef?.current.play();
       notify = await mutateNotify();
     });
@@ -188,10 +187,20 @@ export function SocketClient() {
   useEffect(() => {
     socket.on("remove-notify-to-client", async (notify: INotification) => {
       notify = await mutateNotify();
-      console.log(notify);
     });
     return () => {
       socket.off("remove-notify-to-client");
+    };
+  }, [socket]);
+
+  // Delete message
+  useEffect(() => {
+    socket.on("delete-message-to-client", async (msg: IMessage) => {
+      msg = await mutateMessages();
+      msg = await mutateConv();
+    });
+    return () => {
+      socket.off("delete-message-to-client");
     };
   }, [socket]);
 
@@ -200,7 +209,9 @@ export function SocketClient() {
       <audio controls ref={audioRef} style={{ display: "none" }}>
         <source src="https://assets.coderrocketfuel.com/pomodoro-times-up.mp3" />
       </audio>
-      {/* {notifiData && <FomoNotification notify={notifiData}/>} */}
+      {Object.keys(notifyData).length !== 0 && (
+        <FomoNotification notify={notifyData} />
+      )}
     </>
   );
 }

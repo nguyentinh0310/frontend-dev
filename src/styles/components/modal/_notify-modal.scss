@@ -1,7 +1,7 @@
 .dropdown-notify {
   position: absolute;
   top: 55px;
-  width: 350px;
+  width: 400px;
   z-index: 10;
   font-family: $primary-font;
   .dropdown {
@@ -112,9 +112,9 @@
     }
   }
 }
-@media screen and (max-width: 429px) {
+@media screen and (max-width: 479px) {
   .dropdown-notify {
-    width: 395px;
+    width: 370px;
     .dropdown {
       .menu {
         .menu-item {
@@ -131,17 +131,12 @@
 
 @media screen and (max-width: 419px) {
   .dropdown-notify {
-    width: 385px;
-  }
-}
-
-@media screen and (max-width: 400px) {
-  .dropdown-notify {
     width: 355px;
   }
 }
 
-@media screen and (max-width: 379px) {
+
+@media screen and (max-width: 400px) {
   .dropdown-notify {
     width: 350px;
     .dropdown {

@@ -83,7 +83,7 @@ export function CommentInput({
       if (comment?.user?._id) {
         notify = {
           id: post?._id,
-          text: "đã phản hôi bình luận.",
+          text: "đã phản hồi bình luận.",
           recipients: [comment?.user?._id],
           url: `/posts/${post?._id}`,
         };

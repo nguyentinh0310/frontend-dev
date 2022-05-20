@@ -1,5 +1,4 @@
-import { useAppSelector } from "@/app";
-import { setUserData } from "@/app/user-slice";
+import { setUserId } from "@/app/user-slice";
 import { useAuth, useProfile, useUser } from "@/hooks";
 import { usePostUser } from "@/hooks/use-post";
 import Link from "next/link";
@@ -27,12 +26,15 @@ export function ProfileHeader() {
     router.push(`/profile/${id}/edit`);
   };
 
+  useEffect(() => {
+    dispatch(setUserId(id))
+  }, [dispatch])
+  
+
   const handleShowFollowing = () => setShowFollowing(true);
   const handleShowFollower = () => setShowFollower(true);
 
-  useEffect(() => {
-    dispatch(setUserData(user));
-  }, [dispatch]);
+
   return (
     <div className="profile-top">
       <div className="bg-cover-profile">

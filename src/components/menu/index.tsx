@@ -37,10 +37,6 @@ export function Menu() {
     },
   ];
 
-  const onClickProfile = async () => {
-    await mutateUser();
-    return router.push(`/profile/${auth?._id}`);
-  };
   const handleLogout = async () => {
     await logout();
 
@@ -51,12 +47,18 @@ export function Menu() {
   return (
     <div className="menu-page">
       <ul>
-        <li onClick={onClickProfile}>
-          <span className="avatar">
-            <img src={auth?.avatar} alt="" />
-          </span>
-          <span className="name">{auth?.fullname}</span>
-        </li>
+        <Link href={`/profile/${auth?._id}`}>
+          <li
+            onClick={async () => {
+              await mutateUser();
+            }}
+          >
+            <span className="avatar">
+              <img src={auth?.avatar} alt="" />
+            </span>
+            <span className="name">{auth?.fullname}</span>
+          </li>
+        </Link>
         {ROUTE_LIST.map((route: any) => (
           <Link key={route.path} href={route.path} passHref>
             <li className="row">
