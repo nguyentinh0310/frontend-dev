@@ -14,7 +14,7 @@ export function ExperienceModal() {
     title: yup.string().required("Kinh nghiệm không để trống"),
     company: yup.string().required("Công ty không để trống"),
     from: yup.string().required("Vui lòng chọn thời gian"),
-    to: yup.string().required("Vui lòng chọn thời gian"),
+    to: yup.string().min(yup.ref("from"), "Ngày kết thúc lơn hơn ngày bắt đầu"),
   });
 
   const router = useRouter();
@@ -72,7 +72,11 @@ export function ExperienceModal() {
               control={control}
               placeholder="Kinh nghiệm"
             />
-            <InputField name="company" control={control} placeholder="Công ty" />
+            <InputField
+              name="company"
+              control={control}
+              placeholder="Công ty"
+            />
             <div className="mb-2 row">
               <div className="col-md-6">
                 <label>Bắt đầu</label>

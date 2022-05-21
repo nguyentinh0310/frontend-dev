@@ -25,4 +25,9 @@ const HomePage: NextPageWithLayout = () => {
 };
 HomePage.Layout = MainLayout;
 
+export const getInitialProps = async (context: any) => {
+  // const token = context.;
+  console.log(context);
+};
+
 export default HomePage;

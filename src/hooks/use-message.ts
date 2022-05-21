@@ -10,6 +10,16 @@ export function useConversations() {
   };
 }
 
+export function useConversation(id: any) {
+  const { data, error, mutate } = useSWR(id ? `/conversations/${id}` : null);
+  return {
+    conversation: data,
+    isLoading: !error && !data,
+    isError: error,
+    mutateConvId: mutate,
+  };
+}
+
 export function useMessages(id: any) {
   const { data, error, mutate } = useSWR(id ? `/messages/${id}` : null);
   return {

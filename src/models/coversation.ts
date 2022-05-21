@@ -6,5 +6,6 @@ export interface IConversation {
   text: string;
   media: string[];
   call: any;
+  isRead: boolean
 }
 

@@ -1,5 +1,11 @@
 import { useAppSelector } from "@/app";
-import { useAuth, useConversations, useMessages, useNotify, useUser } from "@/hooks";
+import {
+  useAuth,
+  useConversations,
+  useMessages,
+  useNotify,
+  useUser,
+} from "@/hooks";
 import {
   usePost,
   usePosts,
@@ -204,6 +210,18 @@ export function SocketClient() {
     };
   }, [socket]);
 
+  useEffect(() => {
+    socket.emit("check-user-online", auth);
+  }, [socket, auth]);
+
+  useEffect(() => {
+    socket.on("check-user-online-to-me", async (data: any) => {
+      console.log(data)
+    });
+    return () => {
+      socket.off("check-user-online-to-me");
+    };
+  }, [socket]);
   return (
     <>
       <audio controls ref={audioRef} style={{ display: "none" }}>

@@ -11,7 +11,6 @@ export function makeStore() {
       statusModal: statusModalReducer,
       posts: postsReducer,
       user: userReducer,
-      
     },
   });
 }

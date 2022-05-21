@@ -1,4 +1,6 @@
-import { useAuth, useConversations } from "@/hooks";
+import { conversationsApi } from "@/api-client";
+import { useAppSelector } from "@/app";
+import { useAuth, useConversations, useMessages } from "@/hooks";
 import { IConversation, IUser } from "@/models";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -13,6 +15,7 @@ export function Conversation({ conv }: ConversationProps) {
   const [user, setUser] = useState<any>("");
   const { auth } = useAuth();
   const { mutateConv } = useConversations();
+  const { mutateMessages } = useMessages(user?._id);
 
   useEffect(() => {
     const friendId = conv?.recipients.find(
@@ -21,20 +24,26 @@ export function Conversation({ conv }: ConversationProps) {
     setUser(friendId);
   }, [conv?.recipients, auth?._id]);
 
+  const onClickToMessage = async () => {
+    await conversationsApi.isRead(user ? user?._id : auth?._id);
+    await mutateConv();
+    await mutateMessages();
+    return router.push(`/message/${user ? user?._id : auth?._id}`);
+  };
+
   return (
-    <li
-      onClick={async () => {
-        await mutateConv();
-        return router.push(`/message/${user ? user?._id : auth?._id}`);
-      }}
-    >
-      <a href="#">
+    <li onClick={onClickToMessage}>
+      <a style={{ fontWeight: conv?.isRead ? "normal" : "bold" }}>
         <span className="avatar">
           <img src={user ? user?.avatar : auth?.avatar} alt="" />
         </span>
         <div className="content">
           <span className="name">{user ? user?.fullname : auth?.fullname}</span>
-          <p className="text">{conv?.text}</p>
+          <p className="text">
+            {conv?.text?.length < 15
+              ? conv?.text
+              : conv?.text?.slice(0, 15) + "..."}
+          </p>
         </div>
         <i className="fas fa-circle"></i>
       </a>

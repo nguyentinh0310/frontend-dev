@@ -12,8 +12,11 @@ import { toast } from "react-toastify";
 export function EducationModal() {
   const schema = yup.object().shape({
     school: yup.string().required("Trường học không để trống"),
-    from: yup.string().required("Vui lòng chọn thời gian"),
-    to: yup.string().required("Vui lòng chọn thời gian"),
+    from: yup.date().required("Vui lòng chọn thời gian bắt đầu"),
+    to: yup
+      .date()
+      .required("Vui lòng chọn thời gian kết thúc")
+      .min(yup.ref("from"), "Ngày kết thúc lơn hơn ngày bắt đầu"),
   });
 
   const router = useRouter();

@@ -17,7 +17,6 @@ export function EditFormProfile() {
   const schema = yup.object().shape({
     location: yup.string().required("Vui lòng chọn Tỉnh/Thành phố"),
     bio: yup.string().required("Bio không để trống"),
-    skills: yup.string().required("Kỹ năng không để trống"),
   });
   const router = useRouter();
   const { id } = router.query;
@@ -44,12 +43,13 @@ export function EditFormProfile() {
     defaultValues: initState,
     resolver: yupResolver(schema),
   });
+
+
   const handleSubmitForm = async (values: any) => {
     try {
-      console.log(values);
       await profileApi.create(values);
-      await mutateProfile();
       toast.success("Tạo trang cá nhân thành công!");
+      await mutateProfile();
     } catch (error) {
       toast.error("Lỗi 500");
     }
@@ -151,12 +151,6 @@ export function EditFormProfile() {
           ))}
         </div>
       )}
-      {/* <div className="social">
-        <label>
-          <i className="fa-solid fa-earth-asia"></i> Mạng xã hội khác
-        </label>
-        <SocailModal/>
-      </div> */}
       <div className="d-flex justify-content-center">
         <button
           type="submit"

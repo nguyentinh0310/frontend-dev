@@ -6,9 +6,9 @@ import moment from "moment";
 import { useRouter } from "next/router";
 import React from "react";
 import { toast } from "react-toastify";
+import swal from "sweetalert";
 
-interface NotifyModalProps{
-}
+interface NotifyModalProps {}
 
 export function NotifyModal(props: NotifyModalProps) {
   const router = useRouter();
@@ -28,7 +28,7 @@ export function NotifyModal(props: NotifyModalProps) {
   };
 
   const handleReadAllNotify = async () => {
-    notifies?.forEach(async (notify: INotification) => {
+    notifies?.data?.forEach(async (notify: INotification) => {
       await notificationApi.readNotify(notify._id);
       await mutateNotify();
     });
@@ -36,10 +36,20 @@ export function NotifyModal(props: NotifyModalProps) {
 
   const handleDeleteAllNotify = async () => {
     try {
-      await notificationApi.removeAll();
-      await mutateNotify();
-      toast.success("Xóa thông báo thành công");
-      dispatch(closeModal());
+      swal({
+        title: "Xác nhận",
+        text: "Bạn có muốn tất cả thông báo?",
+        icon: "warning",
+        buttons: ["Huỷ", "Xác nhận"],
+        dangerMode: true,
+      }).then(async (willDelete) => {
+        if (willDelete) {
+          await notificationApi.removeAll();
+          await mutateNotify();
+          toast.success("Xóa thông báo thành công");
+          dispatch(closeModal());
+        }
+      });
     } catch (error) {
       toast.error("Lỗi 500");
     }
@@ -50,9 +60,10 @@ export function NotifyModal(props: NotifyModalProps) {
       <div className="dropdown">
         <div className="dropdown-title">
           <h4>
-            Thông báo {notifies?.length > 0 ? `(${notifies?.length})` : ""}
+            Thông báo
+            {notifies?.data?.length > 0 ? `(${notifies?.data?.length})` : ""}
           </h4>
-          {notifies?.length > 0 && (
+          {notifies?.data?.length > 0 && (
             <span className="operate-notify">
               <a onClick={handleReadAllNotify}>Đánh dấu đã đọc</a>
               <a onClick={handleDeleteAllNotify}>Xóa thông báo</a>
@@ -64,10 +75,10 @@ export function NotifyModal(props: NotifyModalProps) {
             <span className="m-auto mt-3 spinner-border text-success"></span>
           ) : (
             <>
-              {notifies?.length === 0 && (
+              {notifies?.data?.length === 0 && (
                 <h5 className="text-center mt-3">Chưa có thông báo gì chả</h5>
               )}
-              {notifies?.map((notify: INotification) => (
+              {notifies?.data?.map((notify: INotification) => (
                 <a
                   className="menu-item"
                   key={notify?._id}

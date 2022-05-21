@@ -163,6 +163,24 @@ nav {
     }
   }
 }
+@media screen and (max-width: 999px) {
+  nav {
+    .nav-middle {
+      justify-content: start;
+      padding-left: 11rem;
+    }
+  }
+}
+
+@media screen and (max-width: 899px) {
+  nav {
+    .nav-middle {
+      justify-content: start;
+      padding-left: 8rem;
+    }
+  }
+}
+
 @media screen and (max-width: 768px) {
   nav {
     .nav-middle {

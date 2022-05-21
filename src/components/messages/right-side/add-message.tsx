@@ -1,3 +1,4 @@
+import { conversationsApi } from "@/api-client";
 import { messagesApi } from "@/api-client/message-api";
 import { Icons } from "@/components/common";
 import { useAuth, useConversations } from "@/hooks";
@@ -27,6 +28,7 @@ export function AddMessage({
   loadMedia,
   setLoadMedia,
 }: AddMessageProps) {
+
   const [content, setContent] = useState("");
   const [show, setShow] = useState(false);
 
@@ -93,7 +95,6 @@ export function AddMessage({
   };
 
   const videoShow = (src: any) => {
-    console.log(src);
     return <video controls src={src} className="img-thumbnail" />;
   };
   return (

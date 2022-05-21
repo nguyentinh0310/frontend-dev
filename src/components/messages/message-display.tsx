@@ -26,7 +26,6 @@ export function MessageDisplay({ user, msg }: MessageDisplayProps) {
   };
 
   const videoShow = (src: any) => {
-    console.log(src);
     return <video controls src={src} className="img-thumbnail" />;
   };
 
@@ -50,7 +49,6 @@ export function MessageDisplay({ user, msg }: MessageDisplayProps) {
     socket.on("delete-message-to-client", async (msg: IMessage) => {
       msg = await mutateMessages();
       msg = await mutateConv();
-      console.log(msg);
     });
     return () => {
       socket.off("delete-message-to-client");

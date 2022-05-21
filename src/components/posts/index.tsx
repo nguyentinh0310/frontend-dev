@@ -19,8 +19,6 @@ export interface PostProps {
 export function Post({ post }: PostProps) {
   const router = useRouter();
   const dispacth = useAppDispatch();
-  // const {postData} = useAppSelector(state => state.posts)
-  // console.log(postData)
 
   const [readMore, setReadMore] = useState(false);
   const [show, setShow] = useState(false);

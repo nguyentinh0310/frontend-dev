@@ -44,7 +44,7 @@ export function FollowBtn({ user }: FollowBtnProps) {
       id: auth?._id,
       text: "đã theo dõi bạn.",
       recipients: [user?._id],
-      url: `/profile/${user?._id}`,
+      url: `/profile/${auth?._id}`,
     };
     await notificationApi.create(notify);
     await mutateNotify();

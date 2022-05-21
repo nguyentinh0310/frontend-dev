@@ -41,7 +41,7 @@ export default function handler(
           cookies.set("jwt", access_token, {
             httpOnly: true,
             sameSite: "lax",
-            maxAge: 24 * 60 * 60 * 1000,
+            maxAge: 2* 24 * 60 * 60 * 1000,
           });
 
           if (access_token) {

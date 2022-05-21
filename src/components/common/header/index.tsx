@@ -6,7 +6,7 @@ import {
   useAppSelector,
 } from "@/app";
 import { NotifyModal, SettingModal, UserModal } from "@/components/modal";
-import { useAuth, useSearchUser, useUser } from "@/hooks";
+import { useAuth, useConversations, useSearchUser, useUser } from "@/hooks";
 import { useNotify } from "@/hooks/use-notify";
 import { usePosts, usePostsFollow } from "@/hooks/use-post";
 import clsx from "clsx";
@@ -26,7 +26,6 @@ export function Header() {
   );
 
   const [keyword, setKeyword] = useState("");
-  const [isRead, setIsRead] = useState(false);
 
   const { userSearch, isLoading } = useSearchUser(keyword);
   const { auth } = useAuth();
@@ -34,6 +33,7 @@ export function Header() {
   const { mutatePosts } = usePosts(limit);
   const { mutatePostsFl } = usePostsFollow(limit);
   const { notifies } = useNotify();
+  const { conversations } = useConversations();
 
   const scrollTop = () => {
     window.scrollTo(0, 0);
@@ -119,6 +119,15 @@ export function Header() {
           </Link>
           <a className="nav-icon nav-icon-messenger" onClick={onClickMessage}>
             <i className="fab fa-facebook-messenger"></i>
+            {conversations?.totalRows !== 0 && (
+              <span className="count">
+                <small>
+                  {conversations?.totalRows <= 5
+                    ? conversations?.totalRows
+                    : "5+"}
+                </small>
+              </span>
+            )}
           </a>
 
           <a
@@ -126,17 +135,18 @@ export function Header() {
             onClick={onClickNotify}
           >
             <i className="fa fa-bell"></i>
-            {notifies?.length !== 0 && (
-              <span
-                className="count"
-                style={{ display: openNotify ? "none" : "" }}
-              >
-              <small>{notifies?.length}</small>
+            {notifies?.totalRows !== 0 && (
+              <span className="count">
+                <small>
+                  {notifies?.totalRows <= 10 ? notifies?.totalRows : "10+"}
+                </small>
               </span>
             )}
           </a>
           <a
-            className={openSetting ? "nav-icon active" : "nav-icon icon-setting"}
+            className={
+              openSetting ? "nav-icon active" : "nav-icon icon-setting"
+            }
             onClick={onClickSetting}
           >
             <i className="fa-solid fa-caret-down"></i>

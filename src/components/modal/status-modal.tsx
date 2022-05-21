@@ -83,7 +83,7 @@ export function StatusModal() {
     setShow(false);
     if (!content) {
       setLoading(false);
-      toast.error("Vui lòng thêm nội dung bài viết!")
+      toast.error("Vui lòng thêm nội dung bài viết!");
       return;
     }
 
@@ -110,7 +110,7 @@ export function StatusModal() {
         await mutatePostsFl();
         await mutatePost();
         await mutatePostUser();
-        socket.emit("update-post", data)
+        socket.emit("update-post", data);
 
         setContent("");
         setImages([]);
@@ -129,7 +129,7 @@ export function StatusModal() {
         await mutatePosts();
         await mutatePostsFl();
         await mutatePostUser();
-        socket.emit("create-post", data)
+        socket.emit("create-post", data);
 
         setContent("");
         setImages([]);
@@ -149,7 +149,6 @@ export function StatusModal() {
   };
 
   const videoShow = (src: any) => {
-    console.log(src);
     return <video controls src={src} className="img-thumbnail" />;
   };
 

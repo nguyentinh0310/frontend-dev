@@ -2,17 +2,18 @@ import { conversationsApi } from "@/api-client/coversation-api";
 import { useAuth, useConversations, useMessages, useUser } from "@/hooks";
 import { IMessage } from "@/models";
 import { socket } from "@/utils";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
+import swal from "sweetalert";
 import { MessageDisplay } from "../message-display";
 import { AddMessage } from "./add-message";
-import swal from "sweetalert";
-import Link from "next/link";
 
 export function RightSide() {
   const router = useRouter();
   const { id } = router.query;
+
   const [messagesList, setMessagesList] = useState<any>([]);
   const [arrivalMessage, setArrivalMessage] = useState<any>();
   const [media, setMedia] = useState<any>([]);
@@ -33,14 +34,14 @@ export function RightSide() {
 
   // get tin nhắn đến từ socket
   useEffect(() => {
-    socket.on("get-message", (data: any) => {
+    socket.on("get-message", async (data: any) => {
       setArrivalMessage({
         sender: data.sender,
         text: data.text,
         media: data.media,
       });
-
-      data = mutateConv();
+      await conversationsApi.isUnReadConv(auth?._id);
+      data = await mutateConv();
     });
   }, [socket]);
 
@@ -59,25 +60,29 @@ export function RightSide() {
 
   const handleDeleteConversation = async () => {
     try {
-      swal({
-        title: "Xác nhận",
-        text: "Bạn có muốn xoá cuộc hội thoại này?",
-        icon: "warning",
-        buttons: ["Huỷ", "Xác nhận"],
-        dangerMode: true,
-      }).then(async (willDelete) => {
-        if (willDelete) {
-          await conversationsApi.remove(user?._id);
-          await mutateMessages();
-          await mutateConv();
-          toast.success("Xóa cuộc hội thoại thành công!");
-        }
-      });
+      // swal({
+      //   title: "Xác nhận",
+      //   text: "Bạn có muốn xoá cuộc hội thoại này?",
+      //   icon: "warning",
+      //   buttons: ["Huỷ", "Xác nhận"],
+      //   dangerMode: true,
+      // }).then(async (willDelete) => {
+      //   if (willDelete) {
+      //     await conversationsApi.remove(user?._id);
+      //     await mutateMessages();
+      //     await mutateConv();
+      //     toast.success("Xóa cuộc hội thoại thành công!");
+      //     router.push("/message");
+      //   }
+      // });
+      console.log(user?._id)
+      await conversationsApi.remove(user?._id);
+      await mutateMessages();
+      await mutateConv();
     } catch (error) {
       toast.error("Lỗi 500");
     }
   };
-
 
   return (
     <Fragment>
@@ -94,7 +99,7 @@ export function RightSide() {
             </Link>
             {user?.length !== 0 && (
               <div className="icon">
-                <i className="fa-solid fa-phone text-primary"></i>
+                <i className="fa-solid fa-images"></i>
                 <i
                   className="fas fa-trash text-danger"
                   onClick={handleDeleteConversation}
