@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import swal from "sweetalert";
 import { MessageDisplay } from "../message-display";
 import { AddMessage } from "./add-message";
+import { ChatMedia } from "./chat-media";
 
 export function RightSide() {
   const router = useRouter();
@@ -18,6 +19,7 @@ export function RightSide() {
   const [arrivalMessage, setArrivalMessage] = useState<any>();
   const [media, setMedia] = useState<any>([]);
   const [loadMedia, setLoadMedia] = useState(false);
+  const [show, setShow] = useState(false);
 
   const refDisplay = useRef<any>();
 
@@ -35,12 +37,13 @@ export function RightSide() {
   // get tin nhắn đến từ socket
   useEffect(() => {
     socket.on("get-message", async (data: any) => {
+      await conversationsApi.isUnReadConv(data.sender);
       setArrivalMessage({
         sender: data.sender,
         text: data.text,
         media: data.media,
       });
-      await conversationsApi.isUnReadConv(auth?._id);
+      console.log(data.sender);
       data = await mutateConv();
     });
   }, [socket]);
@@ -50,6 +53,7 @@ export function RightSide() {
     if (arrivalMessage && arrivalMessage?.sender === id) {
       setMessagesList((prev: any) => [...prev, arrivalMessage]);
     }
+    refDisplay?.current?.scrollIntoView({ behavior: "smooth", block: "end" });
   }, [arrivalMessage, id]);
 
   useEffect(() => {
@@ -75,10 +79,7 @@ export function RightSide() {
       //     router.push("/message");
       //   }
       // });
-      console.log(user?._id)
-      await conversationsApi.remove(user?._id);
-      await mutateMessages();
-      await mutateConv();
+      console.log(user?._id);
     } catch (error) {
       toast.error("Lỗi 500");
     }
@@ -99,7 +100,17 @@ export function RightSide() {
             </Link>
             {user?.length !== 0 && (
               <div className="icon">
-                <i className="fa-solid fa-images"></i>
+                <i
+                  className="fa-solid fa-images"
+                  onClick={() => setShow(true)}
+                ></i>
+                {show && (
+                  <ChatMedia
+                    show={show}
+                    setShow={setShow}
+                    messages={messages}
+                  />
+                )}
                 <i
                   className="fas fa-trash text-danger"
                   onClick={handleDeleteConversation}
@@ -144,6 +155,7 @@ export function RightSide() {
             setMedia={setMedia}
             loadMedia={loadMedia}
             setLoadMedia={setLoadMedia}
+            refDisplay={refDisplay}
           />
         </>
       ) : (

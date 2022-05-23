@@ -72,6 +72,7 @@ export function MessageDisplay({ user, msg }: MessageDisplayProps) {
             onClick={handleDeleteMessages}
           />
         )}
+
         <span className="chat-text">{msg?.text}</span>
       </div>
 

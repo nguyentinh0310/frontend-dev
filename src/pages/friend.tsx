@@ -1,13 +1,24 @@
-import { ListFiend, MainLayout, Seo, SuggestFiend } from "@/components";
+import {
+  ListFollowers,
+  ListFollowings,
+  MainLayout,
+  Seo,
+  SuggestFiend
+} from "@/components";
+import { useNotify } from "@/hooks";
 import { NextPageWithLayout } from "@/models";
 import React from "react";
 
 const FriendPage: NextPageWithLayout = () => {
+  const { notifies } = useNotify();
+
   return (
     <>
       <Seo
         data={{
-          title: "Bạn bè",
+          title: `${
+            notifies?.totalRows > 0 ? `(${notifies?.totalRows})` : ""
+          } Bạn bè`,
           description:
             "Website It Network xây dựng fullstack sử dụng công nghệ Nextjs và Nodejs",
           url: "http://localhost:3000/",
@@ -16,7 +27,8 @@ const FriendPage: NextPageWithLayout = () => {
         }}
       />
       <section className="friend-page">
-        <ListFiend />
+        <ListFollowers />
+        <ListFollowings />
         <SuggestFiend />
       </section>
     </>

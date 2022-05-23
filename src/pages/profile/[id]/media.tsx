@@ -1,4 +1,5 @@
 import { ProfileLayout, Seo } from "@/components";
+import { useNotify } from "@/hooks";
 import { usePostUser } from "@/hooks/use-post";
 import { IPost, ListResponse } from "@/models";
 import axios from "axios";
@@ -19,6 +20,8 @@ export default function ProfileMediaPage({ initPosts }: ProfileMediaPageProps) {
   const [loading, setLoading] = useState(false);
 
   const { postUser, isLoading } = usePostUser(id);
+  const { notifies } = useNotify();
+
 
   useEffect(() => {
     if (postUser) {
@@ -31,7 +34,9 @@ export default function ProfileMediaPage({ initPosts }: ProfileMediaPageProps) {
     <>
       <Seo
         data={{
-          title: "Ảnh/video",
+          title: `${
+            notifies?.totalRows > 0 ? `(${notifies?.totalRows})` : ""
+          } Ảnh/video`,
           description:
             "Website It Network xây dựng fullstack sử dụng công nghệ Nextjs và Nodejs",
           url: "http://localhost:3000/",

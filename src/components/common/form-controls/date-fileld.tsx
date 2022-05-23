@@ -15,14 +15,14 @@ export function DateField({ name, control }: DateFieldProps) {
     control,
   });
   return (
-      <>
+      <div className="mb-3">
         <input
           type="date"
-          className={"mb-3 form-control " + (error ? "is-invalid" : "")}
+          className={"form-control " + (error ? "is-invalid" : "")}
           onChange={onChange}
           onBlur={onBlur}
         />
         <div className="invalid-feedback">{error?.message}</div>
-      </>
+      </div>
   );
 }

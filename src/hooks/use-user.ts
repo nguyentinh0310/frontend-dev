@@ -20,7 +20,7 @@ export function useSearchUser(keyword: string) {
 }
 
 export function useSuggestUser() {
-  const { data, error, mutate } = useSWR(`/users/suggest_user`);
+  const { data, error, mutate } = useSWR(`/users/suggest_user?num=6`);
   return {
     userSuggest: data,
     isLoading: !error && !data,

@@ -52,14 +52,14 @@ export function Post({ post }: PostProps) {
 
       <div className="post-content" onClick={() => setShow(false)}>
         <ReactMarkdown>
-          {post?.content.length < 100
+          {post?.content.length < 150
             ? post?.content
             : readMore
             ? post?.content + " "
-            : post?.content.slice(0, 100) + "... "}
+            : post?.content.slice(0, 150) + "... "}
         </ReactMarkdown>
 
-        {post?.content.length > 100 && (
+        {post?.content.length > 150 && (
           <span className="readMore" onClick={() => setReadMore(!readMore)}>
             {readMore ? "Ẩn bớt" : "Xem thêm"}
           </span>

@@ -15,6 +15,7 @@ const userSlice = createSlice({
     setUserId: (state, action: PayloadAction<any>) => {
       state.userId = action.payload;
     },
+    
   },
 });
 

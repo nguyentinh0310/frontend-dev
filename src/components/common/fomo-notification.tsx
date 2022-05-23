@@ -1,4 +1,4 @@
-import { useUser } from "@/hooks";
+import { useAuth, useUser } from "@/hooks";
 import { usePost } from "@/hooks/use-post";
 import React from "react";
 
@@ -7,8 +7,10 @@ export interface FomoNotificationProps {
 }
 
 export function FomoNotification({ notify }: FomoNotificationProps) {
+  const { auth } = useAuth();
   const { user } = useUser(notify?.recipients[0]);
   const { post } = usePost(notify?.id);
+  // console.log(auth)
   return (
     <div className="noti">
       {post?.images.length > 0 ? (
@@ -33,7 +35,7 @@ export function FomoNotification({ notify }: FomoNotificationProps) {
 
       <div className="noti-content">
         <h3 className="noti-title">
-          {user?.fullname} {notify?.text}
+          {auth?.fullname} {notify?.text}
         </h3>
       </div>
     </div>

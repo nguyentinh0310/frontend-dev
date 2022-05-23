@@ -2,17 +2,21 @@ import { openStatus, setLimit, useAppDispatch, useAppSelector } from "@/app";
 import { StatusModal } from "@/components/modal";
 import { useAuth } from "@/hooks";
 import { usePostsFollow } from "@/hooks/use-post";
-import { IPost } from "@/models";
+import { IPost, ListResponse } from "@/models";
 import React, { useEffect, useState } from "react";
 import { Post } from "../posts";
 import { PostSkeletonList } from "../skeleton";
 
-export function MiddlePannel() {
+interface MiddlePannelProps {
+  posts: ListResponse<IPost>;
+}
+
+export function MiddlePannel({ posts }: MiddlePannelProps) {
   const { auth } = useAuth();
   const dispacth = useAppDispatch();
   const { limit } = useAppSelector((state) => state.posts);
 
-  const [postList, setPostList] = useState<any>([]);
+  const [postList, setPostList] = useState<any>(posts?.data);
   const [loading, setLoading] = useState(false);
 
   const { postsFollow, isLoading, isError } = usePostsFollow(limit);
@@ -23,7 +27,6 @@ export function MiddlePannel() {
       setLoading(true);
     }
   }, [postsFollow]);
-
 
   const handleShow = () => {
     dispacth(openStatus());
@@ -53,7 +56,7 @@ export function MiddlePannel() {
       )}
 
       {loading && isLoading ? (
-        <PostSkeletonList length={5}  />
+        <PostSkeletonList length={5} />
       ) : (
         postList?.data?.map((post: IPost) => (
           <Post post={post} key={post._id} />

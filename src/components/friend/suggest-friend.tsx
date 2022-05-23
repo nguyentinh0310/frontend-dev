@@ -9,7 +9,7 @@ export function SuggestFiend() {
 
   return (
     <div className="list-friend">
-      <h3>Gợi ý bạn bè</h3>
+      <h4>Gợi ý bạn bè</h4>
       <div className="row">
         {isLoading ? (
           <span>Loadding ...</span>
@@ -24,8 +24,8 @@ export function SuggestFiend() {
                     </span>
                   </Link>
                   <Link href={`/profile/${user?._id}`}>
-                  <span className="name">{user?.fullname}</span>
-                </Link>
+                    <span className="name">{user?.fullname}</span>
+                  </Link>
                   <FollowBtn user={user} />
                 </div>
               </div>

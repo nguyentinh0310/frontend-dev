@@ -13,8 +13,13 @@ export function ExperienceModal() {
   const schema = yup.object().shape({
     title: yup.string().required("Kinh nghiệm không để trống"),
     company: yup.string().required("Công ty không để trống"),
-    from: yup.string().required("Vui lòng chọn thời gian"),
-    to: yup.string().min(yup.ref("from"), "Ngày kết thúc lơn hơn ngày bắt đầu"),
+    from: yup
+      .date()
+      .typeError("Vui lòng chọn thời gian bắt đầu")
+      .required("Vui lòng chọn thời gian bắt đầu"),
+    to: yup
+      .date()
+      .min(yup.ref("from"), "Ngày kết thúc lơn hơn ngày bắt đầu"),
   });
 
   const router = useRouter();
@@ -29,13 +34,14 @@ export function ExperienceModal() {
   const {
     control,
     handleSubmit,
+    reset,
     formState: { isSubmitting },
   } = useForm({
     defaultValues: {
       title: "",
       company: "",
       from: "",
-      to: "",
+      to: new Date,
     },
     resolver: yupResolver(schema),
   });
@@ -44,6 +50,12 @@ export function ExperienceModal() {
       await profileApi.createExperience(values);
       await mutateProfile();
       setShow(false);
+      reset({
+        title: "",
+        company: "",
+        from: "",
+        to: new Date,
+      });
       toast.success("Thêm kinh nghiệm thành công");
       console.log(values);
     } catch (error) {

@@ -4,17 +4,22 @@ import axios from "axios";
 import { GetStaticProps } from "next";
 import React, { Fragment } from "react";
 import Cookies from "cookies";
+import { useNotify } from "@/hooks";
 
 export interface ExplorePageProps {
   initPosts: ListResponse<IPost>;
 }
 
 export default function ExplorePage({ initPosts }: ExplorePageProps) {
+  const { notifies } = useNotify();
+
   return (
     <Fragment>
      <Seo
         data={{
-          title: "Khám phá | It Network",
+          title: `${
+            notifies?.totalRows > 0 ? `(${notifies?.totalRows})` : ""
+          } Khám phá | It Network`,
           description:
             "Website It Network xây dựng fullstack sử dụng công nghệ Nextjs và Nodejs",
           url: "http://localhost:3000/",

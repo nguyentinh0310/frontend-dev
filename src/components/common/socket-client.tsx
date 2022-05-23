@@ -1,4 +1,4 @@
-import { useAppSelector } from "@/app";
+import { setOffine, setOnline, useAppSelector } from "@/app";
 import {
   useAuth,
   useConversations,
@@ -15,13 +15,16 @@ import {
 import { IMessage, INotification, IPost, IUser } from "@/models";
 import { socket } from "@/utils";
 import React, { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import { FomoNotification } from "./fomo-notification";
 
 export function SocketClient() {
   const audioRef = useRef<any>();
+  const dispatch = useDispatch();
   const { postData } = useAppSelector((state) => state.posts);
   const { limit } = useAppSelector((state) => state.posts);
   const { userId } = useAppSelector((state) => state.user);
+  const { online } = useAppSelector((state) => state.online);
 
   const [notifyData, setNotifyData] = useState({});
 
@@ -51,11 +54,8 @@ export function SocketClient() {
   };
   // joinUser
   useEffect(() => {
-    socket.emit("join-user", auth?._id);
-    socket.on("get-user", (users: any) => {
-      // console.log(users);
-    });
-  }, [socket, auth?._id]);
+    socket.emit("join-user", auth);
+  }, [socket, auth]);
 
   // create-post
   useEffect(() => {
@@ -216,12 +216,40 @@ export function SocketClient() {
 
   useEffect(() => {
     socket.on("check-user-online-to-me", async (data: any) => {
-      console.log(data)
+      data.forEach((item: any) => {
+        if (!online?.includes(item?.id)) {
+          // console.log(item);
+          dispatch(setOnline(item?.id));
+        }
+      });
     });
     return () => {
       socket.off("check-user-online-to-me");
     };
-  }, [socket]);
+  }, [socket, dispatch, online]);
+
+  useEffect(() => {
+    socket.on("check-user-online-to-client", async (id: any) => {
+      if (!online?.includes(id)) {
+        dispatch(setOnline(id));
+      }
+    });
+    return () => {
+      socket.off("check-user-online-to-client");
+    };
+  }, [socket, dispatch, online]);
+
+  // Check  Offline
+  useEffect(() => {
+    socket.on("check-user-offline", (id: any) => {
+      dispatch(setOffine(id));
+    });
+
+    return () => {
+      socket.off("check-user-offline");
+    };
+  }, [socket, dispatch]);
+
   return (
     <>
       <audio controls ref={audioRef} style={{ display: "none" }}>

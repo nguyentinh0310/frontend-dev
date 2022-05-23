@@ -24,6 +24,8 @@ export function LeftSide() {
     setKeyword(value);
   };
 
+  
+
   const clickToMessage = async (user: IUser) => {
     setKeyword("");
     await mutateConv();

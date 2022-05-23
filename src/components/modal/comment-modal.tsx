@@ -61,7 +61,6 @@ export function CommentModal({
           recipients: [post?.user?._id, comment?.user?._id],
           url: `/posts/${post._id}`,
         };
-        console.log(notify);
         await notificationApi.remove(notify);
         await mutateNotify();
         socket.emit("remove-notify", notify);

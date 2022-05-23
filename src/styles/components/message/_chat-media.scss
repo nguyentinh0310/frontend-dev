@@ -1,0 +1,27 @@
+.chat-media-modal {
+  width: 100%;
+  margin: 5px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  justify-content: center;
+  grid-gap: 10px;
+  overflow: hidden;
+  .media-display {
+    display: flex;
+    .media-col {
+      min-width: 200px;
+      height: 200px;
+      width: 100%;
+      position: relative;
+      cursor: pointer;
+      overflow: hidden;
+      img,
+      video {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+      }
+    }
+  }
+}

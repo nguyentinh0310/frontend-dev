@@ -1,4 +1,5 @@
 import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
+import onlineReducer from "./online-slice";
 import postsReducer from "./posts-slice";
 import statusModalReducer from "./status-modal-slice";
 import toggleModalReducer from "./toggle-modal-slice";
@@ -11,6 +12,7 @@ export function makeStore() {
       statusModal: statusModalReducer,
       posts: postsReducer,
       user: userReducer,
+      online: onlineReducer,
     },
   });
 }

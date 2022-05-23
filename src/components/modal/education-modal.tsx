@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { DateField, InputField } from "../common";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -12,9 +12,13 @@ import { toast } from "react-toastify";
 export function EducationModal() {
   const schema = yup.object().shape({
     school: yup.string().required("Trường học không để trống"),
-    from: yup.date().required("Vui lòng chọn thời gian bắt đầu"),
+    from: yup
+      .date()
+      .typeError("Vui lòng chọn thời gian bắt đầu")
+      .required("Vui lòng chọn thời gian bắt đầu"),
     to: yup
       .date()
+      .typeError("Vui lòng chọn thời gian kết thúc")
       .required("Vui lòng chọn thời gian kết thúc")
       .min(yup.ref("from"), "Ngày kết thúc lơn hơn ngày bắt đầu"),
   });
@@ -31,6 +35,7 @@ export function EducationModal() {
   const {
     control,
     handleSubmit,
+    reset,
     formState: { isSubmitting },
   } = useForm({
     defaultValues: {
@@ -45,11 +50,20 @@ export function EducationModal() {
       await profileApi.createEducation(values);
       await mutateProfile();
       setShow(false);
+      reset({
+        school: "",
+        from: "",
+        to: "",
+      });
       toast.success("Thêm học vấn thành công");
     } catch (error) {
       toast.error("Lỗi 400");
     }
   };
+
+  // useEffect(() => {
+
+  // }, [isSubmitting, reset]);
 
   return (
     <div className="education-modal">

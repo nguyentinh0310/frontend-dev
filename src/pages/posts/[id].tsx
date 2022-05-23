@@ -1,5 +1,6 @@
 import { MainLayout, PostSkeletonList, Seo, StatusModal } from "@/components";
 import { Post } from "@/components/posts";
+import { useNotify } from "@/hooks";
 import { usePost } from "@/hooks/use-post";
 import { IPost } from "@/models";
 import axios from "axios";
@@ -14,6 +15,7 @@ export interface PostIdPageProps {
 export default function PostIdPage({ postDetail }: PostIdPageProps) {
   const router = useRouter();
   const { id } = router.query;
+  const { notifies } = useNotify();
   const { post, isLoading } = usePost(id);
   const [data, setData] = useState(postDetail);
   const [loading, setLoading] = useState(false);
@@ -29,7 +31,9 @@ export default function PostIdPage({ postDetail }: PostIdPageProps) {
     <>
       <Seo
         data={{
-          title: "Chi tiết bài viết",
+          title: `${
+            notifies?.totalRows > 0 ? `(${notifies?.totalRows})` : ""
+          } Chi tiết bài viết`,
           description:
             "Website It Network xây dựng fullstack sử dụng công nghệ Nextjs và Nodejs",
           url: "http://localhost:3000/",

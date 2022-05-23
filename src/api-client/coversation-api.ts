@@ -10,11 +10,11 @@ export const conversationsApi = {
     const url = `/conversations/${id}`;
     return axiosClient.delete(url);
   },
-  isRead(id: string): Promise<any> {
+  isRead(id: any): Promise<any> {
     const url = `/conversations/isRead/${id}`;
     return axiosClient.put(url);
   },
-  isUnReadConv(id: string): Promise<any> {
+  isUnReadConv(id: any): Promise<any> {
     const url = `/conversations/isUnRead/${id}`;
     return axiosClient.put(url);
   },

@@ -1,5 +1,5 @@
 import { EditFormProfile, MainLayout, Seo, UserEditForm } from "@/components";
-import { useAuth } from "@/hooks";
+import { useAuth, useNotify } from "@/hooks";
 import { NextPageWithLayout } from "@/models";
 import { useRouter } from "next/router";
 import React, { Fragment } from "react";
@@ -8,12 +8,15 @@ const EditProfilePage: NextPageWithLayout = () => {
   const router = useRouter();
   const { id } = router.query;
   const { auth } = useAuth();
+  const { notifies } = useNotify();
 
   return (
     <Fragment>
       <Seo
         data={{
-          title: "Chỉnh sửa cá nhân",
+          title: `${
+            notifies?.totalRows > 0 ? `(${notifies?.totalRows})` : ""
+          } Chỉnh sửa cá nhân`,
           description:
             "Website It Network xây dựng fullstack sử dụng công nghệ Nextjs và Nodejs",
           url: "http://localhost:3000/",

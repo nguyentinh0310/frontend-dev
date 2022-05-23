@@ -1,5 +1,5 @@
 import { ProfileBody, ProfileLayout, Seo } from "@/components";
-import { useAuth } from "@/hooks";
+import { useAuth, useNotify } from "@/hooks";
 import { IPost, ListResponse } from "@/models";
 import axios from "axios";
 import { GetStaticPaths, GetStaticProps } from "next";
@@ -10,11 +10,15 @@ export interface ProfilePageProps {
 }
 export default function ProfilePage({ initPosts }: ProfilePageProps) {
   const { auth } = useAuth();
+  const { notifies } = useNotify();
+
   return (
     <Fragment>
       <Seo
         data={{
-          title: `${auth?.fullname} | Trang cá nhân `,
+          title: `
+          ${notifies?.totalRows > 0 ? `(${notifies?.totalRows} )` : ""}
+          ${auth?.fullname} | Trang cá nhân `,
           description:
             "Website It Network xây dựng fullstack sử dụng công nghệ Nextjs và Nodejs",
           url: "http://localhost:3000/",

@@ -1,5 +1,5 @@
 import { ProfileLayout, Seo } from "@/components";
-import { useAuth } from "@/hooks";
+import { useAuth, useNotify } from "@/hooks";
 import { IPost, NextPageWithLayout } from "@/models";
 import { useRouter } from "next/router";
 import React from "react";
@@ -8,6 +8,7 @@ const ProfileSavedPage: NextPageWithLayout = () => {
   const router = useRouter();
   const { id } = router.query;
   const { auth } = useAuth();
+  const { notifies } = useNotify();
 
   const onClickToDetailPost = (post: IPost) => {
     router.push(`/posts/${post?._id}`);
@@ -17,7 +18,9 @@ const ProfileSavedPage: NextPageWithLayout = () => {
     <>
       <Seo
         data={{
-          title: "Đã lưu",
+          title: `${
+            notifies?.totalRows > 0 ? `(${notifies?.totalRows})` : ""
+          } Đã lưu`,
           description:
             "Website It Network xây dựng fullstack sử dụng công nghệ Nextjs và Nodejs",
           url: "http://localhost:3000/",

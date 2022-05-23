@@ -1,6 +1,6 @@
 import { authApi } from "@/api-client";
 import { MainLayout, PasswordField, Seo } from "@/components";
-import { useAuth } from "@/hooks";
+import { useAuth, useNotify } from "@/hooks";
 import { NextPageWithLayout, UpdatePasswordPayload } from "@/models";
 import { yupResolver } from "@hookform/resolvers/yup";
 import React from "react";
@@ -10,6 +10,7 @@ import * as yup from "yup";
 
 const SettingPage: NextPageWithLayout = () => {
   const { mutateAuth } = useAuth();
+  const { notifies } = useNotify();
 
   const schema = yup.object().shape({
     password_old: yup

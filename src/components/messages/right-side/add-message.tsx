@@ -16,6 +16,7 @@ export interface AddMessageProps {
   setMedia: Function;
   loadMedia: boolean;
   setLoadMedia: Function;
+  refDisplay: any;
 }
 
 export function AddMessage({
@@ -27,8 +28,8 @@ export function AddMessage({
   setMedia,
   loadMedia,
   setLoadMedia,
+  refDisplay,
 }: AddMessageProps) {
-
   const [content, setContent] = useState("");
   const [show, setShow] = useState(false);
 
@@ -59,6 +60,7 @@ export function AddMessage({
     setShow(false);
     setMedia([]);
     setLoadMedia(true);
+    refDisplay?.current?.scrollIntoView({ behavior: "smooth", block: "end" });
 
     try {
       let newArr = [];

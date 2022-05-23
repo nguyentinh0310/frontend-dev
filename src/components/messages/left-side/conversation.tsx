@@ -1,5 +1,5 @@
 import { conversationsApi } from "@/api-client";
-import { useAppSelector } from "@/app";
+import { useAppDispatch, useAppSelector } from "@/app";
 import { useAuth, useConversations, useMessages } from "@/hooks";
 import { IConversation, IUser } from "@/models";
 import { useRouter } from "next/router";
@@ -11,8 +11,13 @@ export interface ConversationProps {
 
 export function Conversation({ conv }: ConversationProps) {
   const router = useRouter();
+  const { online } = useAppSelector((state) => state.online);
+
+  // console.log(online);
 
   const [user, setUser] = useState<any>("");
+  const [check, setCheck] = useState(false);
+
   const { auth } = useAuth();
   const { mutateConv } = useConversations();
   const { mutateMessages } = useMessages(user?._id);
@@ -24,6 +29,17 @@ export function Conversation({ conv }: ConversationProps) {
     setUser(friendId);
   }, [conv?.recipients, auth?._id]);
 
+  // check online-offline
+  useEffect(() => {
+    online?.find((item: any) => {
+      if (item === user?._id) {
+        setCheck(true);
+      } else {
+        setCheck(false);
+      }
+    });
+  }, [online, user?._id]);
+
   const onClickToMessage = async () => {
     await conversationsApi.isRead(user ? user?._id : auth?._id);
     await mutateConv();
@@ -32,7 +48,10 @@ export function Conversation({ conv }: ConversationProps) {
   };
 
   return (
-    <li onClick={onClickToMessage}>
+    <li
+      onClick={onClickToMessage}
+      // style={{ background: check ? "#dcdcdc" : "" }}
+    >
       <a style={{ fontWeight: conv?.isRead ? "normal" : "bold" }}>
         <span className="avatar">
           <img src={user ? user?.avatar : auth?.avatar} alt="" />
@@ -45,7 +64,7 @@ export function Conversation({ conv }: ConversationProps) {
               : conv?.text?.slice(0, 15) + "..."}
           </p>
         </div>
-        <i className="fas fa-circle"></i>
+        <i className={"fas fa-circle " + (check ? "active" : "")}></i>
       </a>
     </li>
   );

@@ -1,13 +1,23 @@
 import { MainLayout, Seo } from "@/components";
 import { LeftPanel, MiddlePannel, RightPanel } from "@/components/home";
-import { NextPageWithLayout } from "@/models";
+import { useNotify } from "@/hooks";
+import { IPost, ListResponse, NextPageWithLayout } from "@/models";
+import axios from "axios";
+import { GetServerSidePropsContext } from "next";
 
-const HomePage: NextPageWithLayout = () => {
+interface HomePageProps {
+  posts: ListResponse<IPost>;
+}
+
+const HomePage = ({ posts }: HomePageProps) => {
+  const { notifies } = useNotify();
   return (
     <>
       <Seo
         data={{
-          title: "It Network",
+          title: `${
+            notifies?.totalRows > 0 ? `(${notifies?.totalRows})` : ""
+          } It Network`,
           description:
             "Website It Network xây dựng fullstack sử dụng công nghệ Nextjs và Nodejs",
           url: "http://localhost:3000/",
@@ -17,7 +27,7 @@ const HomePage: NextPageWithLayout = () => {
       />
       <section className="home">
         <LeftPanel />
-        <MiddlePannel />
+        <MiddlePannel posts={posts} />
         <RightPanel />
       </section>
     </>
@@ -25,9 +35,23 @@ const HomePage: NextPageWithLayout = () => {
 };
 HomePage.Layout = MainLayout;
 
-export const getInitialProps = async (context: any) => {
-  // const token = context.;
-  console.log(context);
+export const getServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
+  const token: any = context.req.headers.cookie;
+  const tokenParser = token.substring(4);
+
+  const res = await axios.get(
+    `${process.env.API_URL}/api/v1/posts/follow?limit=15`,
+    {
+      headers: { Authorization: tokenParser },
+    }
+  );
+  return {
+    props: {
+      posts: res.data,
+    },
+  };
 };
 
 export default HomePage;
