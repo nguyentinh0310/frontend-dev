@@ -43,7 +43,7 @@ export function RightSide() {
         text: data.text,
         media: data.media,
       });
-      console.log(data.sender);
+      // console.log(data.sender);
       data = await mutateConv();
     });
   }, [socket]);
@@ -64,22 +64,21 @@ export function RightSide() {
 
   const handleDeleteConversation = async () => {
     try {
-      // swal({
-      //   title: "Xác nhận",
-      //   text: "Bạn có muốn xoá cuộc hội thoại này?",
-      //   icon: "warning",
-      //   buttons: ["Huỷ", "Xác nhận"],
-      //   dangerMode: true,
-      // }).then(async (willDelete) => {
-      //   if (willDelete) {
-      //     await conversationsApi.remove(user?._id);
-      //     await mutateMessages();
-      //     await mutateConv();
-      //     toast.success("Xóa cuộc hội thoại thành công!");
-      //     router.push("/message");
-      //   }
-      // });
-      console.log(user?._id);
+      swal({
+        title: "Xác nhận",
+        text: "Bạn có muốn xoá cuộc hội thoại này?",
+        icon: "warning",
+        buttons: ["Huỷ", "Xác nhận"],
+        dangerMode: true,
+      }).then(async (willDelete) => {
+        if (willDelete) {
+          await conversationsApi.remove(user?._id);
+          await mutateMessages();
+          await mutateConv();
+          toast.success("Xóa cuộc hội thoại thành công!");
+          router.push("/message");
+        }
+      });
     } catch (error) {
       toast.error("Lỗi 500");
     }

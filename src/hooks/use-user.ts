@@ -11,7 +11,7 @@ export function useUser(id: any) {
 }
 
 export function useSearchUser(keyword: string) {
-  const { data, error } = useSWR(`/users/search?keyword=${keyword}`);
+  const { data, error } = useSWR(`/users/search?keyword=${encodeURIComponent(keyword)}`);
   return {
     userSearch: data,
     isLoading: !error && !data,

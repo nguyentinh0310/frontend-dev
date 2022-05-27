@@ -81,7 +81,7 @@ export function StatusModal() {
     e.preventDefault();
     setLoading(true);
     setShow(false);
-    if (!content) {
+    if (!content.trim()) {
       setLoading(false);
       toast.error("Vui lòng thêm nội dung bài viết!");
       return;
@@ -125,7 +125,6 @@ export function StatusModal() {
           data = await postApi.create({ content });
         }
 
-        console.log(data);
         await mutatePosts();
         await mutatePostsFl();
         await mutatePostUser();

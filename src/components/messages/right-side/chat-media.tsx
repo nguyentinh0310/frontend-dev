@@ -9,7 +9,6 @@ export interface ChatMediaProps {
 }
 
 export function ChatMedia({ show, setShow, messages }: ChatMediaProps) {
-  console.log(messages);
   return (
     <Modal
       show={show}
@@ -23,9 +22,9 @@ export function ChatMedia({ show, setShow, messages }: ChatMediaProps) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body className="d-flex">
-        {messages?.data?.map((msg: IMessage) => (
-          <>
-            {msg?.media?.length > 0 && (
+        {messages?.data?.map(
+          (msg: IMessage) =>
+            msg?.media?.length > 0 && (
               <div className="chat-media-modal" key={msg?._id}>
                 {msg?.media?.map((img: any, index: any) => (
                   <div className="media-display">
@@ -43,9 +42,8 @@ export function ChatMedia({ show, setShow, messages }: ChatMediaProps) {
                   </div>
                 ))}
               </div>
-            )}
-          </>
-        ))}
+            )
+        )}
       </Modal.Body>
     </Modal>
   );

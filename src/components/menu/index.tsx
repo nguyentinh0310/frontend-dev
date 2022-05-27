@@ -1,4 +1,5 @@
 import { useAuth, useUser } from "@/hooks";
+import { socket } from "@/utils";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
@@ -39,7 +40,6 @@ export function Menu() {
 
   const handleLogout = async () => {
     await logout();
-
     toast.success("Đã đăng xuất");
     return router.push("/login");
   };

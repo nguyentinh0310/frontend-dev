@@ -22,7 +22,6 @@ export default function ProfileMediaPage({ initPosts }: ProfileMediaPageProps) {
   const { postUser, isLoading } = usePostUser(id);
   const { notifies } = useNotify();
 
-
   useEffect(() => {
     if (postUser) {
       setPostArr(postUser);

@@ -1,16 +1,14 @@
 .chat-media-modal {
-  width: 100%;
-  margin: 5px;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  justify-content: center;
-  grid-gap: 10px;
-  overflow: hidden;
+  overflow-y: auto;
   .media-display {
-    display: flex;
+    margin: 5px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    grid-gap: 10px;
+    overflow: hidden;
     .media-col {
-      min-width: 200px;
-      height: 200px;
+      width: 100px;
+      height: 100px;
       width: 100%;
       position: relative;
       cursor: pointer;

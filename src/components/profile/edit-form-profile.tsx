@@ -56,7 +56,6 @@ export function EditFormProfile() {
   };
 
   const handleDeleteEduction = async (eduction: IEducation) => {
-    console.log(eduction);
     try {
       swal({
         title: "Xác nhận",

@@ -34,13 +34,14 @@
         font-size: 17px;
         outline: none;
         box-shadow: none;
-        border: 1px solid $third-color;
-        color: $third-color;
+        background: $third-color;
+        color: white;
         &:hover,
         &:active {
+          background: white;
+          border: 1px solid $third-color;
+          color: $third-color;
           transition: all 0.4s;
-          background: $third-color;
-          color: white;
         }
       }
       .btn-follow {
@@ -48,13 +49,14 @@
         font-size: 17px;
         outline: none;
         box-shadow: none;
-        border: 1px solid $primary-color;
-        color: $primary-color;
+        background: $primary-color;
+        color: white;
         &:hover,
         &:active {
           transition: all 0.4s;
-          background: $primary-color;
-          color: white;
+          background: white;
+          border: 1px solid $primary-color;
+          color: $primary-color;
         }
       }
     }

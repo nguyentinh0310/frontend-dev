@@ -13,8 +13,6 @@ export function Conversation({ conv }: ConversationProps) {
   const router = useRouter();
   const { online } = useAppSelector((state) => state.online);
 
-  // console.log(online);
-
   const [user, setUser] = useState<any>("");
   const [check, setCheck] = useState(false);
 

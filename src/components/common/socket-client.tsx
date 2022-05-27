@@ -218,7 +218,6 @@ export function SocketClient() {
     socket.on("check-user-online-to-me", async (data: any) => {
       data.forEach((item: any) => {
         if (!online?.includes(item?.id)) {
-          // console.log(item);
           dispatch(setOnline(item?.id));
         }
       });

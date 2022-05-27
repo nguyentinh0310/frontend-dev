@@ -1,15 +1,9 @@
 import { MainLayout, Seo } from "@/components";
 import { LeftPanel, MiddlePannel, RightPanel } from "@/components/home";
 import { useNotify } from "@/hooks";
-import { IPost, ListResponse, NextPageWithLayout } from "@/models";
-import axios from "axios";
-import { GetServerSidePropsContext } from "next";
 
-interface HomePageProps {
-  posts: ListResponse<IPost>;
-}
 
-const HomePage = ({ posts }: HomePageProps) => {
+const HomePage = () => {
   const { notifies } = useNotify();
   return (
     <>
@@ -27,7 +21,7 @@ const HomePage = ({ posts }: HomePageProps) => {
       />
       <section className="home">
         <LeftPanel />
-        <MiddlePannel posts={posts} />
+        <MiddlePannel />
         <RightPanel />
       </section>
     </>
@@ -35,23 +29,23 @@ const HomePage = ({ posts }: HomePageProps) => {
 };
 HomePage.Layout = MainLayout;
 
-export const getServerSideProps = async (
-  context: GetServerSidePropsContext
-) => {
-  const token: any = context.req.headers.cookie;
-  const tokenParser = token.substring(4);
+// export const getServerSideProps = async (
+//   context: GetServerSidePropsContext
+// ) => {
+//   const token: any = context.req.headers.cookie;
+//   const tokenParser = token?.substring(4);
 
-  const res = await axios.get(
-    `${process.env.API_URL}/api/v1/posts/follow?limit=15`,
-    {
-      headers: { Authorization: tokenParser },
-    }
-  );
-  return {
-    props: {
-      posts: res.data,
-    },
-  };
-};
+//   const res = await axios.get(
+//     `${process.env.API_URL}/api/v1/posts/follow?limit=15`,
+//     {
+//       headers: { Authorization: tokenParser },
+//     }
+//   );
+//   return {
+//     props: {
+//       posts: res.data,
+//     },
+//   };
+// };
 
 export default HomePage;

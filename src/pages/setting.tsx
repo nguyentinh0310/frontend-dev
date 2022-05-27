@@ -44,7 +44,7 @@ const SettingPage: NextPageWithLayout = () => {
       await mutateAuth();
       toast.success("Đổi mật khẩu thành công");
     } catch (error) {
-      toast.error("Mật khẩu không khớp");
+      toast.error("Mật khẩu sai");
     }
   };
 

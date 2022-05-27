@@ -41,7 +41,6 @@ export function SocailModal() {
     resolver: yupResolver(schema),
   });
   const handleSubmitForm = async (values: any) => {
-    console.log(values);
     try {
       // await profileApi.createExperience(values);
       // await mutateProfile();

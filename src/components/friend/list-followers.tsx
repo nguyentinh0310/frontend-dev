@@ -16,8 +16,8 @@ export function ListFollowers() {
           <h4 className="text-center">Chưa có người theo dõi</h4>
         )}
         {auth?.followers?.map((user: IUser) => (
-          <div className="col-lg-4 col-sm-6 friend-col">
-            <div className="friend-box" key={user?._id}>
+          <div className="col-lg-4 col-sm-6 friend-col" key={user?._id}>
+            <div className="friend-box">
               <Link href={`/profile/${user?._id}`}>
                 <span className="avatar">
                   <img src={user?.avatar} alt="" />

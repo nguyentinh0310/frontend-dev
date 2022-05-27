@@ -4,7 +4,7 @@ import { Icons } from "@/components/common";
 import { useAuth, useConversations } from "@/hooks";
 import { IUser } from "@/models";
 import { imageUpload, socket } from "@/utils";
-import React, { FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 import { toast } from "react-toastify";
 
 export interface AddMessageProps {
@@ -55,7 +55,7 @@ export function AddMessage({
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!content) return;
+    if (!content.trim()) return;
     setContent("");
     setShow(false);
     setMedia([]);

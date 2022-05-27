@@ -9,15 +9,16 @@ export function ListFollowings() {
   return (
     <div className="list-friend">
       <h4>
-        Đang theo dõi ({auth?.followings?.length > 0 && `${auth?.followings?.length}`})
+        Đang theo dõi (
+        {auth?.followings?.length > 0 && `${auth?.followings?.length}`})
       </h4>
       <div className="row">
         {auth?.followings?.length === 0 && (
           <h4 className="text-center">Chưa theo dõi ai</h4>
         )}
         {auth?.followings?.map((user: IUser) => (
-          <div className="col-lg-4 col-sm-6 friend-col">
-            <div className="friend-box" key={user?._id}>
+          <div className="col-lg-4 col-sm-6 friend-col" key={user?._id}>
+            <div className="friend-box">
               <Link href={`/profile/${user?._id}`}>
                 <span className="avatar">
                   <img src={user?.avatar} alt="" />

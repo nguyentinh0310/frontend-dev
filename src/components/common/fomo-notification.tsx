@@ -10,7 +10,6 @@ export function FomoNotification({ notify }: FomoNotificationProps) {
   const { auth } = useAuth();
   const { user } = useUser(notify?.recipients[0]);
   const { post } = usePost(notify?.id);
-  // console.log(auth)
   return (
     <div className="noti">
       {post?.images.length > 0 ? (

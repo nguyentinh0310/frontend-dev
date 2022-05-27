@@ -20,13 +20,6 @@ const onlineSlice = createSlice({
         (item: any) => item !== action.payload
       );
     },
-    checkOnOff: (state, action: PayloadAction<any>) => {
-      state.online = state.online.map((item: any) => {
-          console.log(item)
-        action.payload.includes(item);
-
-      });
-    },
   },
 });
 

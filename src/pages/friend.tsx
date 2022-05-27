@@ -27,9 +27,9 @@ const FriendPage: NextPageWithLayout = () => {
         }}
       />
       <section className="friend-page">
+        <SuggestFiend />
         <ListFollowers />
         <ListFollowings />
-        <SuggestFiend />
       </section>
     </>
   );
