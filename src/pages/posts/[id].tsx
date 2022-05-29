@@ -60,7 +60,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return {
     paths: data.data.map((post: IPost) => ({ params: { id: post?._id } })),
-    fallback: false, // or true or 'blocking'
+    fallback: "blocking", // or true or 'blocking'
   };
 };
 export const getStaticProps: GetStaticProps<PostIdPageProps> = async ({
