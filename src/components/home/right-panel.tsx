@@ -58,8 +58,8 @@ export function RightPanel() {
           )}
         </div>
 
-        <div className="suggest-user mt-3">
-          <h4>Gợi ý</h4>
+        {/* <div className="suggest-user mt-3">
+          <h4>Bạn bè</h4>
           {isLoading ? (
             <span>Loadding ...</span>
           ) : (
@@ -80,7 +80,7 @@ export function RightPanel() {
               ))}
             </>
           )}
-        </div>
+        </div> */}
       </div>
     </div>
   );
