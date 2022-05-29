@@ -9,7 +9,7 @@ export default function MenuPage() {
           title: "Danh mục",
           description:
             "Website It Network xây dựng fullstack sử dụng công nghệ Nextjs và Nodejs",
-          url: "http://localhost:3000/",
+          url: "https://it-network-pvptd9hy4-nguyentinh0310.vercel.app/",
           thumbnailUrl:
             "https://res.cloudinary.com/dwgximj2j/image/upload/v1625475731/header__ul8cso.png",
         }}
