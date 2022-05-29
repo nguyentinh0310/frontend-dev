@@ -46,10 +46,7 @@ export function Conversation({ conv }: ConversationProps) {
   };
 
   return (
-    <li
-      onClick={onClickToMessage}
-      // style={{ background: check ? "#dcdcdc" : "" }}
-    >
+    <li onClick={onClickToMessage}>
       <a style={{ fontWeight: conv?.isRead ? "normal" : "bold" }}>
         <span className="avatar">
           <img src={user ? user?.avatar : auth?.avatar} alt="" />

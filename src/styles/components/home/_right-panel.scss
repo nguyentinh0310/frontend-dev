@@ -39,6 +39,16 @@
           color: $third-color !important;
         }
       }
+      .fa-circle {
+        margin-left: auto;
+        padding-right: 20px;
+        font-size: 11px;
+        opacity: 0.5;
+        &.active {
+          color: forestgreen;
+          opacity: 1;
+        }
+      }
     }
     h4 {
       margin-bottom: 10px;

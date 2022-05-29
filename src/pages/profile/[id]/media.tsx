@@ -2,7 +2,6 @@ import { ProfileLayout, Seo } from "@/components";
 import { useNotify } from "@/hooks";
 import { usePostUser } from "@/hooks/use-post";
 import { IPost, ListResponse } from "@/models";
-import axios from "axios";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -89,9 +88,11 @@ export default function ProfileMediaPage({ initPosts }: ProfileMediaPageProps) {
 ProfileMediaPage.Layout = ProfileLayout;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const res = await axios.get(`${process.env.API_URL}/api/v1/posts`);
+  const response = await fetch(`${process.env.API_URL}/api/v1/posts`);
+  const data = await response.json();
+
   return {
-    paths: res.data.data.map((post: IPost) => ({
+    paths: data.data.map((post: IPost) => ({
       params: { id: post?.user?._id },
     })),
     fallback: "blocking", // or true or 'blocking'

@@ -57,7 +57,6 @@ export function ExperienceModal() {
         to: new Date,
       });
       toast.success("Thêm kinh nghiệm thành công");
-      console.log(values);
     } catch (error) {
       toast.error("Lỗi 500");
     }

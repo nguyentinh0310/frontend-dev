@@ -1,10 +1,8 @@
 import { Explore, LeftPanel, MainLayout, RightPanel, Seo } from "@/components";
+import { useNotify } from "@/hooks";
 import { IPost, ListResponse } from "@/models";
-import axios from "axios";
 import { GetStaticProps } from "next";
 import React, { Fragment } from "react";
-import Cookies from "cookies";
-import { useNotify } from "@/hooks";
 
 export interface ExplorePageProps {
   initPosts: ListResponse<IPost>;
@@ -38,11 +36,13 @@ export default function ExplorePage({ initPosts }: ExplorePageProps) {
 ExplorePage.Layout = MainLayout;
 
 export const getStaticProps: GetStaticProps<ExplorePageProps> = async () => {
-  const res = await axios.get(`${process.env.API_URL}/api/v1/posts?limit=15`);
+  const response = await fetch(`${process.env.API_URL}/api/v1/posts?limit=15`);
+  const data = await response.json();
+
 
   return {
     props: {
-      initPosts: res.data,
+      initPosts: data,
     },
   };
 };

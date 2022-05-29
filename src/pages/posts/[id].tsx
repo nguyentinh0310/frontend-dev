@@ -3,7 +3,6 @@ import { Post } from "@/components/posts";
 import { useNotify } from "@/hooks";
 import { usePost } from "@/hooks/use-post";
 import { IPost } from "@/models";
-import axios from "axios";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -56,9 +55,11 @@ export default function PostIdPage({ postDetail }: PostIdPageProps) {
 PostIdPage.Layout = MainLayout;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const res = await axios.get(`${process.env.API_URL}/api/v1/posts`);
+  const response = await fetch(`${process.env.API_URL}/api/v1/posts`);
+  const data = await response.json();
+
   return {
-    paths: res.data.data.map((post: IPost) => ({ params: { id: post?._id } })),
+    paths: data.data.map((post: IPost) => ({ params: { id: post?._id } })),
     fallback: false, // or true or 'blocking'
   };
 };

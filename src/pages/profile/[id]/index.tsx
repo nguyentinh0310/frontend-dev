@@ -1,7 +1,6 @@
 import { ProfileBody, ProfileLayout, Seo } from "@/components";
 import { useAuth, useNotify } from "@/hooks";
 import { IPost, ListResponse } from "@/models";
-import axios from "axios";
 import { GetStaticPaths, GetStaticProps } from "next";
 import React, { Fragment } from "react";
 
@@ -33,9 +32,11 @@ export default function ProfilePage({ initPosts }: ProfilePageProps) {
 ProfilePage.Layout = ProfileLayout;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const res = await axios.get(`${process.env.API_URL}/api/v1/posts`);
+  const response = await fetch(`${process.env.API_URL}/api/v1/posts`);
+  const data = await response.json();
+
   return {
-    paths: res.data.data.map((post: IPost) => ({
+    paths: data.data.map((post: IPost) => ({
       params: { id: post?.user?._id },
     })),
     fallback: "blocking", // or true or 'blocking'
@@ -46,6 +47,7 @@ export const getStaticProps: GetStaticProps<ProfilePageProps> = async ({
   params,
 }) => {
   const postId = params?.id;
+
   if (!postId) return { notFound: true };
 
   const response = await fetch(
