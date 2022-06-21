@@ -26,41 +26,41 @@ export default function handler(
     // dont't send cookie to API server
     req.headers.cookie = "";
 
-    const handleLoginResponse: ProxyResCallback = (proxyRes, req, res) => {
-      let body = "";
-      proxyRes.on("data", function (chunk) {
-        body += chunk;
-      });
-      proxyRes.on("end", function () {
-        try {
-          const { access_token } = JSON.parse(body);
-          // convert token to cookies
-          const cookies = new Cookies(req, res, {
-            secure: process.env.NODE_ENV !== "development",
-          });
-          cookies.set("jwt", access_token, {
-            httpOnly: true,
-            sameSite: "lax",
-            maxAge: 2* 24 * 60 * 60 * 1000,
-          });
+  const handleLoginResponse: ProxyResCallback = (proxyRes, req, res) => {
+    let body = "";
+    proxyRes.on("data", function (chunk) {
+      body += chunk;
+    });
+    proxyRes.on("end", function () {
+      try {
+        const { access_token } = JSON.parse(body);
+        // convert token to cookies
+        const cookies = new Cookies(req, res, {
+          secure: process.env.NODE_ENV !== "development",
+        });
+        cookies.set("jwt", access_token, {
+          httpOnly: true,
+          sameSite: "lax",
+          maxAge: 2* 24 * 60 * 60 * 1000,
+        });
 
-          if (access_token) {
-            (res as NextApiResponse)
-              .status(200)
-              .json({ message: "login successfully" });
-          } else {
-            (res as NextApiResponse).status(500).json({ message: body });
-          }
-        } catch (error) {
+        if (access_token) {
           (res as NextApiResponse)
-            .status(500)
-            .json({ message: "something went wrong" });
+            .status(200)
+            .json({ message: "login successfully" });
+        } else {
+          (res as NextApiResponse).status(500).json({ message: body });
         }
-        resolve(true);
-      });
-    };
+      } catch (error) {
+        (res as NextApiResponse)
+          .status(500)
+          .json({ message: "something went wrong" });
+      }
+      resolve(true);
+    });
+  };
 
-    proxy.once("proxyRes", handleLoginResponse);
+  proxy.once("proxyRes", handleLoginResponse);
 
     proxy.web(req, res, {
       target: process.env.API_URL,
@@ -69,3 +69,5 @@ export default function handler(
     });
   });
 }
+
+

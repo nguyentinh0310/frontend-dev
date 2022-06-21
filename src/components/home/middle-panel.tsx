@@ -2,21 +2,21 @@ import { openStatus, setLimit, useAppDispatch, useAppSelector } from "@/app";
 import { StatusModal } from "@/components/modal";
 import { useAuth } from "@/hooks";
 import { usePostsFollow } from "@/hooks/use-post";
-import { IPost } from "@/models";
+import { IPost, ListResponse } from "@/models";
 import React, { useEffect, useState } from "react";
 import { Post } from "../posts";
 import { PostSkeletonList } from "../skeleton";
 
 interface MiddlePannelProps {
-  // posts: ListResponse<IPost>;
+  posts: ListResponse<IPost>;
 }
 
-export function MiddlePannel(props: MiddlePannelProps) {
+export function MiddlePannel({ posts }: MiddlePannelProps) {
   const { auth } = useAuth();
   const dispacth = useAppDispatch();
   const { limit } = useAppSelector((state) => state.posts);
 
-  const [postList, setPostList] = useState<any>([]);
+  const [postList, setPostList] = useState<any>(posts);
   const [loading, setLoading] = useState(false);
 
   const { postsFollow, isLoading, isError } = usePostsFollow(limit);

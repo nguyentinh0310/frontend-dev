@@ -14,12 +14,6 @@ import "../styles/globals.scss";
 
 export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const Layout = Component.Layout ?? EmptyLayout;
-  // useEffect(() => {
-  //   const socket = socketIoClient.io();
-  //   return () => {
-  //     socket.close();
-  //   };
-  // }, []);
 
   return (
     <>

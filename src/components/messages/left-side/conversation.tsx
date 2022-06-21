@@ -38,10 +38,10 @@ export function Conversation({ conv }: ConversationProps) {
     });
   }, [online, user?._id]);
 
-  const onClickToMessage = async () => {
-    await conversationsApi.isRead(user ? user?._id : auth?._id);
+  const onClickToMessage = async () => {    
     await mutateConv();
     await mutateMessages();
+    await conversationsApi.isRead(user?._id);
     return router.push(`/message/${user ? user?._id : auth?._id}`);
   };
 

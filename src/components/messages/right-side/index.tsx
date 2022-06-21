@@ -43,7 +43,6 @@ export function RightSide() {
         text: data.text,
         media: data.media,
       });
-      // console.log(data.sender);
       data = await mutateConv();
     });
   }, [socket]);

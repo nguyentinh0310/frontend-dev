@@ -55,7 +55,7 @@ export default function PostIdPage({ postDetail }: PostIdPageProps) {
 PostIdPage.Layout = MainLayout;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const response = await fetch(`${process.env.API_URL}/api/v1/posts`);
+  const response = await fetch(`${process.env.API_URL}/api/v1/posts?limit=15`);
   const data = await response.json();
 
   return {
@@ -79,3 +79,5 @@ export const getStaticProps: GetStaticProps<PostIdPageProps> = async ({
     revalidate: 60,
   };
 };
+
+

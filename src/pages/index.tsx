@@ -1,10 +1,14 @@
 import { MainLayout, Seo } from "@/components";
 import { LeftPanel, MiddlePannel, RightPanel } from "@/components/home";
 import { useNotify } from "@/hooks";
-import { NextPageWithLayout } from "@/models";
+import { IPost, ListResponse } from "@/models";
+import { GetServerSidePropsContext } from "next";
 
+export interface HomePageProps {
+  initPosts: ListResponse<IPost>;
+}
 
-const HomePage: NextPageWithLayout  = () => {
+const HomePage = ({ initPosts }: HomePageProps) => {
   const { notifies } = useNotify();
   return (
     <>
@@ -22,7 +26,7 @@ const HomePage: NextPageWithLayout  = () => {
       />
       <section className="home">
         <LeftPanel />
-        <MiddlePannel />
+        <MiddlePannel posts={initPosts} />
         <RightPanel />
       </section>
     </>
@@ -30,21 +34,41 @@ const HomePage: NextPageWithLayout  = () => {
 };
 HomePage.Layout = MainLayout;
 
-// export const getServerSideProps = async (
-//   context: GetServerSidePropsContext
+export const getServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
+  const token: any = context.req.headers.cookie;
+  const tokenParser = token?.substring(4);
+
+  const response = await fetch(
+    `${process.env.API_URL}/api/v1/posts/follow?limit=15`,
+    {
+      headers: { Authorization: context.req ? tokenParser : undefined },
+    }
+  );
+  const data = await response.json();
+
+  return {
+    props: {
+      posts: data,
+    },
+  };
+};
+
+// export const getStaticProps: GetStaticProps<HomePageProps> = async (
+//   context: GetStaticPropsContext
 // ) => {
+//   const cookies = new Cookies(req, res);
+//   const accessToken = cookies.get('jwt')
 //   const token: any = context.req.headers.cookie;
 //   const tokenParser = token?.substring(4);
 
-//   const res = await axios.get(
-//     `${process.env.API_URL}/api/v1/posts/follow?limit=15`,
-//     {
-//       headers: { Authorization: tokenParser },
-//     }
-//   );
+//   const response = await fetch(`${process.env.API_URL}/api/v1/posts?limit=15`);
+//   const data = await response.json();
+
 //   return {
 //     props: {
-//       posts: res.data,
+//       initPosts: data,
 //     },
 //   };
 // };
